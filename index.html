@@ -21,7 +21,7 @@
   }
   body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; min-height: 100vh; padding: 2rem 1rem; }
   .container { max-width: 980px; margin: 0 auto; }
- 
+
   /* Login screen */
   .login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; gap: 1rem; }
   .login-screen h1 { font-size: 22px; font-weight: 500; margin-bottom: 0.5rem; }
@@ -29,7 +29,7 @@
   .user-buttons { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
   .user-btn { padding: 14px 32px; border-radius: 8px; font-size: 15px; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; border: 1.5px solid var(--border); background: var(--surface); color: var(--text); transition: all 0.15s; box-shadow: var(--shadow); }
   .user-btn:hover { border-color: var(--text); background: var(--text); color: #fff; }
- 
+
   header { margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1.25rem; display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
   header h1 { font-size: 18px; font-weight: 500; letter-spacing: -0.01em; }
   header .sub { font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; margin-top: 2px; }
@@ -39,7 +39,7 @@
   .sync-status.err { color: #c0392b; }
   .user-pill { font-size: 11px; font-family: 'DM Mono', monospace; background: var(--c-day-light); color: var(--c-day-dark); padding: 2px 10px; border-radius: 20px; cursor: pointer; }
   .user-pill:hover { background: var(--border); }
- 
+
   .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1rem; }
   .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.5rem; }
   .metric { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.875rem 1.125rem; box-shadow: var(--shadow); }
@@ -122,7 +122,7 @@
 </style>
 </head>
 <body>
- 
+
 <!-- LOGIN -->
 <div id="login-screen" class="login-screen">
   <h1>Tidslogg – First Hotels</h1>
@@ -143,7 +143,7 @@
     <div id="pin-error" style="color:#c0392b; font-size:12px; margin-top:8px; display:none;">Feil PIN. Prøv igjen.</div>
   </div>
 </div>
- 
+
 <!-- MAIN APP -->
 <div id="app" class="container hidden">
   <header>
@@ -157,14 +157,14 @@
       <button class="btn btn-outline" id="btn-export">↓ Eksporter CSV</button>
     </div>
   </header>
- 
+
   <div class="section-label">Fordeling per selskap</div>
   <div class="summary-grid">
     <div class="metric"><div class="metric-label">Totalt loggede timer</div><div class="metric-value" id="total-hours">0,0 t</div><div class="metric-sub" id="total-entries">0 oppføringer</div></div>
     <div class="metric"><div class="metric-label"><span class="dot dot-int"></span> International</div><div class="metric-value" id="int-hours">0,0 t</div><div class="metric-sub" id="int-pct">0 %</div></div>
     <div class="metric"><div class="metric-label"><span class="dot dot-ps"></span> Planetstaden</div><div class="metric-value" id="ps-hours">0,0 t</div><div class="metric-sub" id="ps-pct">0 %</div></div>
   </div>
- 
+
   <div class="section-label">Fordeling per tidskategori</div>
   <div class="cat-grid">
     <div class="metric"><div class="metric-label"><span class="dot dot-day"></span> Normaldag 08–16</div><div class="metric-value" id="cat-day-h">0,0 t</div><div class="metric-sub" id="cat-day-pct">0 %</div></div>
@@ -172,7 +172,7 @@
     <div class="metric"><div class="metric-label"><span class="dot dot-week"></span> Lørdag / søndag</div><div class="metric-value" id="cat-week-h">0,0 t</div><div class="metric-sub" id="cat-week-pct">0 %</div></div>
     <div class="metric"><div class="metric-label"><span class="dot dot-hol"></span> Offentlig fridag</div><div class="metric-value" id="cat-hol-h">0,0 t</div><div class="metric-sub" id="cat-hol-pct">0 %</div></div>
   </div>
- 
+
   <div class="bars" id="bars-section" style="display:none">
     <div class="section-label">Selskap</div>
     <div class="bar-row"><div class="bar-label">International</div><div class="bar-track"><div class="bar-fill bar-fill-int" id="bar-int" style="width:0%"></div></div><div class="bar-pct" id="barpct-int">0 %</div></div>
@@ -184,7 +184,7 @@
     <div class="bar-row"><div class="bar-label">Helg (lør–søn)</div><div class="bar-track"><div class="bar-fill bar-fill-week" id="bar-week" style="width:0%"></div></div><div class="bar-pct" id="barpct-week">0 %</div></div>
     <div class="bar-row"><div class="bar-label">Offentlig fridag</div><div class="bar-track"><div class="bar-fill bar-fill-hol" id="bar-hol" style="width:0%"></div></div><div class="bar-pct" id="barpct-hol">0 %</div></div>
   </div>
- 
+
   <div class="card">
     <div class="card-header">Logg ny aktivitet</div>
     <div class="card-body">
@@ -215,9 +215,23 @@
       <button class="btn btn-primary" id="btn-add">+ Legg til oppføring</button>
     </div>
   </div>
- 
+
+  <div id="earnings-card" class="card" style="display:none; margin-bottom:1rem;">
+    <div class="card-body" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+      <div>
+        <div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:4px;">Timelønn × loggede timer (valgt periode)</div>
+        <div style="font-size:28px; font-family:'DM Mono',monospace; font-weight:400; letter-spacing:-0.02em;" id="earnings-amount">0 kr</div>
+      </div>
+      <div style="font-size:12px; color:var(--faint); font-family:'DM Mono',monospace; text-align:right;">
+        <div id="earnings-detail"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="filters">
-    <label>Uke</label><select id="filter-week"><option value="">Alle</option></select>
+    <label>Fra</label><input type="date" id="filter-from" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);outline:none;cursor:pointer;"/>
+    <label>Til</label><input type="date" id="filter-to" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);outline:none;cursor:pointer;"/>
+    <button onclick="clearDateFilter()" style="border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--muted);cursor:pointer;">Alle</button>
     <label>Selskap</label>
     <select id="filter-company"><option value="">Begge</option><option value="int">International</option><option value="ps">Planetstaden</option></select>
     <label>Kategori</label>
@@ -225,18 +239,19 @@
     <div class="spacer"></div>
     <span id="filter-summary" style="font-size:12px;color:var(--faint);font-family:'DM Mono',monospace"></span>
   </div>
- 
+
   <div class="card">
     <div id="log-container"><div class="empty">Henter data…</div></div>
   </div>
 </div>
- 
+
 <script>
 const PINS = { thomas: '5846', marcus: '1209' };
+const HOURLY_RATE = { marcus: 325 };
 const SUPABASE_URL = 'https://hudiwhhigwopsiwjndwl.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_hRr2_jDv1WvrC5cDVigD3Q_odpSFDlS';
 const TABLE = 'tidslogg';
- 
+
 const HOLIDAYS = new Set([
   '2025-01-01','2025-04-17','2025-04-18','2025-04-20','2025-04-21',
   '2025-05-01','2025-05-17','2025-05-29','2025-06-08','2025-06-09',
@@ -245,14 +260,14 @@ const HOLIDAYS = new Set([
   '2026-05-01','2026-05-14','2026-05-17','2026-05-24','2026-05-25',
   '2026-12-25','2026-12-26'
 ]);
- 
+
 let entries = [];
 let editingId = null;
 let currentUser = null;
- 
+
 // --- Auth ---
 let pendingUser = null;
- 
+
 function selectUser(user) {
   pendingUser = user;
   document.getElementById('pin-area').style.display = 'block';
@@ -263,14 +278,14 @@ function selectUser(user) {
   document.getElementById('btn-marcus').style.opacity = user === 'marcus' ? '1' : '0.4';
   setTimeout(() => document.getElementById('pin-input').focus(), 50);
 }
- 
+
 function cancelPin() {
   pendingUser = null;
   document.getElementById('pin-area').style.display = 'none';
   document.getElementById('btn-thomas').style.opacity = '1';
   document.getElementById('btn-marcus').style.opacity = '1';
 }
- 
+
 function confirmPin() {
   const entered = document.getElementById('pin-input').value;
   if (entered === PINS[pendingUser]) {
@@ -281,7 +296,7 @@ function confirmPin() {
     document.getElementById('pin-input').focus();
   }
 }
- 
+
 function login(user) {
   currentUser = user;
   localStorage.setItem('tidslogg_user', user);
@@ -292,7 +307,7 @@ function login(user) {
   updateHint();
   loadAll();
 }
- 
+
 function logout() {
   if (!confirm('Bytte bruker?')) return;
   currentUser = null;
@@ -302,11 +317,11 @@ function logout() {
   document.getElementById('app').classList.add('hidden');
   document.getElementById('login-screen').classList.remove('hidden');
 }
- 
+
 // Auto-login if remembered
 const savedUser = localStorage.getItem('tidslogg_user');
 if (savedUser) login(savedUser);
- 
+
 // --- Supabase ---
 async function sbFetch(path, opts={}) {
   const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
@@ -323,7 +338,7 @@ async function sbFetch(path, opts={}) {
   if (res.status === 204) return null;
   return res.json();
 }
- 
+
 async function loadAll() {
   setSync('loading');
   try {
@@ -336,14 +351,14 @@ async function loadAll() {
     document.getElementById('log-container').innerHTML = '<div class="empty">Kunne ikke koble til. Sjekk internett.</div>';
   }
 }
- 
+
 function setSync(s) {
   const el = document.getElementById('sync-status');
   if (s==='ok')      { el.textContent='● synkronisert'; el.className='sync-status ok'; }
   else if (s==='loading') { el.textContent='● synkroniserer…'; el.className='sync-status'; }
   else               { el.textContent='● tilkoblingsfeil'; el.className='sync-status err'; }
 }
- 
+
 // --- Helpers ---
 function getCat(d) {
   if (HOLIDAYS.has(d)) return 'hol';
@@ -361,7 +376,7 @@ function fmtH(h){ return h.toFixed(1).replace('.',',')+' t'; }
 function pct(a,b){ return b>0?Math.round(a/b*100):0; }
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
- 
+
 function updateHint(){
   const d=document.getElementById('inp-date').value;
   const s=document.getElementById('inp-cat').value;
@@ -369,20 +384,21 @@ function updateHint(){
 }
 document.getElementById('inp-date').addEventListener('change',updateHint);
 document.getElementById('inp-cat').addEventListener('change',updateHint);
- 
+
 // --- Render ---
 function render() {
-  const wf=document.getElementById('filter-week').value;
+  const ff=document.getElementById('filter-from').value;
+  const ft=document.getElementById('filter-to').value;
   const cf=document.getElementById('filter-company').value;
   const tf=document.getElementById('filter-cat').value;
- 
+
   let tot=0,iH=0,pH=0,cH={day:0,eve:0,week:0,hol:0};
   entries.forEach(e=>{
     const h=parseFloat(e.duration)||0; tot+=h;
     e.company==='int'?iH+=h:pH+=h;
     if(cH[e.cat]!==undefined) cH[e.cat]+=h;
   });
- 
+
   document.getElementById('total-hours').textContent=fmtH(tot);
   document.getElementById('total-entries').textContent=entries.length+' oppføringer';
   document.getElementById('int-hours').textContent=fmtH(iH);
@@ -402,21 +418,28 @@ function render() {
     document.getElementById('barpct-'+c).textContent=p2+' %';
   });
   document.getElementById('bars-section').style.display=tot>0?'block':'none';
- 
-  const weeks=[...new Set(entries.map(e=>getWeek(e.date)))].sort((a,b)=>a-b);
-  const wsel=document.getElementById('filter-week'),curW=wsel.value;
-  wsel.innerHTML='<option value="">Alle uker</option>';
-  weeks.forEach(w=>{ const o=document.createElement('option'); o.value=w; o.textContent='Uke '+w; if(String(w)===curW) o.selected=true; wsel.appendChild(o); });
- 
+
   const filtered=entries.filter(e=>
-    (!wf||String(getWeek(e.date))===wf)&&(!cf||e.company===cf)&&(!tf||e.cat===tf)
+    (!ff||e.date>=ff)&&(!ft||e.date<=ft)&&(!cf||e.company===cf)&&(!tf||e.cat===tf)
   );
   let fH=0; filtered.forEach(e=>fH+=parseFloat(e.duration)||0);
   document.getElementById('filter-summary').textContent=filtered.length<entries.length?filtered.length+' oppf. · '+fmtH(fH):'';
- 
+
+  // Earnings for marcus
+  const earningsCard = document.getElementById('earnings-card');
+  if (currentUser === 'marcus' && HOURLY_RATE[currentUser]) {
+    earningsCard.style.display = 'block';
+    const rate = HOURLY_RATE[currentUser];
+    const earnings = fH * rate;
+    document.getElementById('earnings-amount').textContent = Math.round(earnings).toLocaleString('nb-NO') + ' kr';
+    document.getElementById('earnings-detail').textContent = fmtH(fH) + ' × ' + rate + ' kr/t';
+  } else {
+    earningsCard.style.display = 'none';
+  }
+
   const container=document.getElementById('log-container');
   if(filtered.length===0){ container.innerHTML='<div class="empty">Ingen oppføringer ennå.</div>'; return; }
- 
+
   let html='<table><thead><tr><th>Dato</th><th>Uke</th><th>Selskap</th><th>Kategori</th><th>Aktivitet</th><th>Timer</th><th style="width:64px"></th></tr></thead><tbody>';
   filtered.forEach(e=>{
     const h=parseFloat(e.duration)||0;
@@ -460,10 +483,10 @@ function render() {
   container.innerHTML=html;
   if(editingId){ const el=document.getElementById('edit-'+editingId); if(el) setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'nearest'}),50); }
 }
- 
+
 window.toggleEdit=function(id){ editingId=(editingId===id)?null:id; render(); };
 window.cancelEdit=function(){ editingId=null; render(); };
- 
+
 window.saveEdit=async function(id){
   const date=document.getElementById('e-date').value;
   const task=document.getElementById('e-task').value.trim();
@@ -482,7 +505,7 @@ window.saveEdit=async function(id){
     editingId=null; setSync('ok'); render();
   } catch(e){ setSync('err'); alert('Kunne ikke lagre: '+e.message); }
 };
- 
+
 window.del=async function(id){
   if(!confirm('Slette denne oppføringen?')) return;
   try {
@@ -493,7 +516,7 @@ window.del=async function(id){
     setSync('ok'); render();
   } catch(e){ setSync('err'); alert('Kunne ikke slette: '+e.message); }
 };
- 
+
 document.getElementById('btn-add').addEventListener('click', async ()=>{
   const date=document.getElementById('inp-date').value;
   const company=document.getElementById('inp-company').value;
@@ -518,11 +541,19 @@ document.getElementById('btn-add').addEventListener('click', async ()=>{
   } catch(e){ setSync('err'); alert('Kunne ikke lagre: '+e.message); }
   finally { btn.disabled=false; btn.textContent='+ Legg til oppføring'; }
 });
- 
-['filter-week','filter-company','filter-cat'].forEach(id=>
+
+['filter-company','filter-cat'].forEach(id=>
   document.getElementById(id).addEventListener('change',render)
 );
- 
+document.getElementById('filter-from').addEventListener('change',render);
+document.getElementById('filter-to').addEventListener('change',render);
+
+function clearDateFilter(){
+  document.getElementById('filter-from').value='';
+  document.getElementById('filter-to').value='';
+  render();
+}
+
 document.getElementById('btn-export').addEventListener('click',()=>{
   if(!entries.length){ alert('Ingen oppføringer å eksportere.'); return; }
   const lines=['Dato,Uke,Selskap,Tidskategori,Aktivitet,Timer,Merknad'];
@@ -541,4 +572,3 @@ document.getElementById('btn-export').addEventListener('click',()=>{
 </script>
 </body>
 </html>
- 
