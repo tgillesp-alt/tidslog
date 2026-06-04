@@ -392,6 +392,9 @@ function getWeek(d) {
   dt.setDate(dt.getDate()+4-(dt.getDay()||7));
   return Math.ceil((((dt-new Date(dt.getFullYear(),0,1))/86400000)+1)/7);
 }
+function getDayName(d) {
+  return ['Søn','Man','Tir','Ons','Tor','Fre','Lør'][new Date(d+'T12:00:00').getDay()];
+}
 function fmtH(h){ return h.toFixed(1).replace('.',',')+' t'; }
 function pct(a,b){ return b>0?Math.round(a/b*100):0; }
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -466,20 +469,20 @@ function render() {
   const container=document.getElementById('log-container');
   if(filtered.length===0){ container.innerHTML='<div class="empty">Ingen oppføringer ennå.</div>'; return; }
 
-  let html='<table><thead><tr><th>Dato</th><th>Uke</th><th>Selskap</th><th>Kategori</th><th>Aktivitet</th><th>Timer</th><th style="width:64px"></th></tr></thead><tbody>';
+  let html='<table><thead><tr><th>Dato</th><th>Dag</th><th>Uke</th><th>Selskap</th><th>Kategori</th><th>Aktivitet</th><th>Timer</th><th style="width:64px"></th></tr></thead><tbody>';
   filtered.forEach(e=>{
     const h=parseFloat(e.duration)||0;
     const cBadge=e.company==='int'?'<span class="badge badge-int">International</span>':e.company==='et'?'<span class="badge badge-et">Enter Tromsø</span>':e.company==='ml'?'<span class="badge badge-ml">Mallangen Resort</span>':e.company==='se'?'<span class="badge badge-se">St. Elisabeth</span>':'<span class="badge badge-ps">Planetstaden</span>';
     const tBadge=`<span class="badge ${catCls(e.cat)}">${catLabel(e.cat)}</span>`;
     const note=e.note?`<div class="note-text">${esc(e.note)}</div>`:'';
     const ea=editingId===e.id;
-    html+=`<tr class="data-row"><td class="mono">${e.date}</td><td class="mono">${getWeek(e.date)}</td><td>${cBadge}</td><td>${tBadge}</td><td>${esc(e.task)}${note}</td><td class="mono">${fmtH(h)}</td>
+    html+=`<tr class="data-row"><td class="mono">${e.date}</td><td class="mono">${getDayName(e.date)}</td><td class="mono">${getWeek(e.date)}</td><td>${cBadge}</td><td>${tBadge}</td><td>${esc(e.task)}${note}</td><td class="mono">${fmtH(h)}</td>
       <td style="white-space:nowrap">
         <button class="action-btn edit-btn${ea?' active':''}" onclick="toggleEdit('${e.id}')" title="Rediger">✎</button>
         <button class="action-btn del-btn" onclick="del('${e.id}')" title="Slett">×</button>
       </td></tr>`;
     if(ea){
-      html+=`<tr class="edit-row" id="edit-${e.id}"><td colspan="7">
+      html+=`<tr class="edit-row" id="edit-${e.id}"><td colspan="8">
         <div class="edit-panel">
           <div class="ef"><label>Dato</label><input type="date" id="e-date" value="${e.date}"/></div>
           <div class="ef"><label>Aktivitet</label><input type="text" id="e-task" value="${esc(e.task)}"/></div>
@@ -586,10 +589,10 @@ function clearDateFilter(){
 
 document.getElementById('btn-export').addEventListener('click',()=>{
   if(!entries.length){ alert('Ingen oppføringer å eksportere.'); return; }
-  const lines=['Dato,Uke,Selskap,Tidskategori,Aktivitet,Timer,Merknad'];
+  const lines=['Dato,Dag,Uke,Selskap,Tidskategori,Aktivitet,Timer,Merknad'];
   [...entries].sort((a,b)=>a.date.localeCompare(b.date)).forEach(e=>{
     const co=e.company==='int'?'First Hotels International':e.company==='et'?'Enter Tromsø':e.company==='ml'?'Mallangen Resort':e.company==='se'?'St. Elisabeth':'First Hotels Planetstaden';
-    lines.push([e.date,getWeek(e.date),co,catLabel(e.cat),
+    lines.push([e.date,getDayName(e.date),getWeek(e.date),co,catLabel(e.cat),
       '"'+e.task.replace(/"/g,'""')+'"',
       (parseFloat(e.duration)||0).toFixed(2).replace('.',','),
       '"'+(e.note||'').replace(/"/g,'""')+'"'].join(','));
