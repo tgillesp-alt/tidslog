@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tidslogg – First Hotels</title>
+<title>Tidslogg - First Hotels</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -135,7 +135,7 @@
 
 <!-- LOGIN -->
 <div id="login-screen" class="login-screen">
-  <h1>Tidslogg – First Hotels</h1>
+  <h1>Tidslogg - First Hotels</h1>
   <p>Velg bruker og skriv inn PIN</p>
   <div class="user-buttons">
     <button class="user-btn" id="btn-thomas" onclick="selectUser('thomas')">Thomas</button>
@@ -181,8 +181,8 @@
   <div class="section-label">Fordeling per tidskategori</div>
   <div class="cat-grid">
     <div class="metric"><div class="metric-label"><span class="dot dot-mor"></span> Morgen før 08</div><div class="metric-value" id="cat-mor-h">0,0 t</div><div class="metric-sub" id="cat-mor-pct">0 %</div></div>
-    <div class="metric"><div class="metric-label"><span class="dot dot-day"></span> Normaldag 08–16</div><div class="metric-value" id="cat-day-h">0,0 t</div><div class="metric-sub" id="cat-day-pct">0 %</div></div>
-    <div class="metric"><div class="metric-label"><span class="dot dot-eve"></span> Kveld man–fre</div><div class="metric-value" id="cat-eve-h">0,0 t</div><div class="metric-sub" id="cat-eve-pct">0 %</div></div>
+    <div class="metric"><div class="metric-label"><span class="dot dot-day"></span> Normaldag 08-16</div><div class="metric-value" id="cat-day-h">0,0 t</div><div class="metric-sub" id="cat-day-pct">0 %</div></div>
+    <div class="metric"><div class="metric-label"><span class="dot dot-eve"></span> Kveld man-fre</div><div class="metric-value" id="cat-eve-h">0,0 t</div><div class="metric-sub" id="cat-eve-pct">0 %</div></div>
     <div class="metric"><div class="metric-label"><span class="dot dot-week"></span> Lørdag / søndag</div><div class="metric-value" id="cat-week-h">0,0 t</div><div class="metric-sub" id="cat-week-pct">0 %</div></div>
     <div class="metric"><div class="metric-label"><span class="dot dot-hol"></span> Offentlig fridag</div><div class="metric-value" id="cat-hol-h">0,0 t</div><div class="metric-sub" id="cat-hol-pct">0 %</div></div>
   </div>
@@ -196,10 +196,10 @@
     <div class="bar-row"><div class="bar-label">St. Elisabeth</div><div class="bar-track"><div class="bar-fill bar-fill-se" id="bar-se" style="width:0%"></div></div><div class="bar-pct" id="barpct-se">0 %</div></div>
     <hr class="divider">
     <div class="section-label">Tidskategori</div>
-    <div class="bar-row"><div class="bar-label">Morgen (man–fre før 08)</div><div class="bar-track"><div class="bar-fill bar-fill-mor" id="bar-mor" style="width:0%"></div></div><div class="bar-pct" id="barpct-mor">0 %</div></div>
-    <div class="bar-row"><div class="bar-label">Normaldag (man–fre 08–16)</div><div class="bar-track"><div class="bar-fill bar-fill-day" id="bar-day" style="width:0%"></div></div><div class="bar-pct" id="barpct-day">0 %</div></div>
-    <div class="bar-row"><div class="bar-label">Kveld (man–fre etter 16)</div><div class="bar-track"><div class="bar-fill bar-fill-eve" id="bar-eve" style="width:0%"></div></div><div class="bar-pct" id="barpct-eve">0 %</div></div>
-    <div class="bar-row"><div class="bar-label">Helg (lør–søn)</div><div class="bar-track"><div class="bar-fill bar-fill-week" id="bar-week" style="width:0%"></div></div><div class="bar-pct" id="barpct-week">0 %</div></div>
+    <div class="bar-row"><div class="bar-label">Morgen (man-fre før 08)</div><div class="bar-track"><div class="bar-fill bar-fill-mor" id="bar-mor" style="width:0%"></div></div><div class="bar-pct" id="barpct-mor">0 %</div></div>
+    <div class="bar-row"><div class="bar-label">Normaldag (man-fre 08-16)</div><div class="bar-track"><div class="bar-fill bar-fill-day" id="bar-day" style="width:0%"></div></div><div class="bar-pct" id="barpct-day">0 %</div></div>
+    <div class="bar-row"><div class="bar-label">Kveld (man-fre etter 16)</div><div class="bar-track"><div class="bar-fill bar-fill-eve" id="bar-eve" style="width:0%"></div></div><div class="bar-pct" id="barpct-eve">0 %</div></div>
+    <div class="bar-row"><div class="bar-label">Helg (lør-søn)</div><div class="bar-track"><div class="bar-fill bar-fill-week" id="bar-week" style="width:0%"></div></div><div class="bar-pct" id="barpct-week">0 %</div></div>
     <div class="bar-row"><div class="bar-label">Offentlig fridag</div><div class="bar-track"><div class="bar-fill bar-fill-hol" id="bar-hol" style="width:0%"></div></div><div class="bar-pct" id="barpct-hol">0 %</div></div>
   </div>
 
@@ -231,10 +231,10 @@
         <div class="field"><label>Tidskategori</label>
           <select id="inp-cat">
             <option value="auto">Auto (beregn fra dato)</option>
-            <option value="mor">Morgen man–fre før 08</option>
-            <option value="day">Normaldag 08–16</option>
-            <option value="eve">Kveld man–fre etter 16</option>
-            <option value="week">Helg lør–søn</option>
+            <option value="mor">Morgen man-fre før 08</option>
+            <option value="day">Normaldag 08-16</option>
+            <option value="eve">Kveld man-fre etter 16</option>
+            <option value="week">Helg lør-søn</option>
             <option value="hol">Offentlig fridag</option>
           </select>
           <div class="cat-hint" id="cat-hint"></div>
@@ -396,7 +396,7 @@ function getCat(d) {
   const dow = new Date(d+'T12:00:00').getDay();
   return (dow===0||dow===6)?'week':'day';
 }
-function catLabel(c){ return {mor:'Morgen før 08',day:'Normaldag 08–16',eve:'Kveld etter 16',week:'Helg',hol:'Offentlig fridag'}[c]||c; }
+function catLabel(c){ return {mor:'Morgen før 08',day:'Normaldag 08-16',eve:'Kveld etter 16',week:'Helg',hol:'Offentlig fridag'}[c]||c; }
 function catCls(c)  { return {mor:'badge-mor',day:'badge-day',eve:'badge-eve',week:'badge-week',hol:'badge-hol'}[c]||''; }
 function getWeek(d) {
   const dt=new Date(d+'T12:00:00');
@@ -503,7 +503,7 @@ function render() {
           <div class="ef"><label>Timer</label><input type="number" id="e-dur" min="0.25" max="24" step="0.25" value="${h}"/></div>
           <div class="ef"><label>Tidskategori</label><select id="e-cat">
             <option value="mor"${e.cat==='mor'?' selected':''}>Morgen før 08</option>
-            <option value="day"${e.cat==='day'?' selected':''}>Normaldag 08–16</option>
+            <option value="day"${e.cat==='day'?' selected':''}>Normaldag 08-16</option>
             <option value="eve"${e.cat==='eve'?' selected':''}>Kveld etter 16</option>
             <option value="week"${e.cat==='week'?' selected':''}>Helg</option>
             <option value="hol"${e.cat==='hol'?' selected':''}>Offentlig fridag</option>
@@ -621,13 +621,7 @@ document.getElementById('btn-export').addEventListener('click',()=>{
       '"'+(e.note||'').replace(/"/g,'""')+'"'].join(';'));
   });
   const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob(['﻿'+lines.join('
-')],{type:'text/csv;charset=utf-8;'}));
-  a.download=`tidslogg_${currentUser}.csv`;
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob(['\uFEFF'+lines.join('\r\n')],{type:'text/csv;charset=utf-8;'}));
+  a.href=URL.createObjectURL(new Blob([String.fromCharCode(0xFEFF)+lines.join('\r\n')],{type:'text/csv;charset=utf-8;'}));
   a.download=`tidslogg_${currentUser}.csv`;
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
 });
