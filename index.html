@@ -99,6 +99,8 @@
   .badge-et{background:var(--et-light);color:var(--et-dark)}
   .badge-ml{background:var(--ml-light);color:var(--ml-dark)}
   .badge-se{background:var(--se-light);color:var(--se-dark)}
+  .badge-sted-oslo{background:#E8F4FD;color:#1A5276;font-size:10px;padding:1px 6px;border-radius:3px;margin-left:4px;}
+  .badge-sted-lund{background:#FEF9E7;color:#7D6608;font-size:10px;padding:1px 6px;border-radius:3px;margin-left:4px;}
   .badge-mor{background:var(--c-mor-light);color:var(--c-mor-dark)}
   .badge-day{background:var(--c-day-light);color:var(--c-day-dark)}
   .badge-eve{background:var(--c-eve-light);color:var(--c-eve-dark)}
@@ -204,8 +206,15 @@
   <div class="card">
     <div class="card-header">Logg ny aktivitet</div>
     <div class="card-body">
-      <div class="form-grid">
+      <div class="form-grid-3">
         <div class="field"><label>Dato</label><input type="date" id="inp-date"/></div>
+        <div class="field"><label>Sted</label>
+          <select id="inp-sted">
+            <option value="oslo">Oslo (hjemmekontor)</option>
+            <option value="lund">Lund (hotellet)</option>
+            <option value="annet">Annet</option>
+          </select>
+        </div>
         <div class="field"><label>Selskap</label>
           <select id="inp-company">
             <option value="int">First Hotels International</option>
@@ -252,6 +261,8 @@
     <label>Fra</label><input type="date" id="filter-from" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);outline:none;cursor:pointer;"/>
     <label>Til</label><input type="date" id="filter-to" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);outline:none;cursor:pointer;"/>
     <button onclick="clearDateFilter()" style="border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--muted);cursor:pointer;">Alle</button>
+    <label>Sted</label>
+    <select id="filter-sted"><option value="">Alle</option><option value="oslo">Oslo</option><option value="lund">Lund</option><option value="annet">Annet</option></select>
     <label>Selskap</label>
     <select id="filter-company"><option value="">Alle</option><option value="int">International</option><option value="ps">Planetstaden</option><option value="et">Enter Tromsø</option><option value="ml">Mallangen Resort</option><option value="se">St. Elisabeth</option></select>
     <label>Kategori</label>
@@ -392,6 +403,8 @@ function getWeek(d) {
   dt.setDate(dt.getDate()+4-(dt.getDay()||7));
   return Math.ceil((((dt-new Date(dt.getFullYear(),0,1))/86400000)+1)/7);
 }
+function stedLabel(s){ return {oslo:'Oslo',lund:'Lund',annet:'Annet'}[s]||s; }
+function stedBadge(s){ return s==='lund'?'<span class="badge-sted-lund">Lund</span>':s==='oslo'?'<span class="badge-sted-oslo">Oslo</span>':'<span class="badge-sted-oslo">'+stedLabel(s)+'</span>'; }
 function getDayName(d) {
   return ['Søn','Man','Tir','Ons','Tor','Fre','Lør'][new Date(d+'T12:00:00').getDay()];
 }
@@ -412,6 +425,7 @@ document.getElementById('inp-cat').addEventListener('change',updateHint);
 function render() {
   const ff=document.getElementById('filter-from').value;
   const ft=document.getElementById('filter-to').value;
+  const sf=document.getElementById('filter-sted').value;
   const cf=document.getElementById('filter-company').value;
   const tf=document.getElementById('filter-cat').value;
 
@@ -449,7 +463,7 @@ function render() {
   document.getElementById('bars-section').style.display=tot>0?'block':'none';
 
   const filtered=entries.filter(e=>
-    (!ff||e.date>=ff)&&(!ft||e.date<=ft)&&(!cf||e.company===cf)&&(!tf||e.cat===tf)
+    (!ff||e.date>=ff)&&(!ft||e.date<=ft)&&(!sf||e.sted===sf)&&(!cf||e.company===cf)&&(!tf||e.cat===tf)
   );
   let fH=0; filtered.forEach(e=>fH+=parseFloat(e.duration)||0);
   document.getElementById('filter-summary').textContent=filtered.length<entries.length?filtered.length+' oppf. · '+fmtH(fH):'';
@@ -469,20 +483,20 @@ function render() {
   const container=document.getElementById('log-container');
   if(filtered.length===0){ container.innerHTML='<div class="empty">Ingen oppføringer ennå.</div>'; return; }
 
-  let html='<table><thead><tr><th>Dato</th><th>Dag</th><th>Uke</th><th>Selskap</th><th>Kategori</th><th>Aktivitet</th><th>Timer</th><th style="width:64px"></th></tr></thead><tbody>';
+  let html='<table><thead><tr><th>Dato</th><th>Dag</th><th>Uke</th><th>Sted</th><th>Selskap</th><th>Kategori</th><th>Aktivitet</th><th>Timer</th><th style="width:64px"></th></tr></thead><tbody>';
   filtered.forEach(e=>{
     const h=parseFloat(e.duration)||0;
     const cBadge=e.company==='int'?'<span class="badge badge-int">International</span>':e.company==='et'?'<span class="badge badge-et">Enter Tromsø</span>':e.company==='ml'?'<span class="badge badge-ml">Mallangen Resort</span>':e.company==='se'?'<span class="badge badge-se">St. Elisabeth</span>':'<span class="badge badge-ps">Planetstaden</span>';
     const tBadge=`<span class="badge ${catCls(e.cat)}">${catLabel(e.cat)}</span>`;
     const note=e.note?`<div class="note-text">${esc(e.note)}</div>`:'';
     const ea=editingId===e.id;
-    html+=`<tr class="data-row"><td class="mono">${e.date}</td><td class="mono">${getDayName(e.date)}</td><td class="mono">${getWeek(e.date)}</td><td>${cBadge}</td><td>${tBadge}</td><td>${esc(e.task)}${note}</td><td class="mono">${fmtH(h)}</td>
+    html+=`<tr class="data-row"><td class="mono">${e.date}</td><td class="mono">${getDayName(e.date)}</td><td class="mono">${getWeek(e.date)}</td><td>${stedBadge(e.sted||'oslo')}</td><td>${cBadge}</td><td>${tBadge}</td><td>${esc(e.task)}${note}</td><td class="mono">${fmtH(h)}</td>
       <td style="white-space:nowrap">
         <button class="action-btn edit-btn${ea?' active':''}" onclick="toggleEdit('${e.id}')" title="Rediger">✎</button>
         <button class="action-btn del-btn" onclick="del('${e.id}')" title="Slett">×</button>
       </td></tr>`;
     if(ea){
-      html+=`<tr class="edit-row" id="edit-${e.id}"><td colspan="8">
+      html+=`<tr class="edit-row" id="edit-${e.id}"><td colspan="9">
         <div class="edit-panel">
           <div class="ef"><label>Dato</label><input type="date" id="e-date" value="${e.date}"/></div>
           <div class="ef"><label>Aktivitet</label><input type="text" id="e-task" value="${esc(e.task)}"/></div>
@@ -496,6 +510,11 @@ function render() {
           </select></div>
         </div>
         <div class="edit-panel-2">
+          <div class="ef"><label>Sted</label><select id="e-sted">
+            <option value="oslo"${(e.sted||'oslo')==='oslo'?' selected':''}>Oslo</option>
+            <option value="lund"${e.sted==='lund'?' selected':''}>Lund</option>
+            <option value="annet"${e.sted==='annet'?' selected':''}>Annet</option>
+          </select></div>
           <div class="ef"><label>Selskap</label><select id="e-co">
             <option value="int"${e.company==='int'?' selected':''}>First Hotels International</option>
             <option value="ps"${e.company==='ps'?' selected':''}>First Hotels Planetstaden</option>
@@ -527,14 +546,15 @@ window.saveEdit=async function(id){
   const cat=document.getElementById('e-cat').value;
   const company=document.getElementById('e-co').value;
   const note=document.getElementById('e-note').value.trim();
+  const sted=document.getElementById('e-sted').value;
   if(!date||!task||!duration||duration<=0){ alert('Fyll ut alle felt.'); return; }
   try {
     setSync('loading');
     await sbFetch(`${TABLE}?id=eq.${encodeURIComponent(id)}&user_id=eq.${currentUser}`, {
       method:'PATCH', prefer:'return=representation',
-      body: JSON.stringify({date,task,duration,cat,company,note})
+      body: JSON.stringify({date,task,duration,cat,company,note,sted})
     });
-    entries=entries.map(e=>e.id===id?{...e,date,task,duration,cat,company,note}:e);
+    entries=entries.map(e=>e.id===id?{...e,date,task,duration,cat,company,note,sted}:e);
     editingId=null; setSync('ok'); render();
   } catch(e){ setSync('err'); alert('Kunne ikke lagre: '+e.message); }
 };
@@ -557,9 +577,10 @@ document.getElementById('btn-add').addEventListener('click', async ()=>{
   const duration=parseFloat(document.getElementById('inp-duration').value);
   const catSel=document.getElementById('inp-cat').value;
   const note=document.getElementById('inp-note').value.trim();
+  const sted=document.getElementById('inp-sted').value;
   if(!date||!task||!duration||duration<=0){ alert('Fyll ut dato, aktivitet og tidsforbruk.'); return; }
   const cat=catSel==='auto'?getCat(date):catSel;
-  const entry={id:uid(),date,company,task,duration,cat,note,user_id:currentUser};
+  const entry={id:uid(),date,company,task,duration,cat,note,sted,user_id:currentUser};
   const btn=document.getElementById('btn-add');
   btn.disabled=true; btn.textContent='Lagrer…';
   try {
@@ -580,6 +601,7 @@ document.getElementById('btn-add').addEventListener('click', async ()=>{
 );
 document.getElementById('filter-from').addEventListener('change',render);
 document.getElementById('filter-to').addEventListener('change',render);
+document.getElementById('filter-sted').addEventListener('change',render);
 
 function clearDateFilter(){
   document.getElementById('filter-from').value='';
@@ -589,10 +611,10 @@ function clearDateFilter(){
 
 document.getElementById('btn-export').addEventListener('click',()=>{
   if(!entries.length){ alert('Ingen oppføringer å eksportere.'); return; }
-  const lines=['Dato,Dag,Uke,Selskap,Tidskategori,Aktivitet,Timer,Merknad'];
+  const lines=['Dato,Dag,Uke,Sted,Selskap,Tidskategori,Aktivitet,Timer,Merknad'];
   [...entries].sort((a,b)=>a.date.localeCompare(b.date)).forEach(e=>{
     const co=e.company==='int'?'First Hotels International':e.company==='et'?'Enter Tromsø':e.company==='ml'?'Mallangen Resort':e.company==='se'?'St. Elisabeth':'First Hotels Planetstaden';
-    lines.push([e.date,getDayName(e.date),getWeek(e.date),co,catLabel(e.cat),
+    lines.push([e.date,getDayName(e.date),getWeek(e.date),stedLabel(e.sted||'oslo'),co,catLabel(e.cat),
       '"'+e.task.replace(/"/g,'""')+'"',
       (parseFloat(e.duration)||0).toFixed(2).replace('.',','),
       '"'+(e.note||'').replace(/"/g,'""')+'"'].join(','));
