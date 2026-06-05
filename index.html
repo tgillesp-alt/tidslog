@@ -611,14 +611,21 @@ function clearDateFilter(){
 
 document.getElementById('btn-export').addEventListener('click',()=>{
   if(!entries.length){ alert('Ingen oppføringer å eksportere.'); return; }
-  const lines=['Dato,Dag,Uke,Sted,Selskap,Tidskategori,Aktivitet,Timer,Merknad'];
-  [...entries].sort((a,b)=>a.date.localeCompare(b.date)).forEach(e=>{
+  const sorted=[...entries].sort((a,b)=>a.date.localeCompare(b.date));
+  const lines=['Dato;Dag;Uke;Sted;Selskap;Tidskategori;Aktivitet;Timer;Merknad'];
+  sorted.forEach(e=>{
     const co=e.company==='int'?'First Hotels International':e.company==='et'?'Enter Tromsø':e.company==='ml'?'Mallangen Resort':e.company==='se'?'St. Elisabeth':'First Hotels Planetstaden';
     lines.push([e.date,getDayName(e.date),getWeek(e.date),stedLabel(e.sted||'oslo'),co,catLabel(e.cat),
-      '"'+e.task.replace(/"/g,'""')+'"',
-      (parseFloat(e.duration)||0).toFixed(2).replace('.',','),
-      '"'+(e.note||'').replace(/"/g,'""')+'"'].join(','));
+      '"'+(e.task||'').replace(/"/g,'""')+'"',
+      String(parseFloat(e.duration)||0).replace('.',','),
+      '"'+(e.note||'').replace(/"/g,'""')+'"'].join(';'));
   });
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(['﻿'+lines.join('
+')],{type:'text/csv;charset=utf-8;'}));
+  a.download=`tidslogg_${currentUser}.csv`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob(['\uFEFF'+lines.join('\r\n')],{type:'text/csv;charset=utf-8;'}));
   a.download=`tidslogg_${currentUser}.csv`;
