@@ -28,7 +28,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 
 /* ── LOGIN ── */
 .login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:1rem;background:var(--sidebar-bg)}
-.login-logo{font-size:22px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:1.5rem}
+.login-logo{font-size:32px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:1.5rem;font-weight:300}
 .login-screen h1{font-size:20px;font-weight:400;color:#fff;margin-bottom:.25rem}
 .login-screen p{color:rgba(255,255,255,.45);font-size:13px;margin-bottom:1.5rem}
 .user-buttons{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
@@ -272,9 +272,9 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
   <h1>Tidsregistrering</h1>
   <p>Velg bruker og skriv inn PIN</p>
   <div class="user-buttons">
-    <button class="user-btn" id="btn-thomas" onclick="selectUser('thomas')">Thomas</button>
-    <button class="user-btn" id="btn-marcus" onclick="selectUser('marcus')">Marcus</button>
-    <button class="user-btn" id="btn-sepideh" onclick="selectUser('sepideh')">Sepideh</button>
+    <button class="user-btn" id="btn-thomas" onclick="selectUser('thomas')" style="text-align:center"><div style="font-size:15px;font-weight:500">Thomas</div><div style="font-size:11px;opacity:.6;margin-top:2px">Gillespie · Interim General Manager</div></button>
+    <button class="user-btn" id="btn-marcus" onclick="selectUser('marcus')" style="text-align:center"><div style="font-size:15px;font-weight:500">Marcus</div><div style="font-size:11px;opacity:.6;margin-top:2px">Gillespie · Interim F&amp;B Manager</div></button>
+    <button class="user-btn" id="btn-sepideh" onclick="selectUser('sepideh')" style="text-align:center"><div style="font-size:15px;font-weight:500">Sepideh</div><div style="font-size:11px;opacity:.6;margin-top:2px">Carlsson · CFO</div></button>
   </div>
   <div id="pin-area" style="display:none;margin-top:1.5rem;text-align:center">
     <div style="font-size:13px;color:rgba(255,255,255,.45);margin-bottom:8px" id="pin-label"></div>
