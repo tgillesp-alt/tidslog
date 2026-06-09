@@ -5,387 +5,239 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tidslogg - First Hotels</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --int: #185FA5; --int-light: #E6F1FB; --int-dark: #0C447C;
-    --ps: #0F6E56; --ps-light: #E1F5EE; --ps-dark: #085041;
-    --c-mor: #5A3E8A; --c-mor-light: #EEE8F8; --c-mor-dark: #3D2A5E;
-    --c-day: #444441; --c-day-light: #F1EFE8; --c-day-dark: #2C2C2A;
-    --c-eve: #854F0B; --c-eve-light: #FAEEDA; --c-eve-dark: #633806;
-    --c-week: #3B6D11; --c-week-light: #EAF3DE; --c-week-dark: #27500A;
-    --c-hol: #993556; --c-hol-light: #FBEAF0; --c-hol-dark: #72243E;
-    --et: #6B3FA0; --et-light: #F0EAF8; --et-dark: #4A2B72;
-    --ml: #B5500B; --ml-light: #FBF0E8; --ml-dark: #7A3608;
-    --se: #0B6E8C; --se-light: #E5F4F8; --se-dark: #084E65;
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --int:#185FA5;--int-light:#E6F1FB;--int-dark:#0C447C;
+  --ps:#0F6E56;--ps-light:#E1F5EE;--ps-dark:#085041;
+  --c-mor:#5A3E8A;--c-mor-light:#EEE8F8;--c-mor-dark:#3D2A5E;
+  --c-day:#444441;--c-day-light:#F1EFE8;--c-day-dark:#2C2C2A;
+  --c-eve:#854F0B;--c-eve-light:#FAEEDA;--c-eve-dark:#633806;
+  --c-week:#3B6D11;--c-week-light:#EAF3DE;--c-week-dark:#27500A;
+  --c-hol:#993556;--c-hol-light:#FBEAF0;--c-hol-dark:#72243E;
+  --et:#6B3FA0;--et-light:#F0EAF8;--et-dark:#4A2B72;
+  --ml:#B5500B;--ml-light:#FBF0E8;--ml-dark:#7A3608;
+  --se:#0B6E8C;--se-light:#E5F4F8;--se-dark:#084E65;
+  --sidebar-bg:#14142B;--sidebar-border:rgba(255,255,255,0.07);
+  --bg:#F4F3EF;--surface:#FFFFFF;
+  --border:rgba(0,0,0,0.07);--border-mid:rgba(0,0,0,0.12);
+  --text:#1A1A18;--muted:#6B6B66;--faint:#AEADA8;
+  --accent:#185FA5;--radius:10px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;min-height:100vh}
 
-    /* Layout */
-    --sidebar-bg: #14142B;
-    --sidebar-border: rgba(255,255,255,0.07);
-    --bg: #F4F3EF;
-    --surface: #FFFFFF;
-    --border: rgba(0,0,0,0.07);
-    --border-mid: rgba(0,0,0,0.12);
-    --text: #1A1A18;
-    --muted: #6B6B66;
-    --faint: #AEADA8;
-    --radius: 10px;
-    --accent: #185FA5;
-  }
+/* ── LOGIN ── */
+.login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:1rem;background:var(--sidebar-bg)}
+.login-logo{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:1.5rem}
+.login-screen h1{font-size:20px;font-weight:400;color:#fff;margin-bottom:.25rem}
+.login-screen p{color:rgba(255,255,255,.45);font-size:13px;margin-bottom:1.5rem}
+.user-buttons{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.user-btn{padding:12px 28px;border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.85);transition:all .15s}
+.user-btn:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3);color:#fff}
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 14px;
-    line-height: 1.5;
-    min-height: 100vh;
-  }
+/* ── LAYOUT ── */
+.app-shell{display:flex;min-height:100vh}
+.sidebar{width:220px;flex-shrink:0;background:var(--sidebar-bg);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar-logo{padding:20px 20px 14px;border-bottom:1px solid var(--sidebar-border)}
+.sidebar-brand{font-size:13px;font-weight:500;color:#fff;letter-spacing:.04em;text-transform:uppercase}
+.sidebar-sub{font-size:10px;color:rgba(255,255,255,.3);margin-top:3px;font-family:'DM Mono',monospace}
+.sidebar-user{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--sidebar-border)}
+.sidebar-avatar{width:30px;height:30px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#fff;flex-shrink:0}
+.sidebar-name{font-size:13px;color:#fff;font-weight:500}
+.sidebar-role{font-size:11px;color:rgba(255,255,255,.35)}
+.sidebar-sync{font-size:10px;font-family:'DM Mono',monospace;color:rgba(255,255,255,.25);padding:6px 16px 0}
+.sidebar-sync.ok{color:#1D9E75}.sidebar-sync.err{color:#E24B4A}
+.sidebar-nav{padding:8px 0;flex:1}
+.nav-section-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:10px 16px 4px;font-weight:500}
+.nav-item{display:flex;align-items:center;gap:9px;padding:9px 16px;font-size:13px;color:rgba(255,255,255,.5);cursor:pointer;border-left:2px solid transparent;transition:all .12s;user-select:none}
+.nav-item:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.04)}
+.nav-item.active{color:#fff;border-left-color:var(--accent);background:rgba(24,95,165,.12)}
+.nav-icon{font-size:15px;width:18px;text-align:center;flex-shrink:0}
+.sidebar-footer{padding:12px 16px;border-top:1px solid var(--sidebar-border)}
+.logout-btn{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.3);cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;padding:0}
+.logout-btn:hover{color:rgba(255,255,255,.65)}
 
-  /* ─── LOGIN ─── */
-  .login-screen {
-    display: flex; flex-direction: column; align-items: center;
-    justify-content: center; min-height: 100vh; gap: 1rem;
-    background: var(--sidebar-bg);
-  }
-  .login-logo {
-    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-    color: rgba(255,255,255,0.35); margin-bottom: 1.5rem;
-  }
-  .login-screen h1 {
-    font-size: 20px; font-weight: 400; color: #fff;
-    margin-bottom: 0.25rem;
-  }
-  .login-screen p { color: rgba(255,255,255,0.45); font-size: 13px; margin-bottom: 1.5rem; }
-  .user-buttons { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-  .user-btn {
-    padding: 12px 28px; border-radius: 8px; font-size: 14px;
-    font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer;
-    border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.06);
-    color: rgba(255,255,255,0.85); transition: all 0.15s;
-  }
-  .user-btn:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.3); color: #fff; }
+/* ── MAIN ── */
+.main-content{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;flex-shrink:0}
+.topbar-title{font-size:15px;font-weight:500}
+.topbar-actions{display:flex;gap:8px;align-items:center}
+.page-body{padding:22px 24px;overflow-y:auto;overflow-x:hidden;flex:1}
 
-  /* ─── LAYOUT ─── */
-  .app-shell {
-    display: flex; min-height: 100vh;
-  }
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:6px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;border:1px solid var(--border-mid);background:var(--surface);color:var(--text);transition:opacity .15s,transform .1s}
+.btn:active{transform:scale(.98)}.btn:hover{background:var(--bg)}
+.btn-primary{background:var(--sidebar-bg);color:#fff;border-color:var(--sidebar-bg)}
+.btn-primary:hover{opacity:.88;background:var(--sidebar-bg)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.btn-outline{background:transparent;border-color:var(--border-mid);color:var(--muted)}
+.btn-outline:hover{background:var(--bg)}
+.btn-danger{background:#c0392b;color:#fff;border-color:#c0392b}
+.btn-add-sidebar{width:100%;padding:9px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-add-sidebar:hover{opacity:.88}
 
-  /* ─── SIDEBAR ─── */
-  .sidebar {
-    width: 220px; flex-shrink: 0;
-    background: var(--sidebar-bg);
-    display: flex; flex-direction: column;
-    position: sticky; top: 0; height: 100vh; overflow: hidden;
-  }
-  .sidebar-logo {
-    padding: 22px 20px 16px;
-    border-bottom: 1px solid var(--sidebar-border);
-  }
-  .sidebar-brand {
-    font-size: 13px; font-weight: 500; color: #fff;
-    letter-spacing: 0.04em; text-transform: uppercase;
-  }
-  .sidebar-sub {
-    font-size: 10px; color: rgba(255,255,255,0.3);
-    margin-top: 3px; font-family: 'DM Mono', monospace;
-    letter-spacing: 0.04em;
-  }
-  .sidebar-user {
-    display: flex; align-items: center; gap: 10px;
-    padding: 14px 20px;
-    border-bottom: 1px solid var(--sidebar-border);
-  }
-  .sidebar-avatar {
-    width: 30px; height: 30px; border-radius: 50%;
-    background: var(--accent); display: flex; align-items: center;
-    justify-content: center; font-size: 11px; font-weight: 500; color: #fff;
-    flex-shrink: 0;
-  }
-  .sidebar-name { font-size: 13px; color: #fff; font-weight: 500; }
-  .sidebar-role { font-size: 11px; color: rgba(255,255,255,0.35); }
-  .sidebar-sync {
-    font-size: 10px; font-family: 'DM Mono', monospace;
-    color: rgba(255,255,255,0.25); padding: 8px 20px 0;
-  }
-  .sidebar-sync.ok { color: #1D9E75; }
-  .sidebar-sync.err { color: #E24B4A; }
+/* ── CARDS & FORMS ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:14px}
+.card-header{padding:12px 16px;border-bottom:1px solid var(--border);font-size:10px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;display:flex;align-items:center;justify-content:space-between}
+.card-body{padding:16px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-grid-3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px}
+.field{margin-bottom:10px}
+.field label{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;font-weight:500}
+.field input,.field select,.field textarea{width:100%;border:1px solid var(--border-mid);border-radius:6px;padding:7px 10px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);outline:none;transition:border-color .15s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);background:#fff}
+.field textarea{height:54px;resize:none}
+.cat-hint{font-size:11px;color:var(--faint);margin-top:4px;font-style:italic}
 
-  .sidebar-nav { padding: 16px 0; flex: 1; overflow-y: auto; }
-  .nav-section-label {
-    font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
-    color: rgba(255,255,255,0.25); padding: 10px 20px 4px; font-weight: 500;
-  }
-  .nav-item {
-    display: flex; align-items: center; gap: 9px;
-    padding: 9px 20px; font-size: 13px;
-    color: rgba(255,255,255,0.5); cursor: pointer;
-    border-left: 2px solid transparent;
-    transition: all 0.12s; text-decoration: none;
-  }
-  .nav-item:hover { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.04); }
-  .nav-item.active {
-    color: #fff; border-left-color: var(--accent);
-    background: rgba(24,95,165,0.12);
-  }
-  .nav-icon { font-size: 15px; }
+/* ── SIDEBAR FILTER ── */
+.sb-field{margin-bottom:5px}
+.sb-input{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:6px 9px;font-size:12px;font-family:'DM Sans',sans-serif;color:rgba(255,255,255,.8);outline:none;box-sizing:border-box}
+.sb-input::placeholder{color:rgba(255,255,255,.3)}
+.sb-input:focus{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.1)}
+.sb-input option{background:#1a1a2e;color:#fff}
+.sb-input[type=date]::-webkit-calendar-picker-indicator{filter:invert(.6);cursor:pointer}
 
-  .sidebar-footer {
-    padding: 14px 20px;
-    border-top: 1px solid var(--sidebar-border);
-  }
-  .logout-btn {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 12px; color: rgba(255,255,255,0.3);
-    cursor: pointer; background: none; border: none;
-    font-family: 'DM Sans', sans-serif; padding: 0;
-  }
-  .logout-btn:hover { color: rgba(255,255,255,0.65); }
+/* ── STAT CARDS ── */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px}
+.stat-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.stat-value{font-size:22px;font-weight:400;font-family:'DM Mono',monospace;letter-spacing:-.02em}
+.stat-sub{font-size:10px;color:var(--faint);margin-top:3px;font-family:'DM Mono',monospace}
 
-  /* ─── SIDEBAR FORM ─── */
-  .sb-field { margin-bottom: 5px; }
-  .sb-input {
-    width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 6px; padding: 6px 9px; font-size: 12px; font-family: 'DM Sans', sans-serif;
-    color: rgba(255,255,255,0.8); outline: none; box-sizing: border-box;
-  }
-  .sb-input::placeholder { color: rgba(255,255,255,0.3); }
-  .sb-input:focus { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.1); }
-  .sb-input option { background: #1a1a2e; color: #fff; }
-  .sb-input[type=date]::-webkit-calendar-picker-indicator { filter: invert(0.6); cursor: pointer; }
+/* ── OVERVIEW COLS ── */
+.overview-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.overview-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.overview-title{font-size:10px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px}
+.co-row{margin-bottom:12px}.co-row:last-child{margin-bottom:0}
+.co-row-top{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.co-name{font-size:13px;color:var(--text);flex:1}
+.co-hours{font-size:13px;font-weight:500;font-family:'DM Mono',monospace}
+.co-bar-wrap{height:3px;background:var(--bg);border-radius:2px;margin-bottom:2px}
+.co-bar{height:3px;border-radius:2px;transition:width .4s ease}
+.co-pct{font-size:10px;color:var(--faint);font-family:'DM Mono',monospace}
+.cat-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)}
+.cat-row:last-child{border-bottom:none}
+.cat-badge{font-size:11px;padding:3px 9px;border-radius:4px;font-weight:500}
+.cat-right{text-align:right}
+.cat-h{font-size:13px;font-weight:500;font-family:'DM Mono',monospace}
+.cat-p{font-size:10px;color:var(--faint);font-family:'DM Mono',monospace}
 
-  /* ─── MODAL ─── */
-  .modal-overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.55); z-index: 1000;
-    align-items: center; justify-content: center;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    background: var(--surface); border-radius: 12px;
-    width: 480px; max-width: calc(100vw - 32px);
-    box-shadow: 0 8px 40px rgba(0,0,0,0.18);
-    overflow: hidden;
-  }
-  .modal-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 20px; border-bottom: 1px solid var(--border);
-  }
-  .modal-title { font-size: 14px; font-weight: 500; color: var(--text); }
-  .modal-close {
-    background: none; border: none; cursor: pointer; font-size: 20px;
-    color: var(--faint); line-height: 1; padding: 0 2px;
-  }
-  .modal-close:hover { color: var(--text); }
-  .modal-body { padding: 20px; }
-  .modal-footer { padding: 12px 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; }
+/* ── DOT / BADGE ── */
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;display:inline-block}
+.dot-int{background:var(--int)}.dot-ps{background:var(--ps)}.dot-et{background:var(--et)}
+.dot-ml{background:var(--ml)}.dot-se{background:var(--se)}
+.dot-mor{background:var(--c-mor)}.dot-day{background:var(--c-day)}.dot-eve{background:var(--c-eve)}
+.dot-week{background:var(--c-week)}.dot-hol{background:var(--c-hol)}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;font-family:'DM Mono',monospace;white-space:nowrap}
+.badge-int{background:var(--int-light);color:var(--int-dark)}.badge-ps{background:var(--ps-light);color:var(--ps-dark)}
+.badge-et{background:var(--et-light);color:var(--et-dark)}.badge-ml{background:var(--ml-light);color:var(--ml-dark)}
+.badge-se{background:var(--se-light);color:var(--se-dark)}
+.badge-sted-oslo{background:#E8F4FD;color:#1A5276;font-size:10px;padding:1px 6px;border-radius:3px}
+.badge-sted-lund{background:#FEF9E7;color:#7D6608;font-size:10px;padding:1px 6px;border-radius:3px}
+.badge-mor{background:var(--c-mor-light);color:var(--c-mor-dark)}.badge-day{background:var(--c-day-light);color:var(--c-day-dark)}
+.badge-eve{background:var(--c-eve-light);color:var(--c-eve-dark)}.badge-week{background:var(--c-week-light);color:var(--c-week-dark)}
+.badge-hol{background:var(--c-hol-light);color:var(--c-hol-dark)}
 
-  /* ─── MAIN CONTENT ─── */
-  .main-content {
-    flex: 1; overflow: hidden;
-    display: flex; flex-direction: column;
-  }
-  .topbar {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 14px 28px;
-    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-    flex-wrap: wrap;
-  }
-  .topbar-title { font-size: 15px; font-weight: 500; }
-  .topbar-actions { display: flex; gap: 8px; align-items: center; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 7px 14px; border-radius: 6px; font-size: 12px;
-    font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer;
-    border: 1px solid var(--border-mid); background: var(--surface); color: var(--text);
-    transition: opacity 0.15s, transform 0.1s;
-  }
-  .btn:active { transform: scale(0.98); }
-  .btn:hover { background: var(--bg); }
-  .btn-primary {
-    background: var(--sidebar-bg); color: #fff;
-    border-color: var(--sidebar-bg); width: 100%;
-    justify-content: center; margin-top: 4px;
-  }
-  .btn-primary:hover { opacity: 0.88; background: var(--sidebar-bg); }
-  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-  .btn-outline { background: transparent; border-color: var(--border-mid); color: var(--muted); }
-  .btn-outline:hover { background: var(--bg); }
+/* ── TABLE ── */
+.filters{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px}
+.filters label{font-size:11px;color:var(--muted);font-weight:500}
+.filters select,.filters input[type=date]{border:1px solid var(--border-mid);border-radius:6px;padding:5px 8px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);outline:none;cursor:pointer}
+.filters .spacer{flex:1}
+.filter-summary{font-size:11px;color:var(--faint);font-family:'DM Mono',monospace}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:10px;font-weight:500;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;padding:10px 12px;border-bottom:1px solid var(--border)}
+td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr.data-row:hover>td{background:#FAFAF8}
+tr.edit-row>td{background:#F5F4EF;padding:14px 12px;border-bottom:2px solid rgba(0,0,0,.08)}
+.note-text{font-size:11px;color:var(--faint);margin-top:2px}
+.mono{font-family:'DM Mono',monospace}
+.action-btn{background:none;border:none;cursor:pointer;padding:3px 6px;border-radius:4px;line-height:1;font-size:14px;transition:background .1s,color .1s}
+.edit-btn{color:var(--faint)}.edit-btn:hover,.edit-btn.active{color:var(--int);background:var(--int-light)}
+.del-btn{color:var(--faint)}.del-btn:hover{color:#c0392b;background:#fdf0ef}
+.edit-panel{display:grid;grid-template-columns:130px 1fr 90px 170px;gap:8px;margin-bottom:10px;align-items:end}
+.edit-panel-2{display:grid;grid-template-columns:200px 1fr;gap:8px;margin-bottom:10px;align-items:end}
+.ef label{display:block;font-size:10px;color:var(--faint);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;font-weight:500}
+.ef input,.ef select,.ef textarea{width:100%;border:1px solid var(--border-mid);border-radius:5px;padding:6px 9px;font-size:12px;font-family:'DM Sans',sans-serif;background:#fff;color:var(--text);outline:none}
+.ef textarea{height:46px;resize:none;font-size:12px}
+.edit-actions{display:flex;gap:6px;justify-content:flex-end;margin-top:6px}
+.btn-sm{padding:5px 14px;font-size:12px;border-radius:5px}
+.btn-save{background:var(--sidebar-bg);color:#fff;border:none}.btn-save:hover{opacity:.85}
+.btn-cancel-sm{background:transparent;border:1px solid var(--border-mid);color:var(--muted)}
+.empty{text-align:center;padding:2.5rem 1rem;color:var(--faint);font-size:13px;line-height:2}
 
-  .page-body { padding: 24px 28px; overflow-y: auto; overflow-x: hidden; flex: 1; }
+/* ── RAPPORT ── */
+.rapport-controls{display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.rapport-controls select,.rapport-controls input[type=month]{border:1px solid var(--border-mid);border-radius:6px;padding:7px 10px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);outline:none;cursor:pointer}
+.rapport-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.rapport-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.rapport-title{font-size:10px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px}
+.rapport-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)}
+.rapport-row:last-child{border-bottom:none}
+.rapport-row-label{font-size:13px;color:var(--text);display:flex;align-items:center;gap:7px}
+.rapport-row-val{font-size:13px;font-weight:500;font-family:'DM Mono',monospace;text-align:right}
+.rapport-row-pct{font-size:10px;color:var(--faint);font-family:'DM Mono',monospace}
+.rapport-total{background:var(--bg);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;border:1px solid var(--border)}
+.rapport-total-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.rapport-total-val{font-size:28px;font-weight:400;font-family:'DM Mono',monospace;letter-spacing:-.02em}
+.rapport-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.rapport-bar-label{font-size:12px;color:var(--muted);width:160px;flex-shrink:0}
+.rapport-bar-track{flex:1;background:var(--bg);border-radius:3px;height:6px;overflow:hidden}
+.rapport-bar-fill{height:100%;border-radius:3px;transition:width .4s ease}
+.rapport-bar-pct{font-size:11px;font-family:'DM Mono',monospace;color:var(--faint);width:36px;text-align:right}
 
-  /* ─── TOP STAT ROW ─── */
-  .stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 20px; }
-  .stat-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 14px 16px;
-  }
-  .stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
-  .stat-value { font-size: 22px; font-weight: 400; font-family: 'DM Mono', monospace; letter-spacing: -0.02em; }
-  .stat-sub { font-size: 10px; color: var(--faint); margin-top: 3px; font-family: 'DM Mono', monospace; }
+/* ── INNSTILLINGER ── */
+.settings-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:14px}
+.settings-header{padding:12px 16px;border-bottom:1px solid var(--border);font-size:10px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+.settings-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border)}
+.settings-row:last-child{border-bottom:none}
+.settings-row-label{font-size:13px;color:var(--text);font-weight:500}
+.settings-row-sub{font-size:11px;color:var(--faint);margin-top:2px}
+.settings-row-ctrl{display:flex;align-items:center;gap:8px}
+.settings-input{border:1px solid var(--border-mid);border-radius:6px;padding:6px 10px;font-size:13px;font-family:'DM Mono',monospace;background:var(--bg);color:var(--text);outline:none;width:100px;text-align:right}
+.settings-input:focus{border-color:var(--accent);background:#fff}
+.settings-tag{font-size:11px;padding:3px 9px;border-radius:4px;background:var(--bg);color:var(--muted);font-family:'DM Mono',monospace;border:1px solid var(--border)}
+.settings-save{padding:6px 14px;background:var(--sidebar-bg);color:#fff;border:none;border-radius:6px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer}
+.settings-save:hover{opacity:.85}
+.pin-change-row{padding:14px 16px;border-bottom:1px solid var(--border)}
+.pin-change-row:last-child{border-bottom:none}
+.pin-change-label{font-size:13px;color:var(--text);font-weight:500;margin-bottom:8px}
+.pin-inputs{display:flex;gap:8px;align-items:center}
+.pin-input-field{border:1px solid var(--border-mid);border-radius:6px;padding:6px 10px;font-size:16px;font-family:'DM Mono',monospace;letter-spacing:4px;background:var(--bg);color:var(--text);outline:none;width:90px;text-align:center}
+.pin-input-field:focus{border-color:var(--accent);background:#fff}
 
-  /* ─── TWO COLUMN OVERVIEW ─── */
-  .overview-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-  .overview-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; }
-  .overview-title { font-size: 10px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 14px; }
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border-radius:12px;width:480px;max-width:calc(100vw - 32px);box-shadow:0 8px 40px rgba(0,0,0,.18);overflow:hidden}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.modal-title{font-size:14px;font-weight:500;color:var(--text)}
+.modal-close{background:none;border:none;cursor:pointer;font-size:20px;color:var(--faint);line-height:1;padding:0 2px}
+.modal-close:hover{color:var(--text)}
+.modal-body{padding:20px}
+.modal-footer{padding:12px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px}
 
-  /* Per selskap rows */
-  .co-row { margin-bottom: 14px; }
-  .co-row:last-child { margin-bottom: 0; }
-  .co-row-top { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
-  .co-name { font-size: 13px; color: var(--text); flex: 1; }
-  .co-hours { font-size: 13px; font-weight: 500; font-family: 'DM Mono', monospace; color: var(--text); }
-  .co-bar-wrap { height: 3px; background: var(--bg); border-radius: 2px; margin-bottom: 2px; }
-  .co-bar { height: 3px; border-radius: 2px; transition: width 0.4s ease; }
-  .co-pct { font-size: 10px; color: var(--faint); font-family: 'DM Mono', monospace; }
+/* ── UTIL ── */
+.hidden{display:none!important}
+.section-divider{border:none;border-top:1px solid var(--border);margin:16px 0}
 
-  /* Per tidskategori rows */
-  .cat-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border); }
-  .cat-row:last-child { border-bottom: none; }
-  .cat-badge { font-size: 11px; padding: 3px 9px; border-radius: 4px; font-weight: 500; }
-  .cat-right { text-align: right; }
-  .cat-h { font-size: 13px; font-weight: 500; font-family: 'DM Mono', monospace; }
-  .cat-p { font-size: 10px; color: var(--faint); font-family: 'DM Mono', monospace; }
-
-  /* ─── METRICS (kept for JS compat) ─── */
-  .metric { display: none; }
-  .summary-grid { display: none; }
-  .cat-grid { display: none; }
-  .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; display: inline-block; }
-  .dot-int{background:var(--int)} .dot-ps{background:var(--ps)} .dot-et{background:var(--et)}
-  .dot-ml{background:var(--ml)} .dot-se{background:var(--se)}
-  .dot-mor{background:var(--c-mor)} .dot-day{background:var(--c-day)} .dot-eve{background:var(--c-eve)}
-  .dot-week{background:var(--c-week)} .dot-hol{background:var(--c-hol)}
-  .section-label { display: none; }
-
-  /* ─── BARS (hidden, kept for JS compat) ─── */
-  .bars { display: none !important; }
-  .bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; }
-  .bar-fill-int{background:var(--int)} .bar-fill-ps{background:var(--ps)} .bar-fill-et{background:var(--et)}
-  .bar-fill-ml{background:var(--ml)} .bar-fill-se{background:var(--se)}
-  .bar-fill-mor{background:var(--c-mor)} .bar-fill-day{background:var(--c-day)} .bar-fill-eve{background:var(--c-eve)}
-  .bar-fill-week{background:var(--c-week)} .bar-fill-hol{background:var(--c-hol)}
-
-  /* ─── CARD ─── */
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 14px; }
-  .card-header {
-    padding: 13px 18px; border-bottom: 1px solid var(--border);
-    font-size: 10px; font-weight: 500; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 0.07em;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .card-body { padding: 16px 18px; }
-
-  /* ─── FORM ─── */
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .form-grid-3 { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; }
-  .field { margin-bottom: 10px; }
-  .field label {
-    display: block; font-size: 10px; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; font-weight: 500;
-  }
-  .field input, .field select, .field textarea {
-    width: 100%; border: 1px solid var(--border-mid); border-radius: 6px;
-    padding: 7px 10px; font-size: 13px; font-family: 'DM Sans', sans-serif;
-    background: var(--bg); color: var(--text); outline: none; transition: border-color 0.15s;
-  }
-  .field input:focus, .field select:focus, .field textarea:focus {
-    border-color: var(--accent); background: #fff;
-  }
-  .field textarea { height: 54px; resize: none; }
-  .cat-hint { font-size: 11px; color: var(--faint); margin-top: 4px; font-style: italic; }
-
-  /* ─── EARNINGS ─── */
-  .earnings-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 14px; }
-  .earnings-inner { padding: 16px 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-  .earnings-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
-  .earnings-amount { font-size: 26px; font-family: 'DM Mono', monospace; font-weight: 400; letter-spacing: -0.02em; }
-  .earnings-detail { font-size: 12px; color: var(--faint); font-family: 'DM Mono', monospace; text-align: right; }
-
-  /* ─── FILTERS ─── */
-  .filters {
-    display: flex; align-items: center; gap: 8px;
-    margin-bottom: 10px; flex-wrap: wrap;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 10px 14px;
-  }
-  .filters label { font-size: 11px; color: var(--muted); font-weight: 500; }
-  .filters select, .filters input[type=date] {
-    border: 1px solid var(--border-mid); border-radius: 6px; padding: 5px 8px;
-    font-size: 12px; font-family: 'DM Sans', sans-serif;
-    background: var(--bg); color: var(--text); outline: none; cursor: pointer;
-  }
-  .filters .spacer { flex: 1; }
-  .filter-summary { font-size: 11px; color: var(--faint); font-family: 'DM Mono', monospace; }
-
-  /* ─── TABLE ─── */
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th {
-    text-align: left; font-size: 10px; font-weight: 500; color: var(--faint);
-    text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 12px;
-    border-bottom: 1px solid var(--border);
-  }
-  td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
-  tr:last-child td { border-bottom: none; }
-  tr.data-row:hover > td { background: #FAFAF8; }
-  tr.edit-row > td { background: #F5F4EF; padding: 14px 12px; border-bottom: 2px solid rgba(0,0,0,0.08); }
-
-  /* ─── BADGES ─── */
-  .badge {
-    display: inline-block; padding: 2px 8px; border-radius: 4px;
-    font-size: 11px; font-weight: 500; font-family: 'DM Mono', monospace; white-space: nowrap;
-  }
-  .badge-int{background:var(--int-light);color:var(--int-dark)}
-  .badge-ps{background:var(--ps-light);color:var(--ps-dark)}
-  .badge-et{background:var(--et-light);color:var(--et-dark)}
-  .badge-ml{background:var(--ml-light);color:var(--ml-dark)}
-  .badge-se{background:var(--se-light);color:var(--se-dark)}
-  .badge-sted-oslo{background:#E8F4FD;color:#1A5276;font-size:10px;padding:1px 6px;border-radius:3px;}
-  .badge-sted-lund{background:#FEF9E7;color:#7D6608;font-size:10px;padding:1px 6px;border-radius:3px;}
-  .badge-mor{background:var(--c-mor-light);color:var(--c-mor-dark)}
-  .badge-day{background:var(--c-day-light);color:var(--c-day-dark)}
-  .badge-eve{background:var(--c-eve-light);color:var(--c-eve-dark)}
-  .badge-week{background:var(--c-week-light);color:var(--c-week-dark)}
-  .badge-hol{background:var(--c-hol-light);color:var(--c-hol-dark)}
-
-  .note-text { font-size: 11px; color: var(--faint); margin-top: 2px; }
-  .mono { font-family: 'DM Mono', monospace; }
-  .action-btn { background: none; border: none; cursor: pointer; padding: 3px 6px; border-radius: 4px; line-height: 1; font-size: 14px; transition: background 0.1s, color 0.1s; }
-  .edit-btn { color: var(--faint); }
-  .edit-btn:hover, .edit-btn.active { color: var(--int); background: var(--int-light); }
-  .del-btn { color: var(--faint); }
-  .del-btn:hover { color: #c0392b; background: #fdf0ef; }
-  .edit-panel { display: grid; grid-template-columns: 130px 1fr 90px 170px; gap: 8px; margin-bottom: 10px; align-items: end; }
-  .edit-panel-2 { display: grid; grid-template-columns: 200px 1fr; gap: 8px; margin-bottom: 10px; align-items: end; }
-  .ef label { display: block; font-size: 10px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; font-weight: 500; }
-  .ef input, .ef select, .ef textarea { width: 100%; border: 1px solid var(--border-mid); border-radius: 5px; padding: 6px 9px; font-size: 12px; font-family: 'DM Sans', sans-serif; background: #fff; color: var(--text); outline: none; }
-  .ef textarea { height: 46px; resize: none; font-size: 12px; }
-  .edit-actions { display: flex; gap: 6px; justify-content: flex-end; margin-top: 6px; }
-  .btn-sm { padding: 5px 14px; font-size: 12px; border-radius: 5px; }
-  .btn-save { background: var(--sidebar-bg); color: #fff; border: none; }
-  .btn-save:hover { opacity: 0.85; }
-  .btn-cancel-sm { background: transparent; border: 1px solid var(--border-mid); color: var(--muted); }
-  .empty { text-align: center; padding: 2.5rem 1rem; color: var(--faint); font-size: 13px; line-height: 2; }
-  .hidden { display: none; }
-
-  /* ─── RESPONSIVE ─── */
-  @media(max-width:900px){
-    .sidebar { width: 180px; }
-    .stat-row { grid-template-columns: repeat(2,1fr); }
-  }
-  @media(max-width:680px){
-    .app-shell { flex-direction: column; }
-    .sidebar { width: 100%; height: auto; position: static; flex-direction: row; flex-wrap: wrap; align-items: center; padding: 12px 16px; gap: 12px; }
-    .sidebar-nav, .sidebar-footer, .sidebar-sync { display: none; }
-    .sidebar-logo, .sidebar-user { border: none; padding: 0; }
-    .sidebar-sub { display: none; }
-    .page-body { padding: 16px; }
-    .topbar { padding: 12px 16px; }
-    .stat-row { grid-template-columns: 1fr 1fr; }
-    .overview-cols { grid-template-columns: 1fr; }
-    .form-grid, .form-grid-3, .edit-panel, .edit-panel-2 { grid-template-columns: 1fr; }
-  }
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .sidebar{width:180px}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+  .overview-cols,.rapport-grid{grid-template-columns:1fr}
+}
+@media(max-width:680px){
+  .app-shell{flex-direction:column}
+  .sidebar{width:100%;height:auto;position:static;flex-direction:row;flex-wrap:wrap;align-items:center;padding:12px 16px;gap:12px}
+  .sidebar-nav,.sidebar-footer,.sidebar-sync{display:none}
+  .sidebar-logo,.sidebar-user{border:none;padding:0}
+  .sidebar-sub{display:none}
+  .page-body{padding:16px}
+  .topbar{padding:12px 16px}
+  .stat-row{grid-template-columns:1fr 1fr}
+  .form-grid,.form-grid-3,.edit-panel,.edit-panel-2{grid-template-columns:1fr}
+}
 </style>
 </style>
 <script>/*! xlsx.js (C) 2013-present SheetJS -- http://sheetjs.com */
@@ -424,20 +276,20 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     <button class="user-btn" id="btn-marcus" onclick="selectUser('marcus')">Marcus</button>
     <button class="user-btn" id="btn-sepideh" onclick="selectUser('sepideh')">Sepideh</button>
   </div>
-  <div id="pin-area" style="display:none; margin-top:1.5rem; text-align:center;">
-    <div style="font-size:13px; color:rgba(255,255,255,0.45); margin-bottom:8px;" id="pin-label"></div>
+  <div id="pin-area" style="display:none;margin-top:1.5rem;text-align:center">
+    <div style="font-size:13px;color:rgba(255,255,255,.45);margin-bottom:8px" id="pin-label"></div>
     <input type="password" id="pin-input" maxlength="6" placeholder="PIN"
-      style="width:120px; text-align:center; font-size:20px; letter-spacing:6px; border:1px solid rgba(255,255,255,0.2); border-radius:8px; padding:10px; font-family:'DM Mono',monospace; outline:none; background:rgba(255,255,255,0.08); color:#fff;"
-      onkeydown="if(event.key==='Enter') confirmPin()"/>
-    <div style="margin-top:10px; display:flex; gap:8px; justify-content:center;">
-      <button class="user-btn" onclick="confirmPin()" style="padding:10px 24px; font-size:14px;">Logg inn</button>
-      <button class="user-btn" onclick="cancelPin()" style="padding:10px 24px; font-size:14px; opacity:0.5;">Avbryt</button>
+      style="width:120px;text-align:center;font-size:20px;letter-spacing:6px;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:10px;font-family:'DM Mono',monospace;outline:none;background:rgba(255,255,255,.08);color:#fff"
+      onkeydown="if(event.key==='Enter')confirmPin()"/>
+    <div style="margin-top:10px;display:flex;gap:8px;justify-content:center">
+      <button class="user-btn" onclick="confirmPin()" style="padding:10px 24px;font-size:14px">Logg inn</button>
+      <button class="user-btn" onclick="cancelPin()" style="padding:10px 24px;font-size:14px;opacity:.5">Avbryt</button>
     </div>
-    <div id="pin-error" style="color:#ff6b6b; font-size:12px; margin-top:8px; display:none;">Feil PIN. Prøv igjen.</div>
+    <div id="pin-error" style="color:#ff6b6b;font-size:12px;margin-top:8px;display:none">Feil PIN. Prøv igjen.</div>
   </div>
 </div>
 
-<!-- MAIN APP -->
+<!-- APP SHELL -->
 <div id="app" class="app-shell hidden">
 
   <!-- SIDEBAR -->
@@ -450,56 +302,62 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
       <div class="sidebar-avatar" id="sidebar-avatar">TG</div>
       <div>
         <div class="sidebar-name" id="sidebar-name">—</div>
-        <div class="sidebar-role" id="sidebar-role">Interim GM</div>
+        <div class="sidebar-role" id="sidebar-role"></div>
       </div>
     </div>
     <div class="sidebar-sync" id="sync-status">● kobler til…</div>
+
     <nav class="sidebar-nav">
-      <div class="nav-section-label">Oversikt</div>
-      <div class="nav-item active">
+      <div class="nav-section-label">Navigasjon</div>
+      <div class="nav-item active" id="nav-dashboard" onclick="navTo('dashboard')">
         <span class="nav-icon">◫</span> Dashboard
       </div>
-
-      <div style="padding:8px 12px 10px;">
-        <button onclick="openModal()" style="width:100%;padding:9px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;"><span style="font-size:16px;line-height:1;">+</span> Ny oppføring</button>
+      <div class="nav-item" id="nav-logg" onclick="navTo('logg')">
+        <span class="nav-icon">☰</span> Logg
+      </div>
+      <div class="nav-item" id="nav-rapport" onclick="navTo('rapport')">
+        <span class="nav-icon">◈</span> Rapportering
+      </div>
+      <div class="nav-item" id="nav-innstillinger" onclick="navTo('innstillinger')">
+        <span class="nav-icon">⚙</span> Innstillinger
       </div>
 
-      <div class="nav-section-label" style="margin-top:4px;">Filter</div>
-      <div style="padding:0 12px 10px;">
-        <div class="sb-field" style="display:flex;gap:4px;align-items:center;">
-          <span style="font-size:10px;color:rgba(255,255,255,0.35);width:22px;flex-shrink:0;">Fra</span>
+      <div class="nav-section-label" style="margin-top:8px">Handlinger</div>
+      <div style="padding:4px 12px 8px">
+        <button class="btn-add-sidebar" onclick="openModal()">
+          <span style="font-size:16px;line-height:1">+</span> Ny oppføring
+        </button>
+      </div>
+
+      <div class="nav-section-label" style="margin-top:4px">Filter</div>
+      <div style="padding:0 12px 10px">
+        <div class="sb-field" style="display:flex;gap:4px;align-items:center">
+          <span style="font-size:10px;color:rgba(255,255,255,.35);width:22px;flex-shrink:0">Fra</span>
           <input type="date" id="sb-filter-from" class="sb-input" oninput="sbSyncFilter()"/>
         </div>
-        <div class="sb-field" style="display:flex;gap:4px;align-items:center;">
-          <span style="font-size:10px;color:rgba(255,255,255,0.35);width:22px;flex-shrink:0;">Til</span>
+        <div class="sb-field" style="display:flex;gap:4px;align-items:center">
+          <span style="font-size:10px;color:rgba(255,255,255,.35);width:22px;flex-shrink:0">Til</span>
           <input type="date" id="sb-filter-to" class="sb-input" oninput="sbSyncFilter()"/>
         </div>
         <div class="sb-field"><select id="sb-filter-company" class="sb-input" onchange="sbSyncFilter()"><option value="">Alle selskap</option></select></div>
-        <button onclick="sbClearFilter()" style="width:100%;padding:5px;background:transparent;color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.1);border-radius:6px;font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;">Nullstill filter</button>
-      </div>
-
-      <div class="nav-section-label" style="margin-top:4px;">Eksport</div>
-      <div class="nav-item" id="nav-export-btn" onclick="document.getElementById('btn-export').click()" style="cursor:pointer;">
-        <span class="nav-icon">↓</span> Eksporter Excel
+        <button onclick="sbClearFilter()" style="width:100%;padding:5px;background:transparent;color:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.1);border-radius:6px;font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer">Nullstill filter</button>
       </div>
     </nav>
+
     <div class="sidebar-footer">
-      <button class="logout-btn" onclick="logout()">
-        <span>↩</span> Bytt bruker
-      </button>
+      <button class="logout-btn" onclick="logout()"><span>↩</span> Bytt bruker</button>
     </div>
   </aside>
 
-  <!-- MAIN -->
+  <!-- MAIN CONTENT -->
   <div class="main-content">
     <div class="topbar">
-      <div class="topbar-title" id="topbar-section-title">Dashboard</div>
-      <div class="topbar-actions"></div>
+      <div class="topbar-title" id="topbar-title">Dashboard</div>
+      <div class="topbar-actions" id="topbar-actions"></div>
     </div>
 
-    <div class="page-body">
-
-      <!-- TOP STAT ROW -->
+    <!-- PAGE: DASHBOARD -->
+    <div class="page-body" id="page-dashboard">
       <div class="stat-row">
         <div class="stat-card">
           <div class="stat-label">Totalt</div>
@@ -516,22 +374,21 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
           <div class="stat-value" id="stat-offhours-h">0,0 t</div>
           <div class="stat-sub" id="stat-offhours-pct">0 % av total</div>
         </div>
-        <div id="earnings-card" class="stat-card" style="display:none;">
+        <div id="earnings-card" class="stat-card" style="display:none">
           <div class="stat-label">Estimert lønn</div>
-          <div class="stat-value" id="earnings-amount" style="font-size:18px;">0 kr</div>
+          <div class="stat-value" id="earnings-amount" style="font-size:18px">0 kr</div>
           <div class="stat-sub" id="earnings-detail">uten tillegg</div>
         </div>
-        <div id="stat-placeholder" class="stat-card">
+        <div id="stat-mor-card" class="stat-card">
           <div class="stat-label">Morgen før 08</div>
           <div class="stat-value" id="stat-mor-h">0,0 t</div>
           <div class="stat-sub" id="stat-mor-pct">0 % av total</div>
         </div>
       </div>
 
-      <!-- TWO COLUMN: selskap + tidskategori -->
       <div class="overview-cols">
         <div class="overview-card">
-          <div class="overview-title" id="lbl-per-company">Per selskap</div>
+          <div class="overview-title">Per selskap</div>
           <div id="co-rows">
             <div class="co-row"><div class="co-row-top"><span class="dot dot-ps"></span><span class="co-name">Planetstaden</span><span class="co-hours" id="ps-hours">0,0 t</span></div><div class="co-bar-wrap"><div class="co-bar" id="bar-ps" style="width:0%;background:var(--ps)"></div></div><div class="co-pct" id="ps-pct">0 %</div></div>
             <div class="co-row"><div class="co-row-top"><span class="dot dot-int"></span><span class="co-name">International</span><span class="co-hours" id="int-hours">0,0 t</span></div><div class="co-bar-wrap"><div class="co-bar" id="bar-int" style="width:0%;background:var(--int)"></div></div><div class="co-pct" id="int-pct">0 %</div></div>
@@ -541,79 +398,36 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
           </div>
         </div>
         <div class="overview-card">
-          <div class="overview-title" id="lbl-per-cat">Per tidskategori</div>
-          <div class="cat-row">
-            <span class="cat-badge badge-day">Normaldag 08–16</span>
-            <div class="cat-right"><div class="cat-h" id="cat-day-h">0,0 t</div><div class="cat-p" id="cat-day-pct">0 %</div></div>
-          </div>
-          <div class="cat-row">
-            <span class="cat-badge badge-eve">Kveld man–fre</span>
-            <div class="cat-right"><div class="cat-h" id="cat-eve-h">0,0 t</div><div class="cat-p" id="cat-eve-pct">0 %</div></div>
-          </div>
-          <div class="cat-row">
-            <span class="cat-badge badge-week">Lørdag / søndag</span>
-            <div class="cat-right"><div class="cat-h" id="cat-week-h">0,0 t</div><div class="cat-p" id="cat-week-pct">0 %</div></div>
-          </div>
-          <div class="cat-row">
-            <span class="cat-badge badge-mor">Morgen før 08</span>
-            <div class="cat-right"><div class="cat-h" id="cat-mor-h">0,0 t</div><div class="cat-p" id="cat-mor-pct">0 %</div></div>
-          </div>
-          <div class="cat-row">
-            <span class="cat-badge badge-hol">Offentlig fridag</span>
-            <div class="cat-right"><div class="cat-h" id="cat-hol-h">0,0 t</div><div class="cat-p" id="cat-hol-pct">0 %</div></div>
-          </div>
+          <div class="overview-title">Per tidskategori</div>
+          <div class="cat-row"><span class="cat-badge badge-day">Normaldag 08–16</span><div class="cat-right"><div class="cat-h" id="cat-day-h">0,0 t</div><div class="cat-p" id="cat-day-pct">0 %</div></div></div>
+          <div class="cat-row"><span class="cat-badge badge-eve">Kveld man–fre</span><div class="cat-right"><div class="cat-h" id="cat-eve-h">0,0 t</div><div class="cat-p" id="cat-eve-pct">0 %</div></div></div>
+          <div class="cat-row"><span class="cat-badge badge-week">Lørdag / søndag</span><div class="cat-right"><div class="cat-h" id="cat-week-h">0,0 t</div><div class="cat-p" id="cat-week-pct">0 %</div></div></div>
+          <div class="cat-row"><span class="cat-badge badge-mor">Morgen før 08</span><div class="cat-right"><div class="cat-h" id="cat-mor-h">0,0 t</div><div class="cat-p" id="cat-mor-pct">0 %</div></div></div>
+          <div class="cat-row"><span class="cat-badge badge-hol">Offentlig fridag</span><div class="cat-right"><div class="cat-h" id="cat-hol-h">0,0 t</div><div class="cat-p" id="cat-hol-pct">0 %</div></div></div>
         </div>
       </div>
 
-      <!-- Hidden elements kept for JS compatibility -->
-      <div style="display:none">
-        <div id="bars-section"></div>
-        <div id="card-et"></div><div id="card-ml"></div><div id="card-se"></div>
-        <span id="barpct-int"></span><span id="barpct-ps"></span><span id="barpct-et"></span>
-        <span id="barpct-ml"></span><span id="barpct-se"></span>
-        <span id="bar-mor"></span><span id="bar-day"></span><span id="bar-eve"></span>
-        <span id="bar-week"></span><span id="bar-hol"></span>
-        <span id="barpct-mor"></span><span id="barpct-day"></span><span id="barpct-eve"></span>
-        <span id="barpct-week"></span><span id="barpct-hol"></span>
-        <span id="lbl-per-company-old"></span><span id="lbl-per-cat-old"></span>
-      </div>
-
-      <!-- LOGG NY AKTIVITET -->
+      <!-- Siste 5 oppføringer på dashboard -->
       <div class="card">
-        <div class="card-header"><span id="lbl-log-section">Logg ny aktivitet</span></div>
-        <div class="card-body">
-          <div class="form-grid-3">
-            <div class="field"><label id="lbl-date">Dato</label><input type="date" id="inp-date"/></div>
-            <div class="field"><label id="lbl-sted">Sted</label><select id="inp-sted"></select></div>
-            <div class="field"><label id="lbl-company">Selskap</label><select id="inp-company"></select></div>
-          </div>
-          <div class="form-grid-3">
-            <div class="field"><label>Aktivitet / oppgave</label><input type="text" id="inp-task" placeholder="f.eks. Strategimøte, P&amp;L-gjennomgang…"/></div>
-            <div class="field"><label id="lbl-duration">Tidsforbruk (timer)</label><input type="number" id="inp-duration" min="0.25" max="24" step="0.25" placeholder="f.eks. 1.5"/></div>
-            <div class="field"><label id="lbl-cat">Tidskategori</label>
-              <select id="inp-cat">
-                <option value="auto">Auto (beregn fra dato)</option>
-                <option value="mor">Morgen man-fre før 08</option>
-                <option value="day">Normaldag 08-16</option>
-                <option value="eve">Kveld man-fre etter 16</option>
-                <option value="week">Helg lør-søn</option>
-                <option value="hol">Offentlig fridag</option>
-              </select>
-              <div class="cat-hint" id="cat-hint"></div>
-            </div>
-          </div>
-          <div class="field"><label id="lbl-note">Merknad (valgfritt)</label><textarea id="inp-note" placeholder="Kort beskrivelse…"></textarea></div>
-          <button class="btn btn-primary" id="btn-add">+ Legg til oppføring</button>
-        </div>
+        <div class="card-header"><span>Siste oppføringer</span><button class="btn btn-outline" onclick="navTo('logg')" style="font-size:11px;padding:4px 10px">Se alle →</button></div>
+        <div id="dash-recent"><div class="empty">Laster…</div></div>
       </div>
 
-      <!-- LOGG-TABELL -->
+      <!-- Hidden compat elements -->
+      <div style="display:none">
+        <div id="bars-section"></div><div id="card-et"></div><div id="card-ml"></div><div id="card-se"></div>
+        <span id="barpct-int"></span><span id="barpct-ps"></span><span id="barpct-et"></span><span id="barpct-ml"></span><span id="barpct-se"></span>
+        <span id="bar-mor"></span><span id="bar-day"></span><span id="bar-eve"></span><span id="bar-week"></span><span id="bar-hol"></span>
+        <span id="barpct-mor"></span><span id="barpct-day"></span><span id="barpct-eve"></span><span id="barpct-week"></span><span id="barpct-hol"></span>
+      </div>
+    </div><!-- /page-dashboard -->
+
+    <!-- PAGE: LOGG -->
+    <div class="page-body hidden" id="page-logg">
       <div class="filters">
-        <label id="lbl-from">Fra</label>
-        <input type="date" id="filter-from"/>
-        <label id="lbl-to">Til</label>
-        <input type="date" id="filter-to"/>
-        <button onclick="clearDateFilter()" style="border:1px solid var(--border-mid);border-radius:6px;padding:5px 10px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--muted);cursor:pointer;">Alle</button>
+        <label id="lbl-from">Fra</label><input type="date" id="filter-from"/>
+        <label id="lbl-to">Til</label><input type="date" id="filter-to"/>
+        <button onclick="clearDateFilter()" style="border:1px solid var(--border-mid);border-radius:6px;padding:5px 10px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--muted);cursor:pointer">Alle</button>
         <label>Sted</label>
         <select id="filter-sted"><option value="">Alle</option><option value="oslo">Oslo</option><option value="lund">Lund</option><option value="annet">Annet</option></select>
         <label id="lbl-filter-company">Selskap</label>
@@ -623,16 +437,138 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
         <div class="spacer"></div>
         <span class="filter-summary" id="filter-summary"></span>
       </div>
-
       <div class="card">
         <div class="card-header">
-          <span>Siste oppføringer</span>
-          <button class="btn btn-outline" id="btn-export" style="font-size:11px;padding:5px 10px;">↓ Eksporter Excel</button>
+          <span>Alle oppføringer</span>
+          <button class="btn btn-outline" id="btn-export" style="font-size:11px;padding:5px 10px">↓ Eksporter Excel</button>
         </div>
         <div id="log-container"><div class="empty">Henter data…</div></div>
       </div>
 
-    </div><!-- /page-body -->
+      <!-- Hidden form fields for JS compat -->
+      <div style="display:none">
+        <input type="date" id="inp-date"/><select id="inp-sted"></select><select id="inp-company"></select>
+        <input type="text" id="inp-task"/><input type="number" id="inp-duration"/>
+        <select id="inp-cat"><option value="auto">Auto</option></select>
+        <div id="cat-hint"></div><textarea id="inp-note"></textarea>
+        <button id="btn-add"></button>
+        <div id="lbl-log-section"></div><div id="lbl-date"></div><div id="lbl-sted"></div>
+        <div id="lbl-company"></div><div id="lbl-duration"></div><div id="lbl-cat"></div>
+        <div id="lbl-note"></div><div id="lbl-from-old"></div><div id="lbl-to-old"></div>
+        <div id="lbl-filter-company-old"></div><div id="lbl-filter-cat-old"></div>
+        <div id="app-subtitle-old"></div>
+      </div>
+    </div><!-- /page-logg -->
+
+    <!-- PAGE: RAPPORT -->
+    <div class="page-body hidden" id="page-rapport">
+      <div class="rapport-controls">
+        <label style="font-size:12px;color:var(--muted);font-weight:500">Periode:</label>
+        <input type="month" id="rapport-month" onchange="renderRapport()"/>
+        <select id="rapport-company" onchange="renderRapport()" style="min-width:160px">
+          <option value="">Alle selskap</option>
+        </select>
+        <button class="btn btn-outline" onclick="document.getElementById('btn-export').click()" style="margin-left:auto">↓ Eksporter Excel</button>
+      </div>
+
+      <div class="rapport-total">
+        <div>
+          <div class="rapport-total-label">Totalt denne perioden</div>
+          <div class="rapport-total-val" id="rapport-total-h">0,0 t</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Oppføringer</div>
+          <div style="font-size:20px;font-family:'DM Mono',monospace" id="rapport-total-entries">0</div>
+        </div>
+      </div>
+
+      <div id="rapport-earnings" style="display:none;margin-bottom:14px">
+        <div class="rapport-total" style="background:var(--ps-light);border-color:var(--ps)">
+          <div>
+            <div class="rapport-total-label" style="color:var(--ps-dark)">Estimert lønn (periode)</div>
+            <div class="rapport-total-val" id="rapport-earnings-val" style="color:var(--ps-dark)">0 kr</div>
+          </div>
+          <div style="text-align:right;font-size:12px;color:var(--ps);font-family:'DM Mono',monospace" id="rapport-earnings-detail"></div>
+        </div>
+      </div>
+
+      <div class="rapport-grid">
+        <div class="rapport-card">
+          <div class="rapport-title">Per selskap</div>
+          <div id="rapport-co-rows"><div class="empty" style="padding:1rem 0">Ingen data</div></div>
+        </div>
+        <div class="rapport-card">
+          <div class="rapport-title">Per tidskategori</div>
+          <div id="rapport-cat-rows"><div class="empty" style="padding:1rem 0">Ingen data</div></div>
+        </div>
+      </div>
+
+      <div class="rapport-card" style="margin-bottom:14px">
+        <div class="rapport-title">Daglig fordeling</div>
+        <div id="rapport-daily"><div class="empty" style="padding:1rem 0">Ingen data</div></div>
+      </div>
+    </div><!-- /page-rapport -->
+
+    <!-- PAGE: INNSTILLINGER -->
+    <div class="page-body hidden" id="page-innstillinger">
+
+      <div class="settings-section">
+        <div class="settings-header">Bruker</div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label" id="set-name-label">—</div>
+            <div class="settings-row-sub" id="set-role-label"></div>
+          </div>
+          <span class="settings-tag" id="set-user-tag">—</span>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-header">Endre PIN</div>
+        <div class="pin-change-row" id="pin-change-section">
+          <div class="pin-change-label">Ny PIN (4–6 siffer)</div>
+          <div class="pin-inputs">
+            <input type="password" id="set-new-pin" class="pin-input-field" maxlength="6" placeholder="••••"/>
+            <input type="password" id="set-confirm-pin" class="pin-input-field" maxlength="6" placeholder="••••"/>
+            <button class="settings-save" onclick="savePin()">Lagre</button>
+          </div>
+          <div id="pin-msg" style="font-size:12px;margin-top:6px;color:var(--faint)"></div>
+        </div>
+      </div>
+
+      <div class="settings-section" id="settings-rate-section" style="display:none">
+        <div class="settings-header">Timelønn</div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label">Timesats</div>
+            <div class="settings-row-sub">Brukes til lønnsestimering i rapport</div>
+          </div>
+          <div class="settings-row-ctrl">
+            <input type="number" id="set-rate" class="settings-input" min="0" step="25"/>
+            <span style="font-size:13px;color:var(--muted)">kr/t</span>
+            <button class="settings-save" onclick="saveRate()">Lagre</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-header">Selskaper (aktive)</div>
+        <div id="settings-companies"></div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-header">Data</div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label">Totalt loggede timer</div>
+            <div class="settings-row-sub" id="set-data-summary">—</div>
+          </div>
+          <button class="btn btn-outline" onclick="document.getElementById('btn-export').click()">↓ Eksporter Excel</button>
+        </div>
+      </div>
+
+    </div><!-- /page-innstillinger -->
+
   </div><!-- /main-content -->
 </div><!-- /app-shell -->
 
@@ -661,20 +597,21 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
             <option value="week">Helg lør-søn</option>
             <option value="hol">Offentlig fridag</option>
           </select>
-          <div class="cat-hint" id="sb-cat-hint"></div>
+          <div id="sb-cat-hint" style="font-size:11px;color:var(--faint);margin-top:4px;font-style:italic"></div>
         </div>
       </div>
       <div class="field"><label>Merknad (valgfritt)</label><textarea id="sb-note" placeholder="Kort beskrivelse…"></textarea></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeModal()">Avbryt</button>
-      <button class="btn" id="sb-add-btn" onclick="sbQuickAdd()" style="background:var(--sidebar-bg);color:#fff;border-color:var(--sidebar-bg);">+ Legg til</button>
+      <button class="btn btn-primary" id="sb-add-btn" onclick="sbQuickAdd()">+ Legg til</button>
     </div>
   </div>
 </div>
 
 <script>
-const PINS = { thomas: '3536', marcus: '1209', sepideh: '5846' };
+const PINS_RUNTIME = { thomas: '3536', marcus: '1209', sepideh: '5846' };
+const PINS = PINS_RUNTIME;
 const HOURLY_RATE = { marcus: 325 };
 const SUPABASE_URL = 'https://hudiwhhigwopsiwjndwl.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1ZGl3aGhpZ3dvcHNpd2puZHdsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0OTExNjIsImV4cCI6MjA5NjA2NzE2Mn0.R8EablA2U_K80Pm7r21EYGqXy0ywxfmX3HBlHgm34W8';
@@ -692,376 +629,206 @@ const HOLIDAYS = new Set([
 let entries = [];
 let editingId = null;
 let currentUser = null;
-
-// --- Auth ---
+let currentPage = 'dashboard';
 let pendingUser = null;
+// Runtime pin storage (resets on logout)
+let runtimePins = {...PINS_RUNTIME};
+// Runtime rate storage
+let runtimeRates = {...HOURLY_RATE};
 
-function selectUser(user) {
-  pendingUser = user;
-  document.getElementById('pin-area').style.display = 'block';
-  document.getElementById('pin-label').textContent = 'PIN for ' + user.charAt(0).toUpperCase() + user.slice(1);
-  document.getElementById('pin-input').value = '';
-  document.getElementById('pin-error').style.display = 'none';
-  document.getElementById('btn-thomas').style.opacity = user === 'thomas' ? '1' : '0.4';
-  document.getElementById('btn-marcus').style.opacity = user === 'marcus' ? '1' : '0.4';
-  document.getElementById('btn-sepideh').style.opacity = user === 'sepideh' ? '1' : '0.4';
-  setTimeout(() => document.getElementById('pin-input').focus(), 50);
+// ── HELPERS ──
+function getCat(d){if(HOLIDAYS.has(d))return'hol';const dow=new Date(d+'T12:00:00').getDay();return(dow===0||dow===6)?'week':'day';}
+function catLabel(c){return{mor:'Morgen før 08',day:'Normaldag 08-16',eve:'Kveld etter 16',week:'Helg',hol:'Offentlig fridag'}[c]||c;}
+function catCls(c){return{mor:'badge-mor',day:'badge-day',eve:'badge-eve',week:'badge-week',hol:'badge-hol'}[c]||'';}
+function getWeek(d){const dt=new Date(d+'T12:00:00');dt.setDate(dt.getDate()+4-(dt.getDay()||7));return Math.ceil((((dt-new Date(dt.getFullYear(),0,1))/86400000)+1)/7);}
+function stedLabel(s){return{oslo:'Oslo',stockholm:'First Stockholm',hjemmekontor:'Hjemmekontor',lund:'Lund',annet:'Annet'}[s]||s;}
+function stedBadge(s){return s==='lund'?'<span class="badge-sted-lund">Lund</span>':s==='oslo'?'<span class="badge-sted-oslo">Oslo</span>':s==='stockholm'?'<span class="badge-sted-oslo">Stockholm</span>':'<span class="badge-sted-oslo">'+stedLabel(s)+'</span>';}
+function getDayName(d){return['Søn','Man','Tir','Ons','Tor','Fre','Lør'][new Date(d+'T12:00:00').getDay()];}
+function fmtH(h){return(+h||0).toFixed(1).replace('.',',')+' t';}
+function pct(a,b){return b>0?Math.round(a/b*100):0;}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function coName(c){return{int:'International',ps:'Planetstaden',et:'Enter Tromsø',ml:'Mallangen Resort',se:'St. Elisabeth'}[c]||c;}
+function coBadge(c){return`<span class="badge badge-${c}">${coName(c)}</span>`;}
+
+// ── AUTH ──
+function selectUser(user){
+  pendingUser=user;
+  document.getElementById('pin-area').style.display='block';
+  document.getElementById('pin-label').textContent='PIN for '+user.charAt(0).toUpperCase()+user.slice(1);
+  document.getElementById('pin-input').value='';
+  document.getElementById('pin-error').style.display='none';
+  ['thomas','marcus','sepideh'].forEach(u=>document.getElementById('btn-'+u).style.opacity=u===user?'1':'0.4');
+  setTimeout(()=>document.getElementById('pin-input').focus(),50);
+}
+function cancelPin(){
+  pendingUser=null;document.getElementById('pin-area').style.display='none';
+  ['thomas','marcus','sepideh'].forEach(u=>document.getElementById('btn-'+u).style.opacity='1');
+}
+function confirmPin(){
+  const entered=document.getElementById('pin-input').value;
+  if(entered===runtimePins[pendingUser]){login(pendingUser);}
+  else{document.getElementById('pin-error').style.display='block';document.getElementById('pin-input').value='';document.getElementById('pin-input').focus();}
 }
 
-function cancelPin() {
-  pendingUser = null;
-  document.getElementById('pin-area').style.display = 'none';
-  document.getElementById('btn-thomas').style.opacity = '1';
-  document.getElementById('btn-marcus').style.opacity = '1';
-  document.getElementById('btn-sepideh').style.opacity = '1';
-}
-
-function confirmPin() {
-  const entered = document.getElementById('pin-input').value;
-  if (entered === PINS[pendingUser]) {
-    login(pendingUser);
-  } else {
-    document.getElementById('pin-error').style.display = 'block';
-    document.getElementById('pin-input').value = '';
-    document.getElementById('pin-input').focus();
-  }
-}
-
-
-function populateUserDropdowns() {
-  const isSepideh = currentUser === 'sepideh';
-  const subtitle = document.getElementById('app-subtitle');
-  if(subtitle) subtitle.textContent = isSepideh ? 'First Hotels International & Planetstaden' : 'First Hotels & Enter Tromsø';
-
-  // Update UI language
-  const labels = {
-    'lbl-per-company': t('per_company'),
-    'lbl-per-cat': t('per_cat'),
-    'lbl-log-section': t('log_section'),
-    'lbl-total-h': t('total_h'),
-    'lbl-date': t('date'),
-    'lbl-sted': t('sted'),
-    'lbl-company': t('company'),
-    'lbl-duration': t('duration'),
-    'lbl-cat': t('cat'),
-    'lbl-note': t('note'),
-    'lbl-from': t('from_label'),
-    'lbl-to': t('to_label'),
-    'lbl-filter-company': t('company_label'),
-    'lbl-filter-cat': t('cat_label'),
-    'app-subtitle': t('subtitle_default'),
-  };
-  Object.entries(labels).forEach(([id, text]) => {
-    const el = document.getElementById(id);
-    if(el) el.textContent = text;
-  });
-  const addBtn = document.getElementById('btn-add');
-  if(addBtn) addBtn.textContent = t('add_btn');
-  const exportBtn = document.getElementById('btn-export');
-  if(exportBtn) exportBtn.textContent = t('export_btn');
-
-  // Update auto cat option
-  const autoCat = document.querySelector('#inp-cat option[value="auto"]');
-  if(autoCat) autoCat.textContent = t('auto_cat');
-
-  // Sidebar company dropdown
-  const sbCo = document.getElementById('sb-company');
-  const sbFco = document.getElementById('sb-filter-company');
-  const sbSted = document.getElementById('sb-sted');
-  const coOptions = isSepideh
-    ? '<option value="int">International</option><option value="ps">Planetstaden</option>'
-    : '<option value="ps">Planetstaden</option><option value="int">International</option><option value="et">Enter Tromsø</option><option value="ml">Mallangen Resort</option><option value="se">St. Elisabeth</option>';
-  if(sbCo) sbCo.innerHTML = coOptions;
-  if(sbFco) sbFco.innerHTML = '<option value="">Alle selskap</option>' + coOptions;
-  if(sbSted) {
-    sbSted.innerHTML = isSepideh
-      ? '<option value="stockholm">First Stockholm</option><option value="hjemmekontor">Hjemmekontor</option><option value="annet">Annet</option>'
-      : '<option value="oslo">Oslo (hjemmekontor)</option><option value="lund">Lund (hotellet)</option><option value="annet">Annet</option>';
-  }
-  // Set modal date to today
-  const sbDate = document.getElementById('sb-date');
-  if(sbDate && !sbDate.value) sbDate.value = new Date().toISOString().split('T')[0];
-
-  // Sidebar sync
-  ['et','ml','se'].forEach(c => {
-    const card = document.getElementById('card-'+c);
-    const bar = document.getElementById('bar-row-'+c);
-    if(card) card.style.display = isSepideh ? 'none' : '';
-    if(bar)  bar.style.display  = isSepideh ? 'none' : '';
-  });
-
-  // Sted dropdown
-  const stedSel = document.getElementById('inp-sted');
-  if (stedSel) {
-    stedSel.innerHTML = '';
-    if (isSepideh) {
-      stedSel.innerHTML = '<option value="stockholm">First Stockholm</option><option value="hjemmekontor">Hjemmekontor</option><option value="annet">Annet</option>';
-    } else {
-      stedSel.innerHTML = '<option value="oslo">Oslo (hjemmekontor)</option><option value="lund">Lund (hotellet)</option><option value="annet">Annet</option>';
-    }
-  }
-
-  // Company dropdown
-  const coSel = document.getElementById('inp-company');
-  if (coSel) {
-    if (isSepideh) {
-      coSel.innerHTML = '<option value="int">First Hotels International</option><option value="ps">First Hotels Planetstaden</option>';
-    } else {
-      coSel.innerHTML = '<option value="int">First Hotels International</option><option value="ps">First Hotels Planetstaden</option><option value="et">Enter Tromsø</option><option value="ml">Mallangen Resort</option><option value="se">St. Elisabeth</option>';
-    }
-  }
-
-  // Filter company dropdown
-  const filterCo = document.getElementById('filter-company');
-  if (filterCo) {
-    if (isSepideh) {
-      filterCo.innerHTML = '<option value="">Begge</option><option value="int">International</option><option value="ps">Planetstaden</option>';
-    } else {
-      filterCo.innerHTML = '<option value="">Alle</option><option value="int">International</option><option value="ps">Planetstaden</option><option value="et">Enter Tromsø</option><option value="ml">Mallangen Resort</option><option value="se">St. Elisabeth</option>';
-    }
-  }
-}
-
-function login(user) {
-  currentUser = user;
-  localStorage.setItem('tidslogg_user', user);
+function login(user){
+  currentUser=user;
+  localStorage.setItem('tidslogg_user',user);
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
-  document.getElementById('user-pill') && (document.getElementById('user-pill').textContent = '👤 ' + user.charAt(0).toUpperCase() + user.slice(1) + ' ×');
-  const avatarMap = {thomas:'TG', marcus:'MG', sepideh:'SC'};
-  const roleMap = {thomas:'Interim GM / Head Chef', marcus:'F&B Manager', sepideh:'CFO'};
-  const nameEl = document.getElementById('sidebar-name');
-  const roleEl = document.getElementById('sidebar-role');
-  const avEl = document.getElementById('sidebar-avatar');
-  if(nameEl) nameEl.textContent = user.charAt(0).toUpperCase() + user.slice(1);
-  if(roleEl) roleEl.textContent = roleMap[user] || '';
-  if(avEl) avEl.textContent = avatarMap[user] || user.slice(0,2).toUpperCase();
-  document.getElementById('inp-date').value = new Date().toISOString().split('T')[0];
-  populateUserDropdowns();
-  updateHint();
+  const avatarMap={thomas:'TG',marcus:'MG',sepideh:'SC'};
+  const roleMap={thomas:'Interim GM / Head Chef',marcus:'F&B Manager',sepideh:'CFO'};
+  const el=id=>document.getElementById(id);
+  if(el('sidebar-name')) el('sidebar-name').textContent=user.charAt(0).toUpperCase()+user.slice(1);
+  if(el('sidebar-role')) el('sidebar-role').textContent=roleMap[user]||'';
+  if(el('sidebar-avatar')) el('sidebar-avatar').textContent=avatarMap[user]||user.slice(0,2).toUpperCase();
+  populateDropdowns();
+  navTo('dashboard');
   loadAll();
 }
 
-function logout() {
-  if (!confirm(t('switch_user'))) return;
-  currentUser = null;
-  localStorage.removeItem('tidslogg_user');
-  entries = [];
-  editingId = null;
+function logout(){
+  if(!confirm('Bytte bruker?'))return;
+  currentUser=null;localStorage.removeItem('tidslogg_user');
+  entries=[];editingId=null;
   document.getElementById('app').classList.add('hidden');
   document.getElementById('login-screen').classList.remove('hidden');
 }
 
-// Auto-login if remembered
-const savedUser = localStorage.getItem('tidslogg_user');
-if (savedUser) login(savedUser);
+const savedUser=localStorage.getItem('tidslogg_user');
+if(savedUser)login(savedUser);
 
-// --- Supabase ---
-async function sbFetch(path, opts={}) {
-  const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
-    ...opts,
-    headers: {
-      'apikey': SUPABASE_KEY,
-      'Authorization': 'Bearer ' + SUPABASE_KEY,
-      'Content-Type': 'application/json',
-      'Prefer': opts.prefer || '',
-      ...(opts.headers||{})
-    }
+// ── NAVIGATION ──
+window.navTo=function(page){
+  currentPage=page;
+  ['dashboard','logg','rapport','innstillinger'].forEach(p=>{
+    const pg=document.getElementById('page-'+p);
+    const nav=document.getElementById('nav-'+p);
+    if(pg) pg.classList.toggle('hidden',p!==page);
+    if(nav) nav.classList.toggle('active',p===page);
   });
-  if (!res.ok) throw new Error(await res.text());
-  if (res.status === 204) return null;
-  return res.json();
-}
-
-async function loadAll() {
-  setSync('loading');
-  try {
-    const data = await sbFetch(`${TABLE}?user_id=eq.${currentUser}&order=date.desc,id.desc&select=*`);
-    entries = data || [];
-    setSync('ok');
-    render();
-  } catch(e) {
-    setSync('err');
-    document.getElementById('log-container').innerHTML = '<div class="empty">Kunne ikke koble til. Sjekk internett.</div>';
+  const titles={dashboard:'Dashboard',logg:'Logg',rapport:'Rapportering',innstillinger:'Innstillinger'};
+  const tEl=document.getElementById('topbar-title');
+  if(tEl) tEl.textContent=titles[page]||page;
+  // Topbar actions
+  const ta=document.getElementById('topbar-actions');
+  if(ta){
+    if(page==='rapport') ta.innerHTML='<button class="btn btn-outline" onclick="document.getElementById(\'btn-export\').click()" style="font-size:12px">↓ Eksporter Excel</button>';
+    else ta.innerHTML='';
   }
-}
-
-function setSync(s) {
-  const el = document.getElementById('sync-status');
-  if (s==='ok')      { el.textContent=t('synced'); el.className='sync-status ok'; }
-  else if (s==='loading') { el.textContent=t('syncing'); el.className='sync-status'; }
-  else               { el.textContent=t('conn_err'); el.className='sync-status err'; }
-}
-
-// --- Helpers ---
-function getCat(d) {
-  if (HOLIDAYS.has(d)) return 'hol';
-  const dow = new Date(d+'T12:00:00').getDay();
-  return (dow===0||dow===6)?'week':'day';
-}
-function catLabel(c){ return {mor:'Morgen før 08',day:'Normaldag 08-16',eve:'Kveld etter 16',week:'Helg',hol:'Offentlig fridag'}[c]||c; }
-function catCls(c)  { return {mor:'badge-mor',day:'badge-day',eve:'badge-eve',week:'badge-week',hol:'badge-hol'}[c]||''; }
-function getWeek(d) {
-  const dt=new Date(d+'T12:00:00');
-  dt.setDate(dt.getDate()+4-(dt.getDay()||7));
-  return Math.ceil((((dt-new Date(dt.getFullYear(),0,1))/86400000)+1)/7);
-}
-function stedLabel(s){ return {oslo:'Oslo',stockholm:'First Stockholm',hjemmekontor:'Hjemmekontor',lund:'Lund',annet:'Annet'}[s]||s; }
-function stedBadge(s){ return s==='lund'?'<span class="badge-sted-lund">Lund</span>':s==='oslo'?'<span class="badge-sted-oslo">Oslo</span>':s==='stockholm'?'<span class="badge-sted-oslo">Stockholm</span>':'<span class="badge-sted-oslo">'+stedLabel(s)+'</span>'; }
-
-const LANG = {
-  no: {
-    subtitle_default: 'First Hotels & Enter Tromsø',
-    select_user: 'Velg bruker og skriv inn PIN',
-    log_section: 'Logg ny aktivitet',
-    date: 'Dato', sted: 'Sted', company: 'Selskap',
-    duration: 'Tidsforbruk (timer)', cat: 'Tidskategori',
-    note: 'Merknad (valgfritt)', add_btn: '+ Legg til oppføring',
-    export_btn: '↓ Eksporter Excel', synced: '● synkronisert',
-    syncing: '● synkroniserer…', conn_err: '● tilkoblingsfeil',
-    per_company: 'Fordeling per selskap', per_cat: 'Fordeling per tidskategori',
-    total_h: 'Totalt loggede timer', entries: 'oppføringer',
-    all_weeks: 'Alle uker', both: 'Begge', all: 'Alle',
-    week_label: 'Uke', company_label: 'Selskap', cat_label: 'Kategori',
-    sted_label: 'Sted', from_label: 'Fra', to_label: 'Til',
-    days: ['Søn','Man','Tir','Ons','Tor','Fre','Lør'],
-    auto_cat: 'Auto (beregn fra dato)',
-    cat_mor: 'Morgen man-fre før 08', cat_day: 'Normaldag 08-16',
-    cat_eve: 'Kveld man-fre etter 16', cat_week: 'Helg lør-søn', cat_hol: 'Offentlig fridag',
-    save: 'Lagre', cancel: 'Avbryt', delete_confirm: 'Slette denne oppføringen?',
-    switch_user: 'Bytte bruker?', no_entries: 'Ingen oppføringer å eksportere.',
-    empty: 'Ingen oppføringer ennå.', loading: 'Henter data…',
-    total_label: 'TOTALT',
-  },
-  sv: {
-    subtitle_default: 'First Hotels International & Planetstaden',
-    select_user: 'Välj användare och ange PIN',
-    log_section: 'Logga ny aktivitet',
-    date: 'Datum', sted: 'Plats', company: 'Företag',
-    duration: 'Tidsåtgång (timmar)', cat: 'Tidskategori',
-    note: 'Kommentar (valfritt)', add_btn: '+ Lägg till post',
-    export_btn: '↓ Exportera Excel', synced: '● synkroniserad',
-    syncing: '● synkroniserar…', conn_err: '● anslutningsfel',
-    per_company: 'Fördelning per företag', per_cat: 'Fördelning per tidskategori',
-    total_h: 'Totalt loggade timmar', entries: 'poster',
-    all_weeks: 'Alla veckor', both: 'Båda', all: 'Alla',
-    week_label: 'Vecka', company_label: 'Företag', cat_label: 'Kategori',
-    sted_label: 'Plats', from_label: 'Från', to_label: 'Till',
-    days: ['Sön','Mån','Tis','Ons','Tor','Fre','Lör'],
-    auto_cat: 'Auto (beräkna från datum)',
-    cat_mor: 'Morgon mån-fre före 08', cat_day: 'Normaldag 08-16',
-    cat_eve: 'Kväll mån-fre efter 16', cat_week: 'Helg lör-sön', cat_hol: 'Offentlig helgdag',
-    save: 'Spara', cancel: 'Avbryt', delete_confirm: 'Ta bort denna post?',
-    switch_user: 'Byta användare?', no_entries: 'Inga poster att exportera.',
-    empty: 'Inga poster ännu.', loading: 'Hämtar data…',
-    total_label: 'TOTALT',
-  }
+  if(page==='rapport') renderRapport();
+  if(page==='innstillinger') renderInnstillinger();
+  if(page==='dashboard') renderDashRecent();
 };
 
-function t(key) {
-  const lang = currentUser === 'sepideh' ? 'sv' : 'no';
-  return LANG[lang][key] || key;
+// ── SUPABASE ──
+async function sbFetch(path,opts={}){
+  const res=await fetch(SUPABASE_URL+'/rest/v1/'+path,{
+    ...opts,
+    headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':opts.prefer||'',...(opts.headers||{})}
+  });
+  if(!res.ok) throw new Error(await res.text());
+  if(res.status===204)return null;
+  return res.json();
+}
+async function loadAll(){
+  setSync('loading');
+  try{
+    const data=await sbFetch(`${TABLE}?user_id=eq.${currentUser}&order=date.desc,id.desc&select=*`);
+    entries=data||[];setSync('ok');render();
+  }catch(e){setSync('err');}
+}
+function setSync(s){
+  const el=document.getElementById('sync-status');
+  if(s==='ok'){el.textContent='● synkronisert';el.className='sidebar-sync ok';}
+  else if(s==='loading'){el.textContent='● synkroniserer…';el.className='sidebar-sync';}
+  else{el.textContent='● tilkoblingsfeil';el.className='sidebar-sync err';}
 }
 
-function getDayName(d) {
-  return t('days')[new Date(d+'T12:00:00').getDay()];
+// ── POPULATE DROPDOWNS ──
+function populateDropdowns(){
+  const isSep=currentUser==='sepideh';
+  const sub=document.getElementById('app-subtitle');
+  if(sub) sub.textContent=isSep?'First Hotels International & Planetstaden':'First Hotels & Enter Tromsø';
+  const coOpts=isSep
+    ?'<option value="int">International</option><option value="ps">Planetstaden</option>'
+    :'<option value="ps">Planetstaden</option><option value="int">International</option><option value="et">Enter Tromsø</option><option value="ml">Mallangen Resort</option><option value="se">St. Elisabeth</option>';
+  ['sb-company','inp-company'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=coOpts;});
+  ['rapport-company','sb-filter-company'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML='<option value="">Alle selskap</option>'+coOpts;});
+  const filterCo=document.getElementById('filter-company');
+  if(filterCo) filterCo.innerHTML=(isSep?'<option value="">Begge</option>':'<option value="">Alle</option>')+coOpts;
+  const stedOpts=isSep
+    ?'<option value="stockholm">First Stockholm</option><option value="hjemmekontor">Hjemmekontor</option><option value="annet">Annet</option>'
+    :'<option value="oslo">Oslo (hjemmekontor)</option><option value="lund">Lund (hotellet)</option><option value="annet">Annet</option>';
+  ['sb-sted','inp-sted'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=stedOpts;});
+  // Hide Sepideh-irrelevant rows
+  ['et','ml','se'].forEach(c=>{
+    const r=document.getElementById('bar-row-'+c);
+    if(r) r.style.display=isSep?'none':'';
+  });
+  // Modal date
+  const sd=document.getElementById('sb-date');
+  if(sd&&!sd.value) sd.value=new Date().toISOString().split('T')[0];
+  // Rapport month default
+  const rm=document.getElementById('rapport-month');
+  if(rm&&!rm.value) rm.value=new Date().toISOString().slice(0,7);
 }
 
-function fmtH(h){ return h.toFixed(1).replace('.',',')+' t'; }
-function pct(a,b){ return b>0?Math.round(a/b*100):0; }
-function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
-
-function updateHint(){
-  const d=document.getElementById('inp-date').value;
-  const s=document.getElementById('inp-cat').value;
-  document.getElementById('cat-hint').textContent=(d&&s==='auto')?'→ '+catLabel(getCat(d)):'';
-}
-document.getElementById('inp-date').addEventListener('change',updateHint);
-document.getElementById('inp-cat').addEventListener('change',updateHint);
-
-// --- Render ---
-function render() {
-  const ff=document.getElementById('filter-from').value;
-  const ft=document.getElementById('filter-to').value;
-  const sf=document.getElementById('filter-sted').value;
-  const cf=document.getElementById('filter-company').value;
-  const tf=document.getElementById('filter-cat').value;
-
+// ── RENDER ──
+function render(){
+  const isSep=currentUser==='sepideh';
   let tot=0,iH=0,pH=0,etH=0,mlH=0,seH=0,cH={mor:0,day:0,eve:0,week:0,hol:0};
   entries.forEach(e=>{
-    const h=parseFloat(e.duration)||0; tot+=h;
-    if(e.company==='int') iH+=h; else if(e.company==='et') etH+=h; else if(e.company==='ml') mlH+=h; else if(e.company==='se') seH+=h; else pH+=h;
-    if(cH[e.cat]!==undefined) cH[e.cat]+=h;
+    const h=parseFloat(e.duration)||0;tot+=h;
+    if(e.company==='int')iH+=h;else if(e.company==='et')etH+=h;else if(e.company==='ml')mlH+=h;else if(e.company==='se')seH+=h;else pH+=h;
+    if(cH[e.cat]!==undefined)cH[e.cat]+=h;
   });
-
-  document.getElementById('total-hours').textContent=fmtH(tot);
-  document.getElementById('total-entries').textContent=entries.length+' oppføringer';
-  // New stat cards
-  const dayH=cH['day']||0, offH=(cH['eve']||0)+(cH['week']||0), morH=cH['mor']||0;
-  const sdh=document.getElementById('stat-day-h'); if(sdh) sdh.textContent=fmtH(dayH);
-  const sdp=document.getElementById('stat-day-pct'); if(sdp) sdp.textContent=pct(dayH,tot)+' % av total';
-  const soh=document.getElementById('stat-offhours-h'); if(soh) soh.textContent=fmtH(offH);
-  const sop=document.getElementById('stat-offhours-pct'); if(sop) sop.textContent=pct(offH,tot)+' % av total';
-  const smh=document.getElementById('stat-mor-h'); if(smh) smh.textContent=fmtH(morH);
-  const smp=document.getElementById('stat-mor-pct'); if(smp) smp.textContent=pct(morH,tot)+' % av total';
-  // Update new co-bar widths
-  const bars={int:pct(iH,tot),ps:pct(pH,tot),et:pct(etH,tot),ml:pct(mlH,tot),se:pct(seH,tot)};
-  Object.entries(bars).forEach(([k,v])=>{ const b=document.getElementById('bar-'+k); if(b) b.style.width=v+'%'; });
-  document.getElementById('int-hours').textContent=fmtH(iH);
-  document.getElementById('ps-hours').textContent=fmtH(pH);
-  document.getElementById('int-pct').textContent=pct(iH,tot)+' % av totalt';
-  document.getElementById('ps-pct').textContent=pct(pH,tot)+' % av totalt';
+  const set=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+  set('total-hours',fmtH(tot));set('total-entries',entries.length+' oppføringer');
+  const dayH=cH.day||0,offH=(cH.eve||0)+(cH.week||0),morH=cH.mor||0;
+  set('stat-day-h',fmtH(dayH));set('stat-day-pct',pct(dayH,tot)+' % av total');
+  set('stat-offhours-h',fmtH(offH));set('stat-offhours-pct',pct(offH,tot)+' % av total');
+  set('stat-mor-h',fmtH(morH));set('stat-mor-pct',pct(morH,tot)+' % av total');
+  const coData={int:iH,ps:pH,et:etH,ml:mlH,se:seH};
+  Object.entries(coData).forEach(([k,v])=>{
+    set(k+'-hours',fmtH(v));set(k+'-pct',pct(v,tot)+' %');
+    const b=document.getElementById('bar-'+k);if(b)b.style.width=pct(v,tot)+'%';
+  });
   ['mor','day','eve','week','hol'].forEach(c=>{
-    document.getElementById('cat-'+c+'-h').textContent=fmtH(cH[c]);
-    document.getElementById('cat-'+c+'-pct').textContent=pct(cH[c],tot)+' % av totalt';
+    set('cat-'+c+'-h',fmtH(cH[c]));set('cat-'+c+'-pct',pct(cH[c],tot)+' %');
   });
-  const ip=pct(iH,tot),pp=pct(pH,tot);
-  document.getElementById('bar-int').style.width=ip+'%'; document.getElementById('barpct-int').textContent=ip+' %';
-  document.getElementById('bar-ps').style.width=pp+'%';  document.getElementById('barpct-ps').textContent=pp+' %';
-  const etp=pct(etH,tot);
-  document.getElementById('bar-et').style.width=etp+'%'; document.getElementById('barpct-et').textContent=etp+' %';
-  const mlp=pct(mlH,tot);
-  document.getElementById('bar-ml').style.width=mlp+'%'; document.getElementById('barpct-ml').textContent=mlp+' %';
-  const sep=pct(seH,tot);
-  document.getElementById('bar-se').style.width=sep+'%'; document.getElementById('barpct-se').textContent=sep+' %';
-  ['mor','day','eve','week','hol'].forEach(c=>{
-    const p2=pct(cH[c],tot);
-    document.getElementById('bar-'+c).style.width=p2+'%';
-    document.getElementById('barpct-'+c).textContent=p2+' %';
-  });
-  document.getElementById('bars-section').style.display=tot>0?'block':'none';
+  // Earnings
+  const rate=runtimeRates[currentUser];
+  const ec=document.getElementById('earnings-card');
+  if(currentUser==='marcus'&&rate){
+    if(ec)ec.style.display='block';
+    set('earnings-amount',Math.round(tot*rate).toLocaleString('nb-NO')+' kr');
+    set('earnings-detail',fmtH(tot)+' × '+rate+' kr/t');
+  }else{if(ec)ec.style.display='none';}
+  // Filter & log table
+  const ff=document.getElementById('filter-from')?.value||'';
+  const ft=document.getElementById('filter-to')?.value||'';
+  const sf=document.getElementById('filter-sted')?.value||'';
+  const cf=document.getElementById('filter-company')?.value||'';
+  const tf=document.getElementById('filter-cat')?.value||'';
+  const filtered=entries.filter(e=>(!ff||e.date>=ff)&&(!ft||e.date<=ft)&&(!sf||e.sted===sf)&&(!cf||e.company===cf)&&(!tf||e.cat===tf));
+  let fH=0;filtered.forEach(e=>fH+=parseFloat(e.duration)||0);
+  const fs=document.getElementById('filter-summary');
+  if(fs)fs.textContent=filtered.length<entries.length?filtered.length+' oppf. · '+fmtH(fH):'';
+  renderLogTable(filtered);
+  renderDashRecent();
+}
 
-
-  const filtered=entries.filter(e=>
-    (!ff||e.date>=ff)&&(!ft||e.date<=ft)&&(!sf||e.sted===sf)&&(!cf||e.company===cf)&&(!tf||e.cat===tf)
-  );
-  let fH=0; filtered.forEach(e=>fH+=parseFloat(e.duration)||0);
-  document.getElementById('filter-summary').textContent=filtered.length<entries.length?filtered.length+' oppf. · '+fmtH(fH):'';
-
-  // Earnings for marcus
-  const earningsCard = document.getElementById('earnings-card');
-  if (currentUser === 'marcus' && HOURLY_RATE[currentUser]) {
-    earningsCard.style.display = 'block';
-    const rate = HOURLY_RATE[currentUser];
-    const earnings = fH * rate;
-    document.getElementById('earnings-amount').textContent = Math.round(earnings).toLocaleString('nb-NO') + ' kr';
-    document.getElementById('earnings-detail').textContent = fmtH(fH) + ' × ' + rate + ' kr/t';
-  } else {
-    earningsCard.style.display = 'none';
-  }
-
-  const container=document.getElementById('log-container');
-  if(filtered.length===0){ container.innerHTML='<div class="empty">'+t('empty')+'</div>'; return; }
-
+function renderLogTable(filtered){
+  const container=document.getElementById('log-container');if(!container)return;
+  if(!filtered||filtered.length===0){container.innerHTML='<div class="empty">Ingen oppføringer.</div>';return;}
   let html='<table><thead><tr><th>Dato</th><th>Dag</th><th>Uke</th><th>Sted</th><th>Selskap</th><th>Kategori</th><th>Aktivitet</th><th>Timer</th><th style="width:64px"></th></tr></thead><tbody>';
   filtered.forEach(e=>{
     const h=parseFloat(e.duration)||0;
-    const cBadge=e.company==='int'?'<span class="badge badge-int">International</span>':e.company==='et'?'<span class="badge badge-et">Enter Tromsø</span>':e.company==='ml'?'<span class="badge badge-ml">Mallangen Resort</span>':e.company==='se'?'<span class="badge badge-se">St. Elisabeth</span>':'<span class="badge badge-ps">Planetstaden</span>';
     const tBadge=`<span class="badge ${catCls(e.cat)}">${catLabel(e.cat)}</span>`;
     const note=e.note?`<div class="note-text">${esc(e.note)}</div>`:'';
     const ea=editingId===e.id;
-    html+=`<tr class="data-row"><td class="mono">${e.date}</td><td class="mono">${getDayName(e.date)}</td><td class="mono">${getWeek(e.date)}</td><td>${stedBadge(e.sted||'oslo')}</td><td>${cBadge}</td><td>${tBadge}</td><td>${esc(e.task)}${note}</td><td class="mono">${fmtH(h)}</td>
+    html+=`<tr class="data-row"><td class="mono">${e.date}</td><td class="mono">${getDayName(e.date)}</td><td class="mono">${getWeek(e.date)}</td><td>${stedBadge(e.sted||'oslo')}</td><td>${coBadge(e.company)}</td><td>${tBadge}</td><td>${esc(e.task)}${note}</td><td class="mono">${fmtH(h)}</td>
       <td style="white-space:nowrap">
         <button class="action-btn edit-btn${ea?' active':''}" onclick="toggleEdit('${e.id}')" title="Rediger">✎</button>
         <button class="action-btn del-btn" onclick="del('${e.id}')" title="Slett">×</button>
@@ -1069,29 +836,28 @@ function render() {
     if(ea){
       html+=`<tr class="edit-row" id="edit-${e.id}"><td colspan="9">
         <div class="edit-panel">
-          <div class="ef"><label id="lbl-date">Dato</label><input type="date" id="e-date" value="${e.date}"/></div>
+          <div class="ef"><label>Dato</label><input type="date" id="e-date" value="${e.date}"/></div>
           <div class="ef"><label>Aktivitet</label><input type="text" id="e-task" value="${esc(e.task)}"/></div>
           <div class="ef"><label>Timer</label><input type="number" id="e-dur" min="0.25" max="24" step="0.25" value="${h}"/></div>
-          <div class="ef"><label>Tidskategori</label><select id="e-cat">
-            <option value="mor"${e.cat==='mor'?' selected':''}>Morgen før 08</option>
-            <option value="day"${e.cat==='day'?' selected':''}>Normaldag 08-16</option>
-            <option value="eve"${e.cat==='eve'?' selected':''}>Kveld etter 16</option>
+          <div class="ef"><label>Kategori</label><select id="e-cat">
+            <option value="mor"${e.cat==='mor'?' selected':''}>Morgen</option>
+            <option value="day"${e.cat==='day'?' selected':''}>Normaldag</option>
+            <option value="eve"${e.cat==='eve'?' selected':''}>Kveld</option>
             <option value="week"${e.cat==='week'?' selected':''}>Helg</option>
-            <option value="hol"${e.cat==='hol'?' selected':''}>Offentlig fridag</option>
+            <option value="hol"${e.cat==='hol'?' selected':''}>Fridag</option>
           </select></div>
         </div>
         <div class="edit-panel-2">
           <div class="ef"><label>Sted</label><select id="e-sted">
-            ${currentUser==='sepideh' ?
-              '<option value="stockholm"'+(((e.sted||'stockholm')==='stockholm')?' selected':'')+'>First Stockholm</option><option value="hjemmekontor"'+(e.sted==='hjemmekontor'?' selected':'')+'>Hjemmekontor</option>' :
-              '<option value="oslo"'+((( e.sted||'oslo')==='oslo')?' selected':'')+'>Oslo</option>'
-            }
+            ${currentUser==='sepideh'
+              ?`<option value="stockholm"${(e.sted||'stockholm')==='stockholm'?' selected':''}>First Stockholm</option><option value="hjemmekontor"${e.sted==='hjemmekontor'?' selected':''}>Hjemmekontor</option>`
+              :`<option value="oslo"${(e.sted||'oslo')==='oslo'?' selected':''}>Oslo</option>`}
             <option value="lund"${e.sted==='lund'?' selected':''}>Lund</option>
             <option value="annet"${e.sted==='annet'?' selected':''}>Annet</option>
           </select></div>
           <div class="ef"><label>Selskap</label><select id="e-co">
-            <option value="int"${e.company==='int'?' selected':''}>First Hotels International</option>
-            <option value="ps"${e.company==='ps'?' selected':''}>First Hotels Planetstaden</option>
+            <option value="int"${e.company==='int'?' selected':''}>International</option>
+            <option value="ps"${e.company==='ps'?' selected':''}>Planetstaden</option>
             <option value="et"${e.company==='et'?' selected':''}>Enter Tromsø</option>
             <option value="ml"${e.company==='ml'?' selected':''}>Mallangen Resort</option>
             <option value="se"${e.company==='se'?' selected':''}>St. Elisabeth</option>
@@ -1107,12 +873,129 @@ function render() {
   });
   html+='</tbody></table>';
   container.innerHTML=html;
-  if(editingId){ const el=document.getElementById('edit-'+editingId); if(el) setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'nearest'}),50); }
+  if(editingId){const el=document.getElementById('edit-'+editingId);if(el)setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'nearest'}),50);}
 }
 
-window.toggleEdit=function(id){ editingId=(editingId===id)?null:id; render(); };
-window.cancelEdit=function(){ editingId=null; render(); };
+function renderDashRecent(){
+  const container=document.getElementById('dash-recent');if(!container)return;
+  const recent=entries.slice(0,6);
+  if(!recent.length){container.innerHTML='<div class="empty">Ingen oppføringer ennå.</div>';return;}
+  let html='<table><thead><tr><th>Dato</th><th>Selskap</th><th>Aktivitet</th><th>Timer</th><th>Kategori</th></tr></thead><tbody>';
+  recent.forEach(e=>{
+    html+=`<tr class="data-row"><td class="mono">${e.date}</td><td>${coBadge(e.company)}</td><td>${esc(e.task)}</td><td class="mono">${fmtH(parseFloat(e.duration)||0)}</td><td><span class="badge ${catCls(e.cat)}">${catLabel(e.cat)}</span></td></tr>`;
+  });
+  html+='</tbody></table>';
+  container.innerHTML=html;
+}
 
+// ── RAPPORT ──
+function renderRapport(){
+  const month=document.getElementById('rapport-month')?.value||new Date().toISOString().slice(0,7);
+  const co=document.getElementById('rapport-company')?.value||'';
+  const filtered=entries.filter(e=>e.date.startsWith(month)&&(!co||e.company===co));
+  let tot=0,coT={int:0,ps:0,et:0,ml:0,se:0},catT={mor:0,day:0,eve:0,week:0,hol:0};
+  filtered.forEach(e=>{const h=parseFloat(e.duration)||0;tot+=h;if(coT[e.company]!==undefined)coT[e.company]+=h;if(catT[e.cat]!==undefined)catT[e.cat]+=h;});
+  const set=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+  set('rapport-total-h',fmtH(tot));
+  set('rapport-total-entries',filtered.length);
+  // Earnings
+  const rate=runtimeRates[currentUser];
+  const re=document.getElementById('rapport-earnings');
+  if(currentUser==='marcus'&&rate&&tot>0){
+    if(re)re.style.display='block';
+    set('rapport-earnings-val',Math.round(tot*rate).toLocaleString('nb-NO')+' kr');
+    set('rapport-earnings-detail',fmtH(tot)+' × '+rate+' kr/t');
+  }else{if(re)re.style.display='none';}
+  // Co rows
+  const coNames={int:'International',ps:'Planetstaden',et:'Enter Tromsø',ml:'Mallangen Resort',se:'St. Elisabeth'};
+  const coColors={int:'var(--int)',ps:'var(--ps)',et:'var(--et)',ml:'var(--ml)',se:'var(--se)'};
+  const isSep=currentUser==='sepideh';
+  const coKeys=isSep?['int','ps']:['ps','int','et','ml','se'];
+  let coHtml='';
+  coKeys.forEach(k=>{
+    if(!coT[k]&&coT[k]!==0)return;
+    const p=pct(coT[k],tot);
+    coHtml+=`<div class="rapport-row">
+      <div class="rapport-row-label"><span class="dot" style="background:${coColors[k]}"></span>${coNames[k]}</div>
+      <div><div class="rapport-row-val">${fmtH(coT[k])}</div><div class="rapport-row-pct">${p} %</div></div>
+    </div>
+    <div class="rapport-bar-row"><div class="rapport-bar-track" style="flex:1"><div class="rapport-bar-fill" style="width:${p}%;background:${coColors[k]}"></div></div></div>`;
+  });
+  const coCont=document.getElementById('rapport-co-rows');
+  if(coCont)coCont.innerHTML=coHtml||'<div class="empty" style="padding:1rem 0">Ingen data denne perioden</div>';
+  // Cat rows
+  const catDefs=[{k:'day',label:'Normaldag 08–16',cls:'badge-day'},{k:'eve',label:'Kveld man–fre',cls:'badge-eve'},{k:'week',label:'Lørdag / søndag',cls:'badge-week'},{k:'mor',label:'Morgen før 08',cls:'badge-mor'},{k:'hol',label:'Offentlig fridag',cls:'badge-hol'}];
+  let catHtml='';
+  catDefs.forEach(({k,label,cls})=>{
+    const p=pct(catT[k],tot);
+    catHtml+=`<div class="rapport-row"><div class="rapport-row-label"><span class="cat-badge ${cls}" style="font-size:10px">${label}</span></div><div><div class="rapport-row-val">${fmtH(catT[k])}</div><div class="rapport-row-pct">${p} %</div></div></div>`;
+  });
+  const catCont=document.getElementById('rapport-cat-rows');
+  if(catCont)catCont.innerHTML=catHtml||'<div class="empty" style="padding:1rem 0">Ingen data</div>';
+  // Daily breakdown
+  const dayMap={};
+  filtered.forEach(e=>{dayMap[e.date]=(dayMap[e.date]||0)+(parseFloat(e.duration)||0);});
+  const days=Object.keys(dayMap).sort();
+  const maxDay=Math.max(...Object.values(dayMap),0.1);
+  let dayHtml='<table style="width:100%;font-size:12px"><thead><tr><th>Dato</th><th>Dag</th><th>Timer</th><th style="width:60%"></th></tr></thead><tbody>';
+  days.forEach(d=>{
+    const h=dayMap[d];const p2=Math.round(h/maxDay*100);
+    dayHtml+=`<tr class="data-row"><td class="mono">${d}</td><td class="mono">${getDayName(d)}</td><td class="mono">${fmtH(h)}</td><td><div style="height:6px;background:var(--bg);border-radius:3px"><div style="height:6px;border-radius:3px;background:var(--accent);width:${p2}%"></div></div></td></tr>`;
+  });
+  dayHtml+='</tbody></table>';
+  const dailyCont=document.getElementById('rapport-daily');
+  if(dailyCont)dailyCont.innerHTML=days.length?dayHtml:'<div class="empty" style="padding:1rem 0">Ingen data</div>';
+}
+
+// ── INNSTILLINGER ──
+function renderInnstillinger(){
+  const roleMap={thomas:'Interim GM / Head Chef',marcus:'F&B Manager',sepideh:'CFO'};
+  const set=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+  set('set-name-label',currentUser?currentUser.charAt(0).toUpperCase()+currentUser.slice(1):'');
+  set('set-role-label',roleMap[currentUser]||'');
+  set('set-user-tag',currentUser||'');
+  // Rate
+  const rs=document.getElementById('settings-rate-section');
+  if(rs) rs.style.display=currentUser==='marcus'?'block':'none';
+  const ri=document.getElementById('set-rate');
+  if(ri) ri.value=runtimeRates[currentUser]||'';
+  // Data summary
+  let tot=0;entries.forEach(e=>tot+=parseFloat(e.duration)||0);
+  set('set-data-summary',fmtH(tot)+' totalt · '+entries.length+' oppføringer');
+  // Companies
+  const isSep=currentUser==='sepideh';
+  const cos=isSep?[{k:'int',n:'International'},{k:'ps',n:'Planetstaden'}]:[{k:'ps',n:'Planetstaden'},{k:'int',n:'International'},{k:'et',n:'Enter Tromsø'},{k:'ml',n:'Mallangen Resort'},{k:'se',n:'St. Elisabeth'}];
+  const cont=document.getElementById('settings-companies');
+  if(cont){
+    cont.innerHTML=cos.map(({k,n})=>{
+      const h=(entries.filter(e=>e.company===k).reduce((s,e)=>s+(parseFloat(e.duration)||0),0));
+      return`<div class="settings-row"><div><div class="settings-row-label"><span class="dot dot-${k}" style="margin-right:6px"></span>${n}</div><div class="settings-row-sub">${fmtH(h)} loggede timer</div></div><span class="settings-tag badge-${k}" style="display:inline-block">${k.toUpperCase()}</span></div>`;
+    }).join('');
+  }
+}
+
+function savePin(){
+  const np=document.getElementById('set-new-pin').value;
+  const cp=document.getElementById('set-confirm-pin').value;
+  const msg=document.getElementById('pin-msg');
+  if(np.length<4){msg.textContent='PIN må være minst 4 siffer.';msg.style.color='var(--c-hol)';return;}
+  if(np!==cp){msg.textContent='PINene er ikke like.';msg.style.color='var(--c-hol)';return;}
+  runtimePins[currentUser]=np;
+  document.getElementById('set-new-pin').value='';
+  document.getElementById('set-confirm-pin').value='';
+  msg.textContent='PIN er oppdatert (gjelder til du logger ut).';msg.style.color='var(--ps)';
+}
+function saveRate(){
+  const v=parseFloat(document.getElementById('set-rate').value);
+  if(isNaN(v)||v<0)return;
+  runtimeRates[currentUser]=v;
+  render();
+  renderInnstillinger();
+}
+
+// ── EDIT / DELETE ──
+window.toggleEdit=function(id){editingId=(editingId===id)?null:id;render();};
+window.cancelEdit=function(){editingId=null;render();};
 window.saveEdit=async function(id){
   const date=document.getElementById('e-date').value;
   const task=document.getElementById('e-task').value.trim();
@@ -1121,188 +1004,118 @@ window.saveEdit=async function(id){
   const company=document.getElementById('e-co').value;
   const note=document.getElementById('e-note').value.trim();
   const sted=document.getElementById('e-sted').value;
-  if(!date||!task||!duration||duration<=0){ alert('Fyll ut alle felt.'); return; }
-  try {
+  if(!date||!task||!duration||duration<=0){alert('Fyll ut alle felt.');return;}
+  try{
     setSync('loading');
-    await sbFetch(`${TABLE}?id=eq.${encodeURIComponent(id)}&user_id=eq.${currentUser}`, {
-      method:'PATCH', prefer:'return=representation',
-      body: JSON.stringify({date,task,duration,cat,company,note,sted})
-    });
+    await sbFetch(`${TABLE}?id=eq.${encodeURIComponent(id)}&user_id=eq.${currentUser}`,{method:'PATCH',prefer:'return=representation',body:JSON.stringify({date,task,duration,cat,company,note,sted})});
     entries=entries.map(e=>e.id===id?{...e,date,task,duration,cat,company,note,sted}:e);
-    editingId=null; setSync('ok'); render();
-  } catch(e){ setSync('err'); alert('Kunne ikke lagre: '+e.message); }
+    editingId=null;setSync('ok');render();
+  }catch(e){setSync('err');alert('Kunne ikke lagre: '+e.message);}
 };
-
 window.del=async function(id){
-  if(!confirm(t('delete_confirm'))) return;
-  try {
+  if(!confirm('Slette denne oppføringen?'))return;
+  try{
     setSync('loading');
-    await sbFetch(`${TABLE}?id=eq.${encodeURIComponent(id)}&user_id=eq.${currentUser}`, {method:'DELETE'});
+    await sbFetch(`${TABLE}?id=eq.${encodeURIComponent(id)}&user_id=eq.${currentUser}`,{method:'DELETE'});
     entries=entries.filter(e=>e.id!==id);
-    if(editingId===id) editingId=null;
-    setSync('ok'); render();
-  } catch(e){ setSync('err'); alert('Kunne ikke slette: '+e.message); }
+    if(editingId===id)editingId=null;
+    setSync('ok');render();
+  }catch(e){setSync('err');alert('Kunne ikke slette: '+e.message);}
 };
 
-// --- Sidebar quick functions ---
-function sbSyncFilter() {
-  const ff = document.getElementById('sb-filter-from').value;
-  const ft = document.getElementById('sb-filter-to').value;
-  const fc = document.getElementById('sb-filter-company').value;
-  if(document.getElementById('filter-from')) document.getElementById('filter-from').value = ff;
-  if(document.getElementById('filter-to')) document.getElementById('filter-to').value = ft;
-  if(document.getElementById('filter-company')) document.getElementById('filter-company').value = fc;
-  render();
-}
-function sbClearFilter() {
-  ['sb-filter-from','sb-filter-to'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
-  document.getElementById('sb-filter-company').value = '';
-  clearDateFilter();
-}
-// --- Modal ---
-window.openModal = function() {
+// ── MODAL ──
+window.openModal=function(){
   document.getElementById('modal-overlay').classList.add('open');
-  const d = document.getElementById('sb-date');
-  if(d && !d.value) d.value = new Date().toISOString().split('T')[0];
-  setTimeout(()=>{ const t=document.getElementById('sb-task'); if(t) t.focus(); }, 50);
+  const d=document.getElementById('sb-date');
+  if(d&&!d.value)d.value=new Date().toISOString().split('T')[0];
+  setTimeout(()=>{const t=document.getElementById('sb-task');if(t)t.focus();},50);
 };
-window.closeModal = function() {
-  document.getElementById('modal-overlay').classList.remove('open');
-};
-document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+window.closeModal=function(){document.getElementById('modal-overlay').classList.remove('open');};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
-window.sbQuickAdd = async function() {
-  const date = document.getElementById('sb-date').value;
-  const company = document.getElementById('sb-company').value;
-  const task = document.getElementById('sb-task').value.trim();
-  const duration = parseFloat(document.getElementById('sb-duration').value);
-  const catSel = document.getElementById('sb-cat').value;
-  const note = document.getElementById('sb-note').value.trim();
-  const sted = document.getElementById('sb-sted') ? document.getElementById('sb-sted').value : (currentUser==='sepideh'?'stockholm':'oslo');
-  if(!date||!task||!duration||duration<=0){ alert('Fyll ut dato, aktivitet og timer.'); return; }
-  const cat = catSel==='auto' ? getCat(date) : catSel;
-  const entry = {id:uid(),date,company,task,duration,cat,note,sted,user_id:currentUser};
-  const btn = document.getElementById('sb-add-btn');
-  btn.disabled=true; btn.textContent='Lagrer…';
-  try {
+window.sbQuickAdd=async function(){
+  const date=document.getElementById('sb-date').value;
+  const company=document.getElementById('sb-company').value;
+  const task=document.getElementById('sb-task').value.trim();
+  const duration=parseFloat(document.getElementById('sb-duration').value);
+  const catSel=document.getElementById('sb-cat').value;
+  const note=document.getElementById('sb-note').value.trim();
+  const sted=document.getElementById('sb-sted')?.value||(currentUser==='sepideh'?'stockholm':'oslo');
+  if(!date||!task||!duration||duration<=0){alert('Fyll ut dato, aktivitet og timer.');return;}
+  const cat=catSel==='auto'?getCat(date):catSel;
+  const entry={id:uid(),date,company,task,duration,cat,note,sted,user_id:currentUser};
+  const btn=document.getElementById('sb-add-btn');
+  btn.disabled=true;btn.textContent='Lagrer…';
+  try{
     setSync('loading');
-    await sbFetch(TABLE, {method:'POST', prefer:'return=representation', body:JSON.stringify(entry)});
+    await sbFetch(TABLE,{method:'POST',prefer:'return=representation',body:JSON.stringify(entry)});
     entries.unshift(entry);
     document.getElementById('sb-task').value='';
     document.getElementById('sb-duration').value='';
     document.getElementById('sb-cat').value='auto';
     document.getElementById('sb-note').value='';
-    setSync('ok'); render();
-    closeModal();
-  } catch(e){ setSync('err'); alert('Kunne ikke lagre: '+e.message); }
-  finally { btn.disabled=false; btn.textContent='+ Legg til'; }
+    setSync('ok');render();closeModal();
+    if(currentPage==='rapport')renderRapport();
+  }catch(e){setSync('err');alert('Kunne ikke lagre: '+e.message);}
+  finally{btn.disabled=false;btn.textContent='+ Legg til';}
 };
 
-document.getElementById('btn-add').addEventListener('click', async ()=>{
-  const date=document.getElementById('inp-date').value;
-  const company=document.getElementById('inp-company').value;
-  const task=document.getElementById('inp-task').value.trim();
-  const duration=parseFloat(document.getElementById('inp-duration').value);
-  const catSel=document.getElementById('inp-cat').value;
-  const note=document.getElementById('inp-note').value.trim();
-  const sted=document.getElementById('inp-sted').value;
-  if(!date||!task||!duration||duration<=0){ alert('Fyll ut dato, aktivitet og tidsforbruk.'); return; }
-  const cat=catSel==='auto'?getCat(date):catSel;
-  const entry={id:uid(),date,company,task,duration,cat,note,sted,user_id:currentUser};
-  const btn=document.getElementById('btn-add');
-  btn.disabled=true; btn.textContent='Lagrer…';
-  try {
-    setSync('loading');
-    await sbFetch(TABLE, {method:'POST', prefer:'return=representation', body:JSON.stringify(entry)});
-    entries.unshift(entry);
-    document.getElementById('inp-task').value='';
-    document.getElementById('inp-duration').value='';
-    document.getElementById('inp-cat').value='auto';
-    document.getElementById('inp-note').value='';
-    updateHint(); setSync('ok'); render();
-  } catch(e){ setSync('err'); alert('Kunne ikke lagre: '+e.message); }
-  finally { btn.disabled=false; btn.textContent='+ Legg til oppføring'; }
-});
-
-['filter-company','filter-cat'].forEach(id=>
-  document.getElementById(id).addEventListener('change',render)
-);
-document.getElementById('filter-from').addEventListener('change',render);
-document.getElementById('filter-to').addEventListener('change',render);
-document.getElementById('filter-sted').addEventListener('change',render);
-
-function clearDateFilter(){
-  document.getElementById('filter-from').value='';
-  document.getElementById('filter-to').value='';
+// ── FILTERS ──
+function sbSyncFilter(){
+  const ff=document.getElementById('sb-filter-from')?.value||'';
+  const ft=document.getElementById('sb-filter-to')?.value||'';
+  const fc=document.getElementById('sb-filter-company')?.value||'';
+  const el=id=>{const e=document.getElementById(id);if(e)e.value=arguments[0]===id?ff:ft;};
+  const fFrom=document.getElementById('filter-from');if(fFrom)fFrom.value=ff;
+  const fTo=document.getElementById('filter-to');if(fTo)fTo.value=ft;
+  const fCo=document.getElementById('filter-company');if(fCo)fCo.value=fc;
   render();
 }
-
-document.getElementById('btn-export').addEventListener('click',()=>{
-  if(!entries.length){ alert('Ingen oppføringer å eksportere.'); return; }
-  const sorted=[...entries].sort((a,b)=>a.date.localeCompare(b.date));
-
-  // Header row
-  const wsData = [['Dato','Dag','Uke','Sted','Selskap','Tidskategori','Aktivitet','Timer','Merknad']];
-
-  sorted.forEach(e=>{
-    const co=e.company==='int'?'First Hotels International':e.company==='et'?'Enter Tromsø':e.company==='ml'?'Mallangen Resort':e.company==='se'?'St. Elisabeth':'First Hotels Planetstaden';
-    wsData.push([
-      e.date,
-      getDayName(e.date),
-      getWeek(e.date),
-      stedLabel(e.sted||'oslo'),
-      co,
-      catLabel(e.cat),
-      e.task||'',
-      parseFloat(e.duration)||0,
-      e.note||''
-    ]);
-  });
-
-  // Add totals row
-  const totalH = sorted.reduce((s,e)=>s+(parseFloat(e.duration)||0),0);
-  wsData.push(['','','','','','',t('total_label'),totalH,'']);
-
-  // Marcus earnings row
-  if(currentUser==='marcus' && HOURLY_RATE && HOURLY_RATE['marcus']){
-    const rate = HOURLY_RATE['marcus'];
-    wsData.push(['','','','','','','Timelønn ('+rate+' kr/t)',totalH*rate,'kr']);
-  }
-
-  const ws = XLSX.utils.aoa_to_sheet(wsData);
-
-  // Column widths
-  ws['!cols'] = [
-    {wch:12},{wch:5},{wch:5},{wch:8},{wch:26},{wch:18},{wch:42},{wch:8},{wch:35}
-  ];
-
-  // Style header row - bold + blue background
-  const headerStyle = {
-    font: {bold: true, color: {rgb: 'FFFFFF'}},
-    fill: {fgColor: {rgb: '185FA5'}},
-    alignment: {wrapText: false}
-  };
-  const cols = ['A','B','C','D','E','F','G','H','I'];
-  cols.forEach(c => {
-    const cell = ws[c+'1'];
-    if(cell) cell.s = headerStyle;
-  });
-
-  // Style totals row
-  const lastDataRow = wsData.length;
-  const totStyle = {font:{bold:true}, fill:{fgColor:{rgb:'F1EFE8'}}};
-  cols.forEach(c => {
-    const cell = ws[c+lastDataRow];
-    if(cell) cell.s = totStyle;
-  });
-
-  // Freeze top row
-  ws['!freeze'] = {xSplit:0, ySplit:1};
-
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'Tidslogg');
-  XLSX.writeFile(wb, `tidslogg_${currentUser}.xlsx`);
+function sbClearFilter(){
+  ['sb-filter-from','sb-filter-to','filter-from','filter-to'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  const sfc=document.getElementById('sb-filter-company');if(sfc)sfc.value='';
+  const fc=document.getElementById('filter-company');if(fc)fc.value='';
+  render();
+}
+function clearDateFilter(){
+  ['filter-from','filter-to','sb-filter-from','sb-filter-to'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  render();
+}
+['filter-company','filter-cat','filter-sted','filter-from','filter-to'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el)el.addEventListener('change',render);
 });
+const filterFrom=document.getElementById('filter-from');
+if(filterFrom)filterFrom.addEventListener('change',render);
+const filterTo=document.getElementById('filter-to');
+if(filterTo)filterTo.addEventListener('change',render);
+
+// ── EXPORT ──
+document.getElementById('btn-export').addEventListener('click',()=>{
+  if(!entries.length){alert('Ingen oppføringer å eksportere.');return;}
+  const sorted=[...entries].sort((a,b)=>a.date.localeCompare(b.date));
+  const wsData=[['Dato','Dag','Uke','Sted','Selskap','Tidskategori','Aktivitet','Timer','Merknad']];
+  sorted.forEach(e=>{
+    wsData.push([e.date,getDayName(e.date),getWeek(e.date),stedLabel(e.sted||'oslo'),coName(e.company),catLabel(e.cat),e.task||'',parseFloat(e.duration)||0,e.note||'']);
+  });
+  const totalH=sorted.reduce((s,e)=>s+(parseFloat(e.duration)||0),0);
+  wsData.push(['','','','','','','TOTALT',totalH,'']);
+  const rate=runtimeRates[currentUser];
+  if(currentUser==='marcus'&&rate) wsData.push(['','','','','','','Timelønn ('+rate+' kr/t)',totalH*rate,'kr']);
+  const ws=XLSX.utils.aoa_to_sheet(wsData);
+  ws['!cols']=[{wch:12},{wch:5},{wch:5},{wch:8},{wch:26},{wch:18},{wch:42},{wch:8},{wch:35}];
+  const headerStyle={font:{bold:true,color:{rgb:'FFFFFF'}},fill:{fgColor:{rgb:'185FA5'}}};
+  ['A','B','C','D','E','F','G','H','I'].forEach(c=>{const cell=ws[c+'1'];if(cell)cell.s=headerStyle;});
+  ws['!freeze']={xSplit:0,ySplit:1};
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Tidslogg');
+  XLSX.writeFile(wb,`tidslogg_${currentUser}.xlsx`);
+});
+
+// legacy compat stubs
+function updateHint(){}
+function populateUserDropdowns(){populateDropdowns();}
+
 </script>
 </body>
 </html>
