@@ -28,7 +28,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 
 /* ── LOGIN ── */
 .login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:1rem;background:var(--sidebar-bg)}
-.login-logo{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:1.5rem}
+.login-logo{font-size:22px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:1.5rem}
 .login-screen h1{font-size:20px;font-weight:400;color:#fff;margin-bottom:.25rem}
 .login-screen p{color:rgba(255,255,255,.45);font-size:13px;margin-bottom:1.5rem}
 .user-buttons{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
@@ -327,19 +327,6 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
         </button>
       </div>
 
-      <div class="nav-section-label" style="margin-top:4px">Filter</div>
-      <div style="padding:0 12px 10px">
-        <div class="sb-field" style="display:flex;gap:4px;align-items:center">
-          <span style="font-size:10px;color:rgba(255,255,255,.35);width:22px;flex-shrink:0">Fra</span>
-          <input type="date" id="sb-filter-from" class="sb-input" oninput="sbSyncFilter()"/>
-        </div>
-        <div class="sb-field" style="display:flex;gap:4px;align-items:center">
-          <span style="font-size:10px;color:rgba(255,255,255,.35);width:22px;flex-shrink:0">Til</span>
-          <input type="date" id="sb-filter-to" class="sb-input" oninput="sbSyncFilter()"/>
-        </div>
-        <div class="sb-field"><select id="sb-filter-company" class="sb-input" onchange="sbSyncFilter()"><option value="">Alle selskap</option></select></div>
-        <button onclick="sbClearFilter()" style="width:100%;padding:5px;background:transparent;color:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.1);border-radius:6px;font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer">Nullstill filter</button>
-      </div>
     </nav>
 
     <div class="sidebar-footer">
