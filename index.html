@@ -175,52 +175,59 @@
   .btn-outline { background: transparent; border-color: var(--border-mid); color: var(--muted); }
   .btn-outline:hover { background: var(--bg); }
 
-  .page-body { padding: 24px 28px; overflow-y: auto; flex: 1; }
+  .page-body { padding: 24px 28px; overflow-y: auto; overflow-x: hidden; flex: 1; }
 
-  /* ─── METRICS ─── */
-  .summary-grid {
-    display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 12px;
-  }
-  .cat-grid {
-    display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; margin-bottom: 20px;
-  }
-  .metric {
+  /* ─── TOP STAT ROW ─── */
+  .stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 20px; }
+  .stat-card {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: var(--radius); padding: 14px 16px;
   }
-  .metric-label {
-    font-size: 10px; color: var(--muted); text-transform: uppercase;
-    letter-spacing: 0.07em; margin-bottom: 6px; display: flex; align-items: center; gap: 5px;
-  }
-  .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
+  .stat-value { font-size: 22px; font-weight: 400; font-family: 'DM Mono', monospace; letter-spacing: -0.02em; }
+  .stat-sub { font-size: 10px; color: var(--faint); margin-top: 3px; font-family: 'DM Mono', monospace; }
+
+  /* ─── TWO COLUMN OVERVIEW ─── */
+  .overview-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .overview-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; }
+  .overview-title { font-size: 10px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 14px; }
+
+  /* Per selskap rows */
+  .co-row { margin-bottom: 14px; }
+  .co-row:last-child { margin-bottom: 0; }
+  .co-row-top { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .co-name { font-size: 13px; color: var(--text); flex: 1; }
+  .co-hours { font-size: 13px; font-weight: 500; font-family: 'DM Mono', monospace; color: var(--text); }
+  .co-bar-wrap { height: 3px; background: var(--bg); border-radius: 2px; margin-bottom: 2px; }
+  .co-bar { height: 3px; border-radius: 2px; transition: width 0.4s ease; }
+  .co-pct { font-size: 10px; color: var(--faint); font-family: 'DM Mono', monospace; }
+
+  /* Per tidskategori rows */
+  .cat-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border); }
+  .cat-row:last-child { border-bottom: none; }
+  .cat-badge { font-size: 11px; padding: 3px 9px; border-radius: 4px; font-weight: 500; }
+  .cat-right { text-align: right; }
+  .cat-h { font-size: 13px; font-weight: 500; font-family: 'DM Mono', monospace; }
+  .cat-p { font-size: 10px; color: var(--faint); font-family: 'DM Mono', monospace; }
+
+  /* ─── METRICS (kept for JS compat) ─── */
+  .metric { display: none; }
+  .summary-grid { display: none; }
+  .cat-grid { display: none; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; display: inline-block; }
   .dot-int{background:var(--int)} .dot-ps{background:var(--ps)} .dot-et{background:var(--et)}
   .dot-ml{background:var(--ml)} .dot-se{background:var(--se)}
   .dot-mor{background:var(--c-mor)} .dot-day{background:var(--c-day)} .dot-eve{background:var(--c-eve)}
   .dot-week{background:var(--c-week)} .dot-hol{background:var(--c-hol)}
-  .metric-value {
-    font-size: 20px; font-weight: 400; font-family: 'DM Mono', monospace;
-    letter-spacing: -0.02em;
-  }
-  .metric-sub { font-size: 10px; color: var(--faint); margin-top: 3px; font-family: 'DM Mono', monospace; }
-  .section-label {
-    font-size: 10px; color: var(--muted); text-transform: uppercase;
-    letter-spacing: 0.07em; font-weight: 500; margin-bottom: 8px; margin-top: 4px;
-  }
+  .section-label { display: none; }
 
-  /* ─── BARS ─── */
-  .bars { margin-bottom: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; }
-  .bars-inner-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 500; margin-bottom: 12px; }
-  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
-  .bar-row:last-child { margin-bottom: 0; }
-  .bar-label { font-size: 12px; color: var(--muted); width: 190px; flex-shrink: 0; }
-  .bar-track { flex: 1; background: var(--bg); border-radius: 3px; height: 6px; overflow: hidden; }
+  /* ─── BARS (hidden, kept for JS compat) ─── */
+  .bars { display: none !important; }
   .bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; }
   .bar-fill-int{background:var(--int)} .bar-fill-ps{background:var(--ps)} .bar-fill-et{background:var(--et)}
   .bar-fill-ml{background:var(--ml)} .bar-fill-se{background:var(--se)}
   .bar-fill-mor{background:var(--c-mor)} .bar-fill-day{background:var(--c-day)} .bar-fill-eve{background:var(--c-eve)}
   .bar-fill-week{background:var(--c-week)} .bar-fill-hol{background:var(--c-hol)}
-  .bar-pct { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--faint); width: 38px; text-align: right; }
-  .bars-divider { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
 
   /* ─── CARD ─── */
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 14px; }
@@ -327,7 +334,7 @@
   /* ─── RESPONSIVE ─── */
   @media(max-width:900px){
     .sidebar { width: 180px; }
-    .cat-grid { grid-template-columns: repeat(3,1fr); }
+    .stat-row { grid-template-columns: repeat(2,1fr); }
   }
   @media(max-width:680px){
     .app-shell { flex-direction: column; }
@@ -337,7 +344,8 @@
     .sidebar-sub { display: none; }
     .page-body { padding: 16px; }
     .topbar { padding: 12px 16px; }
-    .summary-grid, .cat-grid { grid-template-columns: 1fr 1fr; }
+    .stat-row { grid-template-columns: 1fr 1fr; }
+    .overview-cols { grid-template-columns: 1fr; }
     .form-grid, .form-grid-3, .edit-panel, .edit-panel-2 { grid-template-columns: 1fr; }
   }
 </style>
@@ -429,48 +437,91 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
   <div class="main-content">
     <div class="topbar">
       <div class="topbar-title" id="topbar-section-title">Dashboard</div>
-      <div class="topbar-actions">
-        <button class="btn btn-outline" id="btn-export">↓ Eksporter Excel</button>
-      </div>
+      <div class="topbar-actions"></div>
     </div>
 
     <div class="page-body">
 
-      <div class="section-label" id="lbl-per-company">Fordeling per selskap</div>
-      <div class="summary-grid">
-        <div class="metric"><div class="metric-label">Totalt loggede timer</div><div class="metric-value" id="total-hours">0,0 t</div><div class="metric-sub" id="total-entries">0 oppføringer</div></div>
-        <div class="metric"><div class="metric-label"><span class="dot dot-int"></span> International</div><div class="metric-value" id="int-hours">0,0 t</div><div class="metric-sub" id="int-pct">0 %</div></div>
-        <div class="metric"><div class="metric-label"><span class="dot dot-ps"></span> Planetstaden</div><div class="metric-value" id="ps-hours">0,0 t</div><div class="metric-sub" id="ps-pct">0 %</div></div>
-        <div id="card-et" class="metric"><div class="metric-label"><span class="dot dot-et"></span> Enter Tromsø</div><div class="metric-value" id="et-hours">0,0 t</div><div class="metric-sub" id="et-pct">0 %</div></div>
-        <div id="card-ml" class="metric"><div class="metric-label"><span class="dot dot-ml"></span> Mallangen Resort</div><div class="metric-value" id="ml-hours">0,0 t</div><div class="metric-sub" id="ml-pct">0 %</div></div>
-        <div id="card-se" class="metric"><div class="metric-label"><span class="dot dot-se"></span> St. Elisabeth</div><div class="metric-value" id="se-hours">0,0 t</div><div class="metric-sub" id="se-pct">0 %</div></div>
+      <!-- TOP STAT ROW -->
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-label">Totalt</div>
+          <div class="stat-value" id="total-hours">0,0 t</div>
+          <div class="stat-sub" id="total-entries">0 oppføringer</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Normaldag</div>
+          <div class="stat-value" id="stat-day-h">0,0 t</div>
+          <div class="stat-sub" id="stat-day-pct">0 % av total</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Kveld / Helg</div>
+          <div class="stat-value" id="stat-offhours-h">0,0 t</div>
+          <div class="stat-sub" id="stat-offhours-pct">0 % av total</div>
+        </div>
+        <div id="earnings-card" class="stat-card" style="display:none;">
+          <div class="stat-label">Estimert lønn</div>
+          <div class="stat-value" id="earnings-amount" style="font-size:18px;">0 kr</div>
+          <div class="stat-sub" id="earnings-detail">uten tillegg</div>
+        </div>
+        <div id="stat-placeholder" class="stat-card">
+          <div class="stat-label">Morgen før 08</div>
+          <div class="stat-value" id="stat-mor-h">0,0 t</div>
+          <div class="stat-sub" id="stat-mor-pct">0 % av total</div>
+        </div>
       </div>
 
-      <div class="section-label" id="lbl-per-cat">Fordeling per tidskategori</div>
-      <div class="cat-grid">
-        <div class="metric"><div class="metric-label"><span class="dot dot-mor"></span> Morgen før 08</div><div class="metric-value" id="cat-mor-h">0,0 t</div><div class="metric-sub" id="cat-mor-pct">0 %</div></div>
-        <div class="metric"><div class="metric-label"><span class="dot dot-day"></span> Normaldag 08-16</div><div class="metric-value" id="cat-day-h">0,0 t</div><div class="metric-sub" id="cat-day-pct">0 %</div></div>
-        <div class="metric"><div class="metric-label"><span class="dot dot-eve"></span> Kveld man-fre</div><div class="metric-value" id="cat-eve-h">0,0 t</div><div class="metric-sub" id="cat-eve-pct">0 %</div></div>
-        <div class="metric"><div class="metric-label"><span class="dot dot-week"></span> Lørdag / søndag</div><div class="metric-value" id="cat-week-h">0,0 t</div><div class="metric-sub" id="cat-week-pct">0 %</div></div>
-        <div class="metric"><div class="metric-label"><span class="dot dot-hol"></span> Offentlig fridag</div><div class="metric-value" id="cat-hol-h">0,0 t</div><div class="metric-sub" id="cat-hol-pct">0 %</div></div>
+      <!-- TWO COLUMN: selskap + tidskategori -->
+      <div class="overview-cols">
+        <div class="overview-card">
+          <div class="overview-title" id="lbl-per-company">Per selskap</div>
+          <div id="co-rows">
+            <div class="co-row"><div class="co-row-top"><span class="dot dot-ps"></span><span class="co-name">Planetstaden</span><span class="co-hours" id="ps-hours">0,0 t</span></div><div class="co-bar-wrap"><div class="co-bar" id="bar-ps" style="width:0%;background:var(--ps)"></div></div><div class="co-pct" id="ps-pct">0 %</div></div>
+            <div class="co-row"><div class="co-row-top"><span class="dot dot-int"></span><span class="co-name">International</span><span class="co-hours" id="int-hours">0,0 t</span></div><div class="co-bar-wrap"><div class="co-bar" id="bar-int" style="width:0%;background:var(--int)"></div></div><div class="co-pct" id="int-pct">0 %</div></div>
+            <div class="co-row" id="bar-row-et"><div class="co-row-top"><span class="dot dot-et"></span><span class="co-name">Enter Tromsø</span><span class="co-hours" id="et-hours">0,0 t</span></div><div class="co-bar-wrap"><div class="co-bar" id="bar-et" style="width:0%;background:var(--et)"></div></div><div class="co-pct" id="et-pct">0 %</div></div>
+            <div class="co-row" id="bar-row-ml"><div class="co-row-top"><span class="dot dot-ml"></span><span class="co-name">Mallangen Resort</span><span class="co-hours" id="ml-hours">0,0 t</span></div><div class="co-bar-wrap"><div class="co-bar" id="bar-ml" style="width:0%;background:var(--ml)"></div></div><div class="co-pct" id="ml-pct">0 %</div></div>
+            <div class="co-row" id="bar-row-se"><div class="co-row-top"><span class="dot dot-se"></span><span class="co-name">St. Elisabeth</span><span class="co-hours" id="se-hours">0,0 t</span></div><div class="co-bar-wrap"><div class="co-bar" id="bar-se" style="width:0%;background:var(--se)"></div></div><div class="co-pct" id="se-pct">0 %</div></div>
+          </div>
+        </div>
+        <div class="overview-card">
+          <div class="overview-title" id="lbl-per-cat">Per tidskategori</div>
+          <div class="cat-row">
+            <span class="cat-badge badge-day">Normaldag 08–16</span>
+            <div class="cat-right"><div class="cat-h" id="cat-day-h">0,0 t</div><div class="cat-p" id="cat-day-pct">0 %</div></div>
+          </div>
+          <div class="cat-row">
+            <span class="cat-badge badge-eve">Kveld man–fre</span>
+            <div class="cat-right"><div class="cat-h" id="cat-eve-h">0,0 t</div><div class="cat-p" id="cat-eve-pct">0 %</div></div>
+          </div>
+          <div class="cat-row">
+            <span class="cat-badge badge-week">Lørdag / søndag</span>
+            <div class="cat-right"><div class="cat-h" id="cat-week-h">0,0 t</div><div class="cat-p" id="cat-week-pct">0 %</div></div>
+          </div>
+          <div class="cat-row">
+            <span class="cat-badge badge-mor">Morgen før 08</span>
+            <div class="cat-right"><div class="cat-h" id="cat-mor-h">0,0 t</div><div class="cat-p" id="cat-mor-pct">0 %</div></div>
+          </div>
+          <div class="cat-row">
+            <span class="cat-badge badge-hol">Offentlig fridag</span>
+            <div class="cat-right"><div class="cat-h" id="cat-hol-h">0,0 t</div><div class="cat-p" id="cat-hol-pct">0 %</div></div>
+          </div>
+        </div>
       </div>
 
-      <div class="bars" id="bars-section" style="display:none">
-        <div class="bars-inner-label">Selskap</div>
-        <div class="bar-row"><div class="bar-label">International</div><div class="bar-track"><div class="bar-fill bar-fill-int" id="bar-int" style="width:0%"></div></div><div class="bar-pct" id="barpct-int">0 %</div></div>
-        <div class="bar-row"><div class="bar-label">Planetstaden</div><div class="bar-track"><div class="bar-fill bar-fill-ps" id="bar-ps" style="width:0%"></div></div><div class="bar-pct" id="barpct-ps">0 %</div></div>
-        <div class="bar-row" id="bar-row-et"><div class="bar-label">Enter Tromsø</div><div class="bar-track"><div class="bar-fill bar-fill-et" id="bar-et" style="width:0%"></div></div><div class="bar-pct" id="barpct-et">0 %</div></div>
-        <div class="bar-row" id="bar-row-ml"><div class="bar-label">Mallangen Resort</div><div class="bar-track"><div class="bar-fill bar-fill-ml" id="bar-ml" style="width:0%"></div></div><div class="bar-pct" id="barpct-ml">0 %</div></div>
-        <div class="bar-row" id="bar-row-se"><div class="bar-label">St. Elisabeth</div><div class="bar-track"><div class="bar-fill bar-fill-se" id="bar-se" style="width:0%"></div></div><div class="bar-pct" id="barpct-se">0 %</div></div>
-        <hr class="bars-divider">
-        <div class="bars-inner-label">Tidskategori</div>
-        <div class="bar-row"><div class="bar-label">Morgen (man-fre før 08)</div><div class="bar-track"><div class="bar-fill bar-fill-mor" id="bar-mor" style="width:0%"></div></div><div class="bar-pct" id="barpct-mor">0 %</div></div>
-        <div class="bar-row"><div class="bar-label">Normaldag (man-fre 08-16)</div><div class="bar-track"><div class="bar-fill bar-fill-day" id="bar-day" style="width:0%"></div></div><div class="bar-pct" id="barpct-day">0 %</div></div>
-        <div class="bar-row"><div class="bar-label">Kveld (man-fre etter 16)</div><div class="bar-track"><div class="bar-fill bar-fill-eve" id="bar-eve" style="width:0%"></div></div><div class="bar-pct" id="barpct-eve">0 %</div></div>
-        <div class="bar-row"><div class="bar-label">Helg (lør-søn)</div><div class="bar-track"><div class="bar-fill bar-fill-week" id="bar-week" style="width:0%"></div></div><div class="bar-pct" id="barpct-week">0 %</div></div>
-        <div class="bar-row"><div class="bar-label">Offentlig fridag</div><div class="bar-track"><div class="bar-fill bar-fill-hol" id="bar-hol" style="width:0%"></div></div><div class="bar-pct" id="barpct-hol">0 %</div></div>
+      <!-- Hidden elements kept for JS compatibility -->
+      <div style="display:none">
+        <div id="bars-section"></div>
+        <div id="card-et"></div><div id="card-ml"></div><div id="card-se"></div>
+        <span id="barpct-int"></span><span id="barpct-ps"></span><span id="barpct-et"></span>
+        <span id="barpct-ml"></span><span id="barpct-se"></span>
+        <span id="bar-mor"></span><span id="bar-day"></span><span id="bar-eve"></span>
+        <span id="bar-week"></span><span id="bar-hol"></span>
+        <span id="barpct-mor"></span><span id="barpct-day"></span><span id="barpct-eve"></span>
+        <span id="barpct-week"></span><span id="barpct-hol"></span>
+        <span id="lbl-per-company-old"></span><span id="lbl-per-cat-old"></span>
       </div>
 
+      <!-- LOGG NY AKTIVITET -->
       <div class="card">
         <div class="card-header"><span id="lbl-log-section">Logg ny aktivitet</span></div>
         <div class="card-body">
@@ -499,16 +550,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
         </div>
       </div>
 
-      <div id="earnings-card" class="earnings-card" style="display:none;">
-        <div class="earnings-inner">
-          <div>
-            <div class="earnings-label">Timelønn × loggede timer (valgt periode)</div>
-            <div class="earnings-amount" id="earnings-amount">0 kr</div>
-          </div>
-          <div class="earnings-detail" id="earnings-detail"></div>
-        </div>
-      </div>
-
+      <!-- LOGG-TABELL -->
       <div class="filters">
         <label id="lbl-from">Fra</label>
         <input type="date" id="filter-from"/>
@@ -526,6 +568,10 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
       </div>
 
       <div class="card">
+        <div class="card-header">
+          <span>Siste oppføringer</span>
+          <button class="btn btn-outline" id="btn-export" style="font-size:11px;padding:5px 10px;">↓ Eksporter Excel</button>
+        </div>
         <div id="log-container"><div class="empty">Henter data…</div></div>
       </div>
 
@@ -839,6 +885,17 @@ function render() {
 
   document.getElementById('total-hours').textContent=fmtH(tot);
   document.getElementById('total-entries').textContent=entries.length+' oppføringer';
+  // New stat cards
+  const dayH=cH['day']||0, offH=(cH['eve']||0)+(cH['week']||0), morH=cH['mor']||0;
+  const sdh=document.getElementById('stat-day-h'); if(sdh) sdh.textContent=fmtH(dayH);
+  const sdp=document.getElementById('stat-day-pct'); if(sdp) sdp.textContent=pct(dayH,tot)+' % av total';
+  const soh=document.getElementById('stat-offhours-h'); if(soh) soh.textContent=fmtH(offH);
+  const sop=document.getElementById('stat-offhours-pct'); if(sop) sop.textContent=pct(offH,tot)+' % av total';
+  const smh=document.getElementById('stat-mor-h'); if(smh) smh.textContent=fmtH(morH);
+  const smp=document.getElementById('stat-mor-pct'); if(smp) smp.textContent=pct(morH,tot)+' % av total';
+  // Update new co-bar widths
+  const bars={int:pct(iH,tot),ps:pct(pH,tot),et:pct(etH,tot),ml:pct(mlH,tot),se:pct(seH,tot)};
+  Object.entries(bars).forEach(([k,v])=>{ const b=document.getElementById('bar-'+k); if(b) b.style.width=v+'%'; });
   document.getElementById('int-hours').textContent=fmtH(iH);
   document.getElementById('ps-hours').textContent=fmtH(pH);
   document.getElementById('int-pct').textContent=pct(iH,tot)+' % av totalt';
