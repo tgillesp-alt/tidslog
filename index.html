@@ -212,28 +212,6 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     <div class="metric"><div class="metric-label"><span class="dot dot-hol"></span> Offentlig fridag</div><div class="metric-value" id="cat-hol-h">0,0 t</div><div class="metric-sub" id="cat-hol-pct">0 %</div></div>
   </div>
 
-  <!-- Weekly summary cards - Thomas only -->
-  <div id="weekly-summary" style="display:none; margin-bottom:1.5rem;">
-    <div class="section-label" id="lbl-weekly">Ukeoversikt</div>
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">
-      <div class="metric">
-        <div class="metric-label">Forrige uke</div>
-        <div class="metric-value" id="week-prev-h">0,0 t</div>
-        <div class="metric-sub" id="week-prev-label">Uke –</div>
-      </div>
-      <div class="metric">
-        <div class="metric-label">Inneværende uke</div>
-        <div class="metric-value" id="week-curr-h">0,0 t</div>
-        <div class="metric-sub" id="week-curr-label">Uke –</div>
-      </div>
-      <div class="metric">
-        <div class="metric-label">Snitt per dag (alle dager)</div>
-        <div class="metric-value" id="week-avg-h">0,0 t</div>
-        <div class="metric-sub" id="week-avg-sub">løpende</div>
-      </div>
-    </div>
-  </div>
-
   <div class="bars" id="bars-section" style="display:none">
     <div class="section-label">Selskap</div>
     <div class="bar-row"><div class="bar-label">International</div><div class="bar-track"><div class="bar-fill bar-fill-int" id="bar-int" style="width:0%"></div></div><div class="bar-pct" id="barpct-int">0 %</div></div>
@@ -637,44 +615,6 @@ function render() {
   });
   document.getElementById('bars-section').style.display=tot>0?'block':'none';
 
-  // Weekly summary - Thomas only
-  const weeklySummary = document.getElementById('weekly-summary');
-  if (currentUser === 'thomas') {
-    weeklySummary.style.display = 'block';
-
-    // Get current week and previous week numbers
-    const today = new Date();
-    function getWeekFromDate(d) {
-      const dt = new Date(d);
-      dt.setDate(dt.getDate() + 4 - (dt.getDay() || 7));
-      const y = new Date(dt.getFullYear(), 0, 1);
-      return Math.ceil((((dt - y) / 86400000) + 1) / 7);
-    }
-    const currWeekNum = getWeekFromDate(today.toISOString().split('T')[0]);
-    const prevWeekNum = currWeekNum - 1;
-
-    // Sum hours per week
-    let currH = 0, prevH = 0;
-    entries.forEach(e => {
-      const w = getWeek(e.date);
-      const h = parseFloat(e.duration) || 0;
-      if (w === currWeekNum) currH += h;
-      if (w === prevWeekNum) prevH += h;
-    });
-
-    // Average per day - based on unique dates logged
-    const uniqueDates = new Set(entries.map(e => e.date));
-    const avgH = uniqueDates.size > 0 ? tot / uniqueDates.size : 0;
-
-    document.getElementById('week-prev-h').textContent = fmtH(prevH);
-    document.getElementById('week-prev-label').textContent = 'Uke ' + prevWeekNum;
-    document.getElementById('week-curr-h').textContent = fmtH(currH);
-    document.getElementById('week-curr-label').textContent = 'Uke ' + currWeekNum;
-    document.getElementById('week-avg-h').textContent = fmtH(avgH);
-    document.getElementById('week-avg-sub').textContent = uniqueDates.size + ' dager logget';
-  } else {
-    weeklySummary.style.display = 'none';
-  }
 
   const filtered=entries.filter(e=>
     (!ff||e.date>=ff)&&(!ft||e.date<=ft)&&(!sf||e.sted===sf)&&(!cf||e.company===cf)&&(!tf||e.cat===tf)
