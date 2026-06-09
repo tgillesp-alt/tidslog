@@ -193,7 +193,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     </div>
   </header>
 
-  <div class="section-label">Fordeling per selskap</div>
+  <div class="section-label" id="lbl-per-company">Fordeling per selskap</div>
   <div class="summary-grid">
     <div class="metric"><div class="metric-label">Totalt loggede timer</div><div class="metric-value" id="total-hours">0,0 t</div><div class="metric-sub" id="total-entries">0 oppføringer</div></div>
     <div class="metric"><div class="metric-label"><span class="dot dot-int"></span> International</div><div class="metric-value" id="int-hours">0,0 t</div><div class="metric-sub" id="int-pct">0 %</div></div>
@@ -203,7 +203,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     <div id="card-se" class="metric"><div class="metric-label"><span class="dot dot-se"></span> St. Elisabeth</div><div class="metric-value" id="se-hours">0,0 t</div><div class="metric-sub" id="se-pct">0 %</div></div>
   </div>
 
-  <div class="section-label">Fordeling per tidskategori</div>
+  <div class="section-label" id="lbl-per-cat">Fordeling per tidskategori</div>
   <div class="cat-grid">
     <div class="metric"><div class="metric-label"><span class="dot dot-mor"></span> Morgen før 08</div><div class="metric-value" id="cat-mor-h">0,0 t</div><div class="metric-sub" id="cat-mor-pct">0 %</div></div>
     <div class="metric"><div class="metric-label"><span class="dot dot-day"></span> Normaldag 08-16</div><div class="metric-value" id="cat-day-h">0,0 t</div><div class="metric-sub" id="cat-day-pct">0 %</div></div>
@@ -229,23 +229,23 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
   </div>
 
   <div class="card">
-    <div class="card-header">Logg ny aktivitet</div>
+    <div class="card-header" id="lbl-log-section">Logg ny aktivitet</div>
     <div class="card-body">
       <div class="form-grid-3">
-        <div class="field"><label>Dato</label><input type="date" id="inp-date"/></div>
-        <div class="field"><label>Sted</label>
+        <div class="field"><label id="lbl-date">Dato</label><input type="date" id="inp-date"/></div>
+        <div class="field"><label id="lbl-sted">Sted</label>
           <select id="inp-sted">
           </select>
         </div>
-        <div class="field"><label>Selskap</label>
+        <div class="field"><label id="lbl-company">Selskap</label>
           <select id="inp-company">
           </select>
         </div>
       </div>
       <div class="form-grid-3">
         <div class="field"><label>Aktivitet / oppgave</label><input type="text" id="inp-task" placeholder="f.eks. Strategimøte, P&amp;L-gjennomgang…"/></div>
-        <div class="field"><label>Tidsforbruk (timer)</label><input type="number" id="inp-duration" min="0.25" max="24" step="0.25" placeholder="f.eks. 1.5"/></div>
-        <div class="field"><label>Tidskategori</label>
+        <div class="field"><label id="lbl-duration">Tidsforbruk (timer)</label><input type="number" id="inp-duration" min="0.25" max="24" step="0.25" placeholder="f.eks. 1.5"/></div>
+        <div class="field"><label id="lbl-cat">Tidskategori</label>
           <select id="inp-cat">
             <option value="auto">Auto (beregn fra dato)</option>
             <option value="mor">Morgen man-fre før 08</option>
@@ -257,7 +257,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
           <div class="cat-hint" id="cat-hint"></div>
         </div>
       </div>
-      <div class="field"><label>Merknad (valgfritt)</label><textarea id="inp-note" placeholder="Kort beskrivelse…"></textarea></div>
+      <div class="field"><label id="lbl-note">Merknad (valgfritt)</label><textarea id="inp-note" placeholder="Kort beskrivelse…"></textarea></div>
       <button class="btn btn-primary" id="btn-add">+ Legg til oppføring</button>
     </div>
   </div>
@@ -275,14 +275,14 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
   </div>
 
   <div class="filters">
-    <label>Fra</label><input type="date" id="filter-from" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);outline:none;cursor:pointer;"/>
-    <label>Til</label><input type="date" id="filter-to" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);outline:none;cursor:pointer;"/>
+    <label id="lbl-from">Fra</label><input type="date" id="filter-from" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);outline:none;cursor:pointer;"/>
+    <label id="lbl-to">Til</label><input type="date" id="filter-to" style="border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);outline:none;cursor:pointer;"/>
     <button onclick="clearDateFilter()" style="border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--muted);cursor:pointer;">Alle</button>
     <label>Sted</label>
     <select id="filter-sted"><option value="">Alle</option><option value="oslo">Oslo</option><option value="lund">Lund</option><option value="annet">Annet</option></select>
-    <label>Selskap</label>
+    <label id="lbl-filter-company">Selskap</label>
     <select id="filter-company"><option value="">Alle</option></select>
-    <label>Kategori</label>
+    <label id="lbl-filter-cat">Kategori</label>
     <select id="filter-cat"><option value="">Alle</option><option value="mor">Morgen</option><option value="day">Normaldag</option><option value="eve">Kveld</option><option value="week">Helg</option><option value="hol">Fridag</option></select>
     <div class="spacer"></div>
     <span id="filter-summary" style="font-size:12px;color:var(--faint);font-family:'DM Mono',monospace"></span>
@@ -352,6 +352,38 @@ function populateUserDropdowns() {
   const isSepideh = currentUser === 'sepideh';
   const subtitle = document.getElementById('app-subtitle');
   if(subtitle) subtitle.textContent = isSepideh ? 'First Hotels International & Planetstaden' : 'First Hotels & Enter Tromsø';
+
+  // Update UI language
+  const labels = {
+    'lbl-per-company': t('per_company'),
+    'lbl-per-cat': t('per_cat'),
+    'lbl-log-section': t('log_section'),
+    'lbl-total-h': t('total_h'),
+    'lbl-date': t('date'),
+    'lbl-sted': t('sted'),
+    'lbl-company': t('company'),
+    'lbl-duration': t('duration'),
+    'lbl-cat': t('cat'),
+    'lbl-note': t('note'),
+    'lbl-from': t('from_label'),
+    'lbl-to': t('to_label'),
+    'lbl-filter-company': t('company_label'),
+    'lbl-filter-cat': t('cat_label'),
+    'app-subtitle': t('subtitle_default'),
+  };
+  Object.entries(labels).forEach(([id, text]) => {
+    const el = document.getElementById(id);
+    if(el) el.textContent = text;
+  });
+  const addBtn = document.getElementById('btn-add');
+  if(addBtn) addBtn.textContent = t('add_btn');
+  const exportBtn = document.getElementById('btn-export');
+  if(exportBtn) exportBtn.textContent = t('export_btn');
+
+  // Update auto cat option
+  const autoCat = document.querySelector('#inp-cat option[value="auto"]');
+  if(autoCat) autoCat.textContent = t('auto_cat');
+
   // Show/hide extra company cards and bars
   ['et','ml','se'].forEach(c => {
     const card = document.getElementById('card-'+c);
@@ -405,7 +437,7 @@ function login(user) {
 }
 
 function logout() {
-  if (!confirm('Bytte bruker?')) return;
+  if (!confirm(t('switch_user'))) return;
   currentUser = null;
   localStorage.removeItem('tidslogg_user');
   entries = [];
@@ -450,9 +482,9 @@ async function loadAll() {
 
 function setSync(s) {
   const el = document.getElementById('sync-status');
-  if (s==='ok')      { el.textContent='● synkronisert'; el.className='sync-status ok'; }
-  else if (s==='loading') { el.textContent='● synkroniserer…'; el.className='sync-status'; }
-  else               { el.textContent='● tilkoblingsfeil'; el.className='sync-status err'; }
+  if (s==='ok')      { el.textContent=t('synced'); el.className='sync-status ok'; }
+  else if (s==='loading') { el.textContent=t('syncing'); el.className='sync-status'; }
+  else               { el.textContent=t('conn_err'); el.className='sync-status err'; }
 }
 
 // --- Helpers ---
@@ -470,9 +502,65 @@ function getWeek(d) {
 }
 function stedLabel(s){ return {oslo:'Oslo',stockholm:'First Stockholm',hjemmekontor:'Hjemmekontor',lund:'Lund',annet:'Annet'}[s]||s; }
 function stedBadge(s){ return s==='lund'?'<span class="badge-sted-lund">Lund</span>':s==='oslo'?'<span class="badge-sted-oslo">Oslo</span>':s==='stockholm'?'<span class="badge-sted-oslo">Stockholm</span>':'<span class="badge-sted-oslo">'+stedLabel(s)+'</span>'; }
-function getDayName(d) {
-  return ['Søn','Man','Tir','Ons','Tor','Fre','Lør'][new Date(d+'T12:00:00').getDay()];
+
+const LANG = {
+  no: {
+    subtitle_default: 'First Hotels & Enter Tromsø',
+    select_user: 'Velg bruker og skriv inn PIN',
+    log_section: 'Logg ny aktivitet',
+    date: 'Dato', sted: 'Sted', company: 'Selskap',
+    duration: 'Tidsforbruk (timer)', cat: 'Tidskategori',
+    note: 'Merknad (valgfritt)', add_btn: '+ Legg til oppføring',
+    export_btn: '↓ Eksporter Excel', synced: '● synkronisert',
+    syncing: '● synkroniserer…', conn_err: '● tilkoblingsfeil',
+    per_company: 'Fordeling per selskap', per_cat: 'Fordeling per tidskategori',
+    total_h: 'Totalt loggede timer', entries: 'oppføringer',
+    all_weeks: 'Alle uker', both: 'Begge', all: 'Alle',
+    week_label: 'Uke', company_label: 'Selskap', cat_label: 'Kategori',
+    sted_label: 'Sted', from_label: 'Fra', to_label: 'Til',
+    days: ['Søn','Man','Tir','Ons','Tor','Fre','Lør'],
+    auto_cat: 'Auto (beregn fra dato)',
+    cat_mor: 'Morgen man-fre før 08', cat_day: 'Normaldag 08-16',
+    cat_eve: 'Kveld man-fre etter 16', cat_week: 'Helg lør-søn', cat_hol: 'Offentlig fridag',
+    save: 'Lagre', cancel: 'Avbryt', delete_confirm: 'Slette denne oppføringen?',
+    switch_user: 'Bytte bruker?', no_entries: 'Ingen oppføringer å eksportere.',
+    empty: 'Ingen oppføringer ennå.', loading: 'Henter data…',
+    total_label: 'TOTALT',
+  },
+  sv: {
+    subtitle_default: 'First Hotels International & Planetstaden',
+    select_user: 'Välj användare och ange PIN',
+    log_section: 'Logga ny aktivitet',
+    date: 'Datum', sted: 'Plats', company: 'Företag',
+    duration: 'Tidsåtgång (timmar)', cat: 'Tidskategori',
+    note: 'Kommentar (valfritt)', add_btn: '+ Lägg till post',
+    export_btn: '↓ Exportera Excel', synced: '● synkroniserad',
+    syncing: '● synkroniserar…', conn_err: '● anslutningsfel',
+    per_company: 'Fördelning per företag', per_cat: 'Fördelning per tidskategori',
+    total_h: 'Totalt loggade timmar', entries: 'poster',
+    all_weeks: 'Alla veckor', both: 'Båda', all: 'Alla',
+    week_label: 'Vecka', company_label: 'Företag', cat_label: 'Kategori',
+    sted_label: 'Plats', from_label: 'Från', to_label: 'Till',
+    days: ['Sön','Mån','Tis','Ons','Tor','Fre','Lör'],
+    auto_cat: 'Auto (beräkna från datum)',
+    cat_mor: 'Morgon mån-fre före 08', cat_day: 'Normaldag 08-16',
+    cat_eve: 'Kväll mån-fre efter 16', cat_week: 'Helg lör-sön', cat_hol: 'Offentlig helgdag',
+    save: 'Spara', cancel: 'Avbryt', delete_confirm: 'Ta bort denna post?',
+    switch_user: 'Byta användare?', no_entries: 'Inga poster att exportera.',
+    empty: 'Inga poster ännu.', loading: 'Hämtar data…',
+    total_label: 'TOTALT',
+  }
+};
+
+function t(key) {
+  const lang = currentUser === 'sepideh' ? 'sv' : 'no';
+  return LANG[lang][key] || key;
 }
+
+function getDayName(d) {
+  return t('days')[new Date(d+'T12:00:00').getDay()];
+}
+
 function fmtH(h){ return h.toFixed(1).replace('.',',')+' t'; }
 function pct(a,b){ return b>0?Math.round(a/b*100):0; }
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -546,7 +634,7 @@ function render() {
   }
 
   const container=document.getElementById('log-container');
-  if(filtered.length===0){ container.innerHTML='<div class="empty">Ingen oppføringer ennå.</div>'; return; }
+  if(filtered.length===0){ container.innerHTML='<div class="empty">'+t('empty')+'</div>'; return; }
 
   let html='<table><thead><tr><th>Dato</th><th>Dag</th><th>Uke</th><th>Sted</th><th>Selskap</th><th>Kategori</th><th>Aktivitet</th><th>Timer</th><th style="width:64px"></th></tr></thead><tbody>';
   filtered.forEach(e=>{
@@ -563,7 +651,7 @@ function render() {
     if(ea){
       html+=`<tr class="edit-row" id="edit-${e.id}"><td colspan="9">
         <div class="edit-panel">
-          <div class="ef"><label>Dato</label><input type="date" id="e-date" value="${e.date}"/></div>
+          <div class="ef"><label id="lbl-date">Dato</label><input type="date" id="e-date" value="${e.date}"/></div>
           <div class="ef"><label>Aktivitet</label><input type="text" id="e-task" value="${esc(e.task)}"/></div>
           <div class="ef"><label>Timer</label><input type="number" id="e-dur" min="0.25" max="24" step="0.25" value="${h}"/></div>
           <div class="ef"><label>Tidskategori</label><select id="e-cat">
@@ -628,7 +716,7 @@ window.saveEdit=async function(id){
 };
 
 window.del=async function(id){
-  if(!confirm('Slette denne oppføringen?')) return;
+  if(!confirm(t('delete_confirm'))) return;
   try {
     setSync('loading');
     await sbFetch(`${TABLE}?id=eq.${encodeURIComponent(id)}&user_id=eq.${currentUser}`, {method:'DELETE'});
@@ -701,7 +789,7 @@ document.getElementById('btn-export').addEventListener('click',()=>{
 
   // Add totals row
   const totalH = sorted.reduce((s,e)=>s+(parseFloat(e.duration)||0),0);
-  wsData.push(['','','','','','','TOTALT',totalH,'']);
+  wsData.push(['','','','','','',t('total_label'),totalH,'']);
 
   // Marcus earnings row
   if(currentUser==='marcus' && HOURLY_RATE && HOURLY_RATE['marcus']){
