@@ -318,9 +318,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
       <div class="nav-item" id="nav-rapport" onclick="navTo('rapport')">
         <span class="nav-icon">◈</span> Rapportering
       </div>
-      <div class="nav-item" id="nav-innstillinger" onclick="navTo('innstillinger')">
-        <span class="nav-icon">⚙</span> Innstillinger
-      </div>
+
 
       <div class="nav-section-label" style="margin-top:8px">Handlinger</div>
       <div style="padding:4px 12px 8px">
@@ -463,12 +461,13 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     <!-- PAGE: RAPPORT -->
     <div class="page-body hidden" id="page-rapport">
       <div class="rapport-controls">
-        <label style="font-size:12px;color:var(--muted);font-weight:500">Periode:</label>
-        <input type="month" id="rapport-month" onchange="renderRapport()"/>
+        <label style="font-size:12px;color:var(--muted);font-weight:500">Fra:</label>
+        <input type="month" id="rapport-from" onchange="renderRapport()"/>
+        <label style="font-size:12px;color:var(--muted);font-weight:500">Til:</label>
+        <input type="month" id="rapport-to" onchange="renderRapport()"/>
         <select id="rapport-company" onchange="renderRapport()" style="min-width:160px">
           <option value="">Alle selskap</option>
         </select>
-        <button class="btn btn-outline" onclick="document.getElementById('btn-export').click()" style="margin-left:auto">↓ Eksporter Excel</button>
       </div>
 
       <div class="rapport-total">
@@ -508,66 +507,6 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
         <div id="rapport-daily"><div class="empty" style="padding:1rem 0">Ingen data</div></div>
       </div>
     </div><!-- /page-rapport -->
-
-    <!-- PAGE: INNSTILLINGER -->
-    <div class="page-body hidden" id="page-innstillinger">
-
-      <div class="settings-section">
-        <div class="settings-header">Bruker</div>
-        <div class="settings-row">
-          <div>
-            <div class="settings-row-label" id="set-name-label">—</div>
-            <div class="settings-row-sub" id="set-role-label"></div>
-          </div>
-          <span class="settings-tag" id="set-user-tag">—</span>
-        </div>
-      </div>
-
-      <div class="settings-section">
-        <div class="settings-header">Endre PIN</div>
-        <div class="pin-change-row" id="pin-change-section">
-          <div class="pin-change-label">Ny PIN (4–6 siffer)</div>
-          <div class="pin-inputs">
-            <input type="password" id="set-new-pin" class="pin-input-field" maxlength="6" placeholder="••••"/>
-            <input type="password" id="set-confirm-pin" class="pin-input-field" maxlength="6" placeholder="••••"/>
-            <button class="settings-save" onclick="savePin()">Lagre</button>
-          </div>
-          <div id="pin-msg" style="font-size:12px;margin-top:6px;color:var(--faint)"></div>
-        </div>
-      </div>
-
-      <div class="settings-section" id="settings-rate-section" style="display:none">
-        <div class="settings-header">Timelønn</div>
-        <div class="settings-row">
-          <div>
-            <div class="settings-row-label">Timesats</div>
-            <div class="settings-row-sub">Brukes til lønnsestimering i rapport</div>
-          </div>
-          <div class="settings-row-ctrl">
-            <input type="number" id="set-rate" class="settings-input" min="0" step="25"/>
-            <span style="font-size:13px;color:var(--muted)">kr/t</span>
-            <button class="settings-save" onclick="saveRate()">Lagre</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="settings-section">
-        <div class="settings-header">Selskaper (aktive)</div>
-        <div id="settings-companies"></div>
-      </div>
-
-      <div class="settings-section">
-        <div class="settings-header">Data</div>
-        <div class="settings-row">
-          <div>
-            <div class="settings-row-label">Totalt loggede timer</div>
-            <div class="settings-row-sub" id="set-data-summary">—</div>
-          </div>
-          <button class="btn btn-outline" onclick="document.getElementById('btn-export').click()">↓ Eksporter Excel</button>
-        </div>
-      </div>
-
-    </div><!-- /page-innstillinger -->
 
   </div><!-- /main-content -->
 </div><!-- /app-shell -->
@@ -701,13 +640,13 @@ if(savedUser)login(savedUser);
 // ── NAVIGATION ──
 window.navTo=function(page){
   currentPage=page;
-  ['dashboard','logg','rapport','innstillinger'].forEach(p=>{
+  ['dashboard','logg','rapport'].forEach(p=>{
     const pg=document.getElementById('page-'+p);
     const nav=document.getElementById('nav-'+p);
     if(pg) pg.classList.toggle('hidden',p!==page);
     if(nav) nav.classList.toggle('active',p===page);
   });
-  const titles={dashboard:'Dashboard',logg:'Logg',rapport:'Rapportering',innstillinger:'Innstillinger'};
+  const titles={dashboard:'Dashboard',logg:'Logg',rapport:'Rapportering'};
   const tEl=document.getElementById('topbar-title');
   if(tEl) tEl.textContent=titles[page]||page;
   // Topbar actions
@@ -717,7 +656,6 @@ window.navTo=function(page){
     else ta.innerHTML='';
   }
   if(page==='rapport') renderRapport();
-  if(page==='innstillinger') renderInnstillinger();
   if(page==='dashboard') renderDashRecent();
 };
 
@@ -769,9 +707,12 @@ function populateDropdowns(){
   // Modal date
   const sd=document.getElementById('sb-date');
   if(sd&&!sd.value) sd.value=new Date().toISOString().split('T')[0];
-  // Rapport month default
-  const rm=document.getElementById('rapport-month');
-  if(rm&&!rm.value) rm.value=new Date().toISOString().slice(0,7);
+  // Rapport month defaults
+  const rm = document.getElementById('rapport-from');
+  const rmTo = document.getElementById('rapport-to');
+  const thisMonth = new Date().toISOString().slice(0,7);
+  if(rm && !rm.value) rm.value = thisMonth;
+  if(rmTo && !rmTo.value) rmTo.value = thisMonth;
 }
 
 // ── RENDER ──
@@ -890,9 +831,18 @@ function renderDashRecent(){
 
 // ── RAPPORT ──
 function renderRapport(){
-  const month=document.getElementById('rapport-month')?.value||new Date().toISOString().slice(0,7);
-  const co=document.getElementById('rapport-company')?.value||'';
-  const filtered=entries.filter(e=>e.date.startsWith(month)&&(!co||e.company===co));
+  const today = new Date().toISOString().slice(0,7);
+  const fromEl = document.getElementById('rapport-from');
+  const toEl = document.getElementById('rapport-to');
+  if(fromEl && !fromEl.value) fromEl.value = today;
+  if(toEl && !toEl.value) toEl.value = today;
+  const from = fromEl?.value || today;
+  const to = toEl?.value || today;
+  // Ensure from <= to
+  const fromDate = from + '-01';
+  const toDate = to + '-31';
+  const co = document.getElementById('rapport-company')?.value||'';
+  const filtered = entries.filter(e => e.date >= fromDate && e.date <= toDate && (!co || e.company === co));
   let tot=0,coT={int:0,ps:0,et:0,ml:0,se:0},catT={mor:0,day:0,eve:0,week:0,hol:0};
   filtered.forEach(e=>{const h=parseFloat(e.duration)||0;tot+=h;if(coT[e.company]!==undefined)coT[e.company]+=h;if(catT[e.cat]!==undefined)catT[e.cat]+=h;});
   const set=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
@@ -948,51 +898,6 @@ function renderRapport(){
 }
 
 // ── INNSTILLINGER ──
-function renderInnstillinger(){
-  const roleMap={thomas:'Interim GM / Head Chef',marcus:'F&B Manager',sepideh:'CFO'};
-  const set=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
-  set('set-name-label',currentUser?currentUser.charAt(0).toUpperCase()+currentUser.slice(1):'');
-  set('set-role-label',roleMap[currentUser]||'');
-  set('set-user-tag',currentUser||'');
-  // Rate
-  const rs=document.getElementById('settings-rate-section');
-  if(rs) rs.style.display=currentUser==='marcus'?'block':'none';
-  const ri=document.getElementById('set-rate');
-  if(ri) ri.value=runtimeRates[currentUser]||'';
-  // Data summary
-  let tot=0;entries.forEach(e=>tot+=parseFloat(e.duration)||0);
-  set('set-data-summary',fmtH(tot)+' totalt · '+entries.length+' oppføringer');
-  // Companies
-  const isSep=currentUser==='sepideh';
-  const cos=isSep?[{k:'int',n:'International'},{k:'ps',n:'Planetstaden'}]:[{k:'ps',n:'Planetstaden'},{k:'int',n:'International'},{k:'et',n:'Enter Tromsø'},{k:'ml',n:'Mallangen Resort'},{k:'se',n:'St. Elisabeth'}];
-  const cont=document.getElementById('settings-companies');
-  if(cont){
-    cont.innerHTML=cos.map(({k,n})=>{
-      const h=(entries.filter(e=>e.company===k).reduce((s,e)=>s+(parseFloat(e.duration)||0),0));
-      return`<div class="settings-row"><div><div class="settings-row-label"><span class="dot dot-${k}" style="margin-right:6px"></span>${n}</div><div class="settings-row-sub">${fmtH(h)} loggede timer</div></div><span class="settings-tag badge-${k}" style="display:inline-block">${k.toUpperCase()}</span></div>`;
-    }).join('');
-  }
-}
-
-function savePin(){
-  const np=document.getElementById('set-new-pin').value;
-  const cp=document.getElementById('set-confirm-pin').value;
-  const msg=document.getElementById('pin-msg');
-  if(np.length<4){msg.textContent='PIN må være minst 4 siffer.';msg.style.color='var(--c-hol)';return;}
-  if(np!==cp){msg.textContent='PINene er ikke like.';msg.style.color='var(--c-hol)';return;}
-  runtimePins[currentUser]=np;
-  document.getElementById('set-new-pin').value='';
-  document.getElementById('set-confirm-pin').value='';
-  msg.textContent='PIN er oppdatert (gjelder til du logger ut).';msg.style.color='var(--ps)';
-}
-function saveRate(){
-  const v=parseFloat(document.getElementById('set-rate').value);
-  if(isNaN(v)||v<0)return;
-  runtimeRates[currentUser]=v;
-  render();
-  renderInnstillinger();
-}
-
 // ── EDIT / DELETE ──
 window.toggleEdit=function(id){editingId=(editingId===id)?null:id;render();};
 window.cancelEdit=function(){editingId=null;render();};
