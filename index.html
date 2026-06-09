@@ -142,6 +142,18 @@
   }
   .logout-btn:hover { color: rgba(255,255,255,0.65); }
 
+  /* ─── SIDEBAR FORM ─── */
+  .sb-field { margin-bottom: 5px; }
+  .sb-input {
+    width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px; padding: 6px 9px; font-size: 12px; font-family: 'DM Sans', sans-serif;
+    color: rgba(255,255,255,0.8); outline: none; box-sizing: border-box;
+  }
+  .sb-input::placeholder { color: rgba(255,255,255,0.3); }
+  .sb-input:focus { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.1); }
+  .sb-input option { background: #1a1a2e; color: #fff; }
+  .sb-input[type=date]::-webkit-calendar-picker-indicator { filter: invert(0.6); cursor: pointer; }
+
   /* ─── MAIN CONTENT ─── */
   .main-content {
     flex: 1; overflow: hidden;
@@ -421,7 +433,41 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
       <div class="nav-item active">
         <span class="nav-icon">◫</span> Dashboard
       </div>
-      <div class="nav-section-label">Eksport</div>
+
+      <div class="nav-section-label" style="margin-top:8px;">Ny oppføring</div>
+      <div style="padding:0 12px 10px;">
+        <div class="sb-field"><input type="date" id="sb-date" class="sb-input"/></div>
+        <div class="sb-field"><select id="sb-company" class="sb-input"></select></div>
+        <div class="sb-field"><input type="text" id="sb-task" class="sb-input" placeholder="Aktivitet…"/></div>
+        <div style="display:flex;gap:6px;">
+          <input type="number" id="sb-duration" class="sb-input" min="0.25" max="24" step="0.25" placeholder="t" style="width:60px;flex-shrink:0;"/>
+          <select id="sb-cat" class="sb-input" style="flex:1;">
+            <option value="auto">Auto</option>
+            <option value="mor">Morgen</option>
+            <option value="day">Normaldag</option>
+            <option value="eve">Kveld</option>
+            <option value="week">Helg</option>
+            <option value="hol">Fridag</option>
+          </select>
+        </div>
+        <button id="sb-add-btn" onclick="sbQuickAdd()" style="width:100%;margin-top:7px;padding:7px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;">+ Legg til</button>
+      </div>
+
+      <div class="nav-section-label" style="margin-top:4px;">Filter</div>
+      <div style="padding:0 12px 10px;">
+        <div class="sb-field" style="display:flex;gap:4px;align-items:center;">
+          <span style="font-size:10px;color:rgba(255,255,255,0.35);width:22px;flex-shrink:0;">Fra</span>
+          <input type="date" id="sb-filter-from" class="sb-input" oninput="sbSyncFilter()"/>
+        </div>
+        <div class="sb-field" style="display:flex;gap:4px;align-items:center;">
+          <span style="font-size:10px;color:rgba(255,255,255,0.35);width:22px;flex-shrink:0;">Til</span>
+          <input type="date" id="sb-filter-to" class="sb-input" oninput="sbSyncFilter()"/>
+        </div>
+        <div class="sb-field"><select id="sb-filter-company" class="sb-input" onchange="sbSyncFilter()"><option value="">Alle selskap</option></select></div>
+        <button onclick="sbClearFilter()" style="width:100%;padding:5px;background:transparent;color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.1);border-radius:6px;font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;">Nullstill filter</button>
+      </div>
+
+      <div class="nav-section-label" style="margin-top:4px;">Eksport</div>
       <div class="nav-item" id="nav-export-btn" onclick="document.getElementById('btn-export').click()" style="cursor:pointer;">
         <span class="nav-icon">↓</span> Eksporter Excel
       </div>
@@ -670,7 +716,24 @@ function populateUserDropdowns() {
   const autoCat = document.querySelector('#inp-cat option[value="auto"]');
   if(autoCat) autoCat.textContent = t('auto_cat');
 
-  // Show/hide extra company cards and bars
+  // Sidebar company dropdown
+  const sbCo = document.getElementById('sb-company');
+  const sbFco = document.getElementById('sb-filter-company');
+  if(sbCo) {
+    sbCo.innerHTML = isSepideh
+      ? '<option value="int">International</option><option value="ps">Planetstaden</option>'
+      : '<option value="ps">Planetstaden</option><option value="int">International</option><option value="et">Enter Tromsø</option><option value="ml">Mallangen Resort</option><option value="se">St. Elisabeth</option>';
+  }
+  if(sbFco) {
+    sbFco.innerHTML = '<option value="">Alle selskap</option>' + (isSepideh
+      ? '<option value="int">International</option><option value="ps">Planetstaden</option>'
+      : '<option value="ps">Planetstaden</option><option value="int">International</option><option value="et">Enter Tromsø</option><option value="ml">Mallangen Resort</option><option value="se">St. Elisabeth</option>');
+  }
+  // Set sidebar date to today
+  const sbDate = document.getElementById('sb-date');
+  if(sbDate && !sbDate.value) sbDate.value = new Date().toISOString().split('T')[0];
+
+  // Sidebar sync
   ['et','ml','se'].forEach(c => {
     const card = document.getElementById('card-'+c);
     const bar = document.getElementById('bar-row-'+c);
@@ -1030,6 +1093,45 @@ window.del=async function(id){
     if(editingId===id) editingId=null;
     setSync('ok'); render();
   } catch(e){ setSync('err'); alert('Kunne ikke slette: '+e.message); }
+};
+
+// --- Sidebar quick functions ---
+function sbSyncFilter() {
+  const ff = document.getElementById('sb-filter-from').value;
+  const ft = document.getElementById('sb-filter-to').value;
+  const fc = document.getElementById('sb-filter-company').value;
+  if(document.getElementById('filter-from')) document.getElementById('filter-from').value = ff;
+  if(document.getElementById('filter-to')) document.getElementById('filter-to').value = ft;
+  if(document.getElementById('filter-company')) document.getElementById('filter-company').value = fc;
+  render();
+}
+function sbClearFilter() {
+  ['sb-filter-from','sb-filter-to'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('sb-filter-company').value = '';
+  clearDateFilter();
+}
+window.sbQuickAdd = async function() {
+  const date = document.getElementById('sb-date').value;
+  const company = document.getElementById('sb-company').value;
+  const task = document.getElementById('sb-task').value.trim();
+  const duration = parseFloat(document.getElementById('sb-duration').value);
+  const catSel = document.getElementById('sb-cat').value;
+  if(!date||!task||!duration||duration<=0){ alert('Fyll ut dato, aktivitet og timer.'); return; }
+  const cat = catSel==='auto' ? getCat(date) : catSel;
+  const sted = currentUser==='sepideh' ? 'stockholm' : 'oslo';
+  const entry = {id:uid(),date,company,task,duration,cat,note:'',sted,user_id:currentUser};
+  const btn = document.getElementById('sb-add-btn');
+  btn.disabled=true; btn.textContent='Lagrer…';
+  try {
+    setSync('loading');
+    await sbFetch(TABLE, {method:'POST', prefer:'return=representation', body:JSON.stringify(entry)});
+    entries.unshift(entry);
+    document.getElementById('sb-task').value='';
+    document.getElementById('sb-duration').value='';
+    document.getElementById('sb-cat').value='auto';
+    setSync('ok'); render();
+  } catch(e){ setSync('err'); alert('Kunne ikke lagre: '+e.message); }
+  finally { btn.disabled=false; btn.textContent='+ Legg til'; }
 };
 
 document.getElementById('btn-add').addEventListener('click', async ()=>{
