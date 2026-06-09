@@ -603,7 +603,7 @@ function login(user){
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
   const avatarMap={thomas:'TG',marcus:'MG',sepideh:'SC'};
-  const roleMap={thomas:'Interim GM / Head Chef',marcus:'F&B Manager',sepideh:'CFO'};
+  const roleMap={thomas:'Interim General Manager',marcus:'Interim F&B Manager',sepideh:'CFO'};
   const el=id=>document.getElementById(id);
   if(el('sidebar-name')) el('sidebar-name').textContent=user.charAt(0).toUpperCase()+user.slice(1);
   if(el('sidebar-role')) el('sidebar-role').textContent=roleMap[user]||'';
