@@ -125,6 +125,7 @@
   .btn-cancel-sm { background: transparent; border: 1px solid var(--border); color: var(--muted); }
   .empty { text-align: center; padding: 2.5rem 1rem; color: var(--faint); font-size: 13px; line-height: 2; }
   .hidden { display: none; }
+  .hide-sepideh { }
   @media(max-width:680px){
     .summary-grid,.cat-grid{grid-template-columns:1fr 1fr}
     .form-grid,.form-grid-3,.edit-panel,.edit-panel-2{grid-template-columns:1fr}
@@ -197,9 +198,9 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     <div class="metric"><div class="metric-label">Totalt loggede timer</div><div class="metric-value" id="total-hours">0,0 t</div><div class="metric-sub" id="total-entries">0 oppføringer</div></div>
     <div class="metric"><div class="metric-label"><span class="dot dot-int"></span> International</div><div class="metric-value" id="int-hours">0,0 t</div><div class="metric-sub" id="int-pct">0 %</div></div>
     <div class="metric"><div class="metric-label"><span class="dot dot-ps"></span> Planetstaden</div><div class="metric-value" id="ps-hours">0,0 t</div><div class="metric-sub" id="ps-pct">0 %</div></div>
-    <div class="metric"><div class="metric-label"><span class="dot dot-et"></span> Enter Tromsø</div><div class="metric-value" id="et-hours">0,0 t</div><div class="metric-sub" id="et-pct">0 %</div></div>
-    <div class="metric"><div class="metric-label"><span class="dot dot-ml"></span> Mallangen Resort</div><div class="metric-value" id="ml-hours">0,0 t</div><div class="metric-sub" id="ml-pct">0 %</div></div>
-    <div class="metric"><div class="metric-label"><span class="dot dot-se"></span> St. Elisabeth</div><div class="metric-value" id="se-hours">0,0 t</div><div class="metric-sub" id="se-pct">0 %</div></div>
+    <div id="card-et" class="metric"><div class="metric-label"><span class="dot dot-et"></span> Enter Tromsø</div><div class="metric-value" id="et-hours">0,0 t</div><div class="metric-sub" id="et-pct">0 %</div></div>
+    <div id="card-ml" class="metric"><div class="metric-label"><span class="dot dot-ml"></span> Mallangen Resort</div><div class="metric-value" id="ml-hours">0,0 t</div><div class="metric-sub" id="ml-pct">0 %</div></div>
+    <div id="card-se" class="metric"><div class="metric-label"><span class="dot dot-se"></span> St. Elisabeth</div><div class="metric-value" id="se-hours">0,0 t</div><div class="metric-sub" id="se-pct">0 %</div></div>
   </div>
 
   <div class="section-label">Fordeling per tidskategori</div>
@@ -215,9 +216,9 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     <div class="section-label">Selskap</div>
     <div class="bar-row"><div class="bar-label">International</div><div class="bar-track"><div class="bar-fill bar-fill-int" id="bar-int" style="width:0%"></div></div><div class="bar-pct" id="barpct-int">0 %</div></div>
     <div class="bar-row"><div class="bar-label">Planetstaden</div><div class="bar-track"><div class="bar-fill bar-fill-ps" id="bar-ps" style="width:0%"></div></div><div class="bar-pct" id="barpct-ps">0 %</div></div>
-    <div class="bar-row"><div class="bar-label">Enter Tromsø</div><div class="bar-track"><div class="bar-fill bar-fill-et" id="bar-et" style="width:0%"></div></div><div class="bar-pct" id="barpct-et">0 %</div></div>
-    <div class="bar-row"><div class="bar-label">Mallangen Resort</div><div class="bar-track"><div class="bar-fill bar-fill-ml" id="bar-ml" style="width:0%"></div></div><div class="bar-pct" id="barpct-ml">0 %</div></div>
-    <div class="bar-row"><div class="bar-label">St. Elisabeth</div><div class="bar-track"><div class="bar-fill bar-fill-se" id="bar-se" style="width:0%"></div></div><div class="bar-pct" id="barpct-se">0 %</div></div>
+    <div class="bar-row" id="bar-row-et"><div class="bar-label">Enter Tromsø</div><div class="bar-track"><div class="bar-fill bar-fill-et" id="bar-et" style="width:0%"></div></div><div class="bar-pct" id="barpct-et">0 %</div></div>
+    <div class="bar-row" id="bar-row-ml"><div class="bar-label">Mallangen Resort</div><div class="bar-track"><div class="bar-fill bar-fill-ml" id="bar-ml" style="width:0%"></div></div><div class="bar-pct" id="barpct-ml">0 %</div></div>
+    <div class="bar-row" id="bar-row-se"><div class="bar-label">St. Elisabeth</div><div class="bar-track"><div class="bar-fill bar-fill-se" id="bar-se" style="width:0%"></div></div><div class="bar-pct" id="barpct-se">0 %</div></div>
     <hr class="divider">
     <div class="section-label">Tidskategori</div>
     <div class="bar-row"><div class="bar-label">Morgen (man-fre før 08)</div><div class="bar-track"><div class="bar-fill bar-fill-mor" id="bar-mor" style="width:0%"></div></div><div class="bar-pct" id="barpct-mor">0 %</div></div>
@@ -349,6 +350,13 @@ function confirmPin() {
 
 function populateUserDropdowns() {
   const isSepideh = currentUser === 'sepideh';
+  // Show/hide extra company cards and bars
+  ['et','ml','se'].forEach(c => {
+    const card = document.getElementById('card-'+c);
+    const bar = document.getElementById('bar-row-'+c);
+    if(card) card.style.display = isSepideh ? 'none' : '';
+    if(bar)  bar.style.display  = isSepideh ? 'none' : '';
+  });
 
   // Sted dropdown
   const stedSel = document.getElementById('inp-sted');
