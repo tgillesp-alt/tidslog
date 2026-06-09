@@ -234,18 +234,10 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
         <div class="field"><label>Dato</label><input type="date" id="inp-date"/></div>
         <div class="field"><label>Sted</label>
           <select id="inp-sted">
-            <option value="oslo">Oslo (hjemmekontor)</option>
-            <option value="lund">Lund (hotellet)</option>
-            <option value="annet">Annet</option>
           </select>
         </div>
         <div class="field"><label>Selskap</label>
           <select id="inp-company">
-            <option value="int">First Hotels International</option>
-            <option value="ps">First Hotels Planetstaden</option>
-            <option value="et">Enter Tromsø</option>
-            <option value="ml">Mallangen Resort</option>
-            <option value="se">St. Elisabeth</option>
           </select>
         </div>
       </div>
@@ -288,7 +280,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     <label>Sted</label>
     <select id="filter-sted"><option value="">Alle</option><option value="oslo">Oslo</option><option value="lund">Lund</option><option value="annet">Annet</option></select>
     <label>Selskap</label>
-    <select id="filter-company"><option value="">Alle</option><option value="int">International</option><option value="ps">Planetstaden</option><option value="et">Enter Tromsø</option><option value="ml">Mallangen Resort</option><option value="se">St. Elisabeth</option></select>
+    <select id="filter-company"><option value="">Alle</option></select>
     <label>Kategori</label>
     <select id="filter-cat"><option value="">Alle</option><option value="mor">Morgen</option><option value="day">Normaldag</option><option value="eve">Kveld</option><option value="week">Helg</option><option value="hol">Fridag</option></select>
     <div class="spacer"></div>
@@ -354,6 +346,42 @@ function confirmPin() {
   }
 }
 
+
+function populateUserDropdowns() {
+  const isSepideh = currentUser === 'sepideh';
+
+  // Sted dropdown
+  const stedSel = document.getElementById('inp-sted');
+  if (stedSel) {
+    stedSel.innerHTML = '';
+    if (isSepideh) {
+      stedSel.innerHTML = '<option value="stockholm">First Stockholm</option><option value="hjemmekontor">Hjemmekontor</option><option value="annet">Annet</option>';
+    } else {
+      stedSel.innerHTML = '<option value="oslo">Oslo (hjemmekontor)</option><option value="lund">Lund (hotellet)</option><option value="annet">Annet</option>';
+    }
+  }
+
+  // Company dropdown
+  const coSel = document.getElementById('inp-company');
+  if (coSel) {
+    if (isSepideh) {
+      coSel.innerHTML = '<option value="int">First Hotels International</option><option value="ps">First Hotels Planetstaden</option>';
+    } else {
+      coSel.innerHTML = '<option value="int">First Hotels International</option><option value="ps">First Hotels Planetstaden</option><option value="et">Enter Tromsø</option><option value="ml">Mallangen Resort</option><option value="se">St. Elisabeth</option>';
+    }
+  }
+
+  // Filter company dropdown
+  const filterCo = document.getElementById('filter-company');
+  if (filterCo) {
+    if (isSepideh) {
+      filterCo.innerHTML = '<option value="">Begge</option><option value="int">International</option><option value="ps">Planetstaden</option>';
+    } else {
+      filterCo.innerHTML = '<option value="">Alle</option><option value="int">International</option><option value="ps">Planetstaden</option><option value="et">Enter Tromsø</option><option value="ml">Mallangen Resort</option><option value="se">St. Elisabeth</option>';
+    }
+  }
+}
+
 function login(user) {
   currentUser = user;
   localStorage.setItem('tidslogg_user', user);
@@ -361,6 +389,7 @@ function login(user) {
   document.getElementById('app').classList.remove('hidden');
   document.getElementById('user-pill').textContent = '👤 ' + user.charAt(0).toUpperCase() + user.slice(1) + ' ×';
   document.getElementById('inp-date').value = new Date().toISOString().split('T')[0];
+  populateUserDropdowns();
   updateHint();
   loadAll();
 }
@@ -429,8 +458,8 @@ function getWeek(d) {
   dt.setDate(dt.getDate()+4-(dt.getDay()||7));
   return Math.ceil((((dt-new Date(dt.getFullYear(),0,1))/86400000)+1)/7);
 }
-function stedLabel(s){ return {oslo:'Oslo',lund:'Lund',annet:'Annet'}[s]||s; }
-function stedBadge(s){ return s==='lund'?'<span class="badge-sted-lund">Lund</span>':s==='oslo'?'<span class="badge-sted-oslo">Oslo</span>':'<span class="badge-sted-oslo">'+stedLabel(s)+'</span>'; }
+function stedLabel(s){ return {oslo:'Oslo',stockholm:'First Stockholm',hjemmekontor:'Hjemmekontor',lund:'Lund',annet:'Annet'}[s]||s; }
+function stedBadge(s){ return s==='lund'?'<span class="badge-sted-lund">Lund</span>':s==='oslo'?'<span class="badge-sted-oslo">Oslo</span>':s==='stockholm'?'<span class="badge-sted-oslo">Stockholm</span>':'<span class="badge-sted-oslo">'+stedLabel(s)+'</span>'; }
 function getDayName(d) {
   return ['Søn','Man','Tir','Ons','Tor','Fre','Lør'][new Date(d+'T12:00:00').getDay()];
 }
@@ -537,7 +566,10 @@ function render() {
         </div>
         <div class="edit-panel-2">
           <div class="ef"><label>Sted</label><select id="e-sted">
-            <option value="oslo"${(e.sted||'oslo')==='oslo'?' selected':''}>Oslo</option>
+            ${currentUser==='sepideh' ?
+              '<option value="stockholm"'+(((e.sted||'stockholm')==='stockholm')?' selected':'')+'>First Stockholm</option><option value="hjemmekontor"'+(e.sted==='hjemmekontor'?' selected':'')+'>Hjemmekontor</option>' :
+              '<option value="oslo"'+((( e.sted||'oslo')==='oslo')?' selected':'')+'>Oslo</option>'
+            }
             <option value="lund"${e.sted==='lund'?' selected':''}>Lund</option>
             <option value="annet"${e.sted==='annet'?' selected':''}>Annet</option>
           </select></div>
