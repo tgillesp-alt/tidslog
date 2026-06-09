@@ -184,7 +184,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
   <header>
     <div>
       <h1>Tidslogg</h1>
-      <div class="sub">First Hotels &amp; Enter Tromsø</div>
+      <div class="sub" id="app-subtitle">First Hotels &amp; Enter Tromsø</div>
     </div>
     <div class="header-right">
       <span class="sync-status" id="sync-status">● kobler til…</span>
@@ -350,6 +350,8 @@ function confirmPin() {
 
 function populateUserDropdowns() {
   const isSepideh = currentUser === 'sepideh';
+  const subtitle = document.getElementById('app-subtitle');
+  if(subtitle) subtitle.textContent = isSepideh ? 'First Hotels International & Planetstaden' : 'First Hotels & Enter Tromsø';
   // Show/hide extra company cards and bars
   ['et','ml','se'].forEach(c => {
     const card = document.getElementById('card-'+c);
