@@ -354,7 +354,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
         <div class="stat-card" id="card-avg" style="display:none">
           <div class="stat-label">Snitt timer/dag</div>
           <div class="stat-value" id="avg-day-hours">0,0 t</div>
-          <div class="stat-sub" id="avg-day-sub">mål 7,5 t/dag</div>
+          <div class="stat-sub" id="avg-day-sub">mål 37,5 t/uke</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Normaldag</div>
@@ -751,7 +751,7 @@ function render(){
       const avgDay=wd?tot/wd:0;
       avgCard.style.display='block';
       set('avg-day-hours',fmtH(avgDay));
-      set('avg-day-sub','tilsvarer '+fmtH(avgDay*5)+'/uke · '+wd+' arbeidsdager · mål 7,5 t/dag');
+      set('avg-day-sub','tilsvarer '+fmtH(avgDay*5)+'/uke · mål 37,5 t/uke · '+wd+' arbeidsdager');
     }else{avgCard.style.display='none';}
   }
   const dayH=cH.day||0,offH=(cH.eve||0)+(cH.week||0),morH=cH.mor||0;
