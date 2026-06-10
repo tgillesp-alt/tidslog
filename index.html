@@ -275,6 +275,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     <button class="user-btn" id="btn-thomas" onclick="selectUser('thomas')" style="text-align:center"><div style="font-size:15px;font-weight:500">Thomas Gillespie</div><div style="font-size:11px;opacity:.6;margin-top:2px">Interim General Manager</div></button>
     <button class="user-btn" id="btn-marcus" onclick="selectUser('marcus')" style="text-align:center"><div style="font-size:15px;font-weight:500">Marcus Gillespie</div><div style="font-size:11px;opacity:.6;margin-top:2px">Interim F&amp;B Manager</div></button>
     <button class="user-btn" id="btn-sepideh" onclick="selectUser('sepideh')" style="text-align:center"><div style="font-size:15px;font-weight:500">Sepideh Carlsson</div><div style="font-size:11px;opacity:.6;margin-top:2px">CFO</div></button>
+    <button class="user-btn" id="btn-mathias" onclick="selectUser('mathias')" style="text-align:center"><div style="font-size:15px;font-weight:500">Mathias Gabrielsen</div><div style="font-size:11px;opacity:.6;margin-top:2px">Interim General Manager</div></button>
   </div>
   <div id="pin-area" style="display:none;margin-top:1.5rem;text-align:center">
     <div style="font-size:13px;color:rgba(255,255,255,.45);margin-bottom:8px" id="pin-label"></div>
@@ -536,7 +537,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
 </div>
 
 <script>
-const PINS_RUNTIME = { thomas: '3536', marcus: '1209', sepideh: '5846' };
+const PINS_RUNTIME = { thomas: '3536', marcus: '1209', sepideh: '5846', mathias: '5846' };
 const PINS = PINS_RUNTIME;
 const HOURLY_RATE = { marcus: 325 };
 const SUPABASE_URL = 'https://hudiwhhigwopsiwjndwl.supabase.co';
@@ -584,12 +585,12 @@ function selectUser(user){
   document.getElementById('pin-label').textContent='PIN for '+user.charAt(0).toUpperCase()+user.slice(1);
   document.getElementById('pin-input').value='';
   document.getElementById('pin-error').style.display='none';
-  ['thomas','marcus','sepideh'].forEach(u=>document.getElementById('btn-'+u).style.opacity=u===user?'1':'0.4');
+  ['thomas','marcus','sepideh','mathias'].forEach(u=>document.getElementById('btn-'+u).style.opacity=u===user?'1':'0.4');
   setTimeout(()=>document.getElementById('pin-input').focus(),50);
 }
 function cancelPin(){
   pendingUser=null;document.getElementById('pin-area').style.display='none';
-  ['thomas','marcus','sepideh'].forEach(u=>document.getElementById('btn-'+u).style.opacity='1');
+  ['thomas','marcus','sepideh','mathias'].forEach(u=>document.getElementById('btn-'+u).style.opacity='1');
 }
 function confirmPin(){
   const entered=document.getElementById('pin-input').value;
@@ -602,8 +603,8 @@ function login(user){
   localStorage.setItem('tidslogg_user',user);
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
-  const avatarMap={thomas:'TG',marcus:'MG',sepideh:'SC'};
-  const roleMap={thomas:'Interim General Manager',marcus:'Interim F&B Manager',sepideh:'CFO'};
+  const avatarMap={thomas:'TG',marcus:'MG',sepideh:'SC',mathias:'MG'};
+  const roleMap={thomas:'Interim General Manager',marcus:'Interim F&B Manager',sepideh:'CFO',mathias:'Interim General Manager'};
   const el=id=>document.getElementById(id);
   if(el('sidebar-name')) el('sidebar-name').textContent=user.charAt(0).toUpperCase()+user.slice(1);
   if(el('sidebar-role')) el('sidebar-role').textContent=roleMap[user]||'';
