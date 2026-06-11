@@ -86,7 +86,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .field label{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;font-weight:500}
 .field input,.field select,.field textarea{width:100%;border:1px solid var(--border-mid);border-radius:6px;padding:7px 10px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);outline:none;transition:border-color .15s}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);background:#fff}
-.field textarea{height:54px;resize:none}
+.field textarea{min-height:90px;resize:vertical}
 .cat-hint{font-size:11px;color:var(--faint);margin-top:4px;font-style:italic}
 
 /* ── SIDEBAR FILTER ── */
@@ -160,7 +160,8 @@ tr.edit-row>td{background:#F5F4EF;padding:14px 12px;border-bottom:2px solid rgba
 .edit-panel-2{display:grid;grid-template-columns:200px 1fr;gap:8px;margin-bottom:10px;align-items:end}
 .ef label{display:block;font-size:10px;color:var(--faint);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;font-weight:500}
 .ef input,.ef select,.ef textarea{width:100%;border:1px solid var(--border-mid);border-radius:5px;padding:6px 9px;font-size:12px;font-family:'DM Sans',sans-serif;background:#fff;color:var(--text);outline:none}
-.ef textarea{height:46px;resize:none;font-size:12px}
+.ef textarea{min-height:130px;resize:vertical;font-size:13px;line-height:1.5}
+.ef-note{grid-column:1/-1}
 .edit-actions{display:flex;gap:6px;justify-content:flex-end;margin-top:6px}
 .btn-sm{padding:5px 14px;font-size:12px;border-radius:5px}
 .btn-save{background:var(--sidebar-bg);color:#fff;border:none}.btn-save:hover{opacity:.85}
@@ -832,7 +833,7 @@ function renderLogTable(filtered){
             <option value="ml"${e.company==='ml'?' selected':''}>Mallangen Resort</option>
             <option value="se"${e.company==='se'?' selected':''}>St. Elisabeth</option>
           </select></div>
-          <div class="ef"><label>Merknad</label><textarea id="e-note">${esc(e.note||'')}</textarea></div>
+          <div class="ef ef-note"><label>Merknad</label><textarea id="e-note">${esc(e.note||'')}</textarea></div>
         </div>
         <div class="edit-actions">
           <button class="btn btn-sm btn-cancel-sm" onclick="cancelEdit()">Avbryt</button>
