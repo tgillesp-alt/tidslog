@@ -521,7 +521,8 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
       </div>
       <div class="field"><label>Aktivitet / oppgave</label><input type="text" id="sb-task" placeholder="f.eks. Strategimøte, budsjettgjennomgang…"/></div>
       <div class="form-grid">
-        <div class="field"><label>Tidsforbruk (timer)</label><input type="number" id="sb-duration" min="0.25" max="24" step="0.25" placeholder="f.eks. 1.5"/></div>
+        <div class="field"><label>Timer</label><input type="number" id="sb-hours" min="0" max="24" step="1" placeholder="f.eks. 1"/></div>
+        <div class="field"><label>Minutter</label><input type="number" id="sb-minutes" min="0" max="59" step="1" placeholder="f.eks. 30"/></div>
         <div class="field"><label>Tidskategori</label>
           <select id="sb-cat">
             <option value="auto">Auto (beregn fra dato)</option>
@@ -808,7 +809,8 @@ function renderLogTable(filtered){
         <div class="edit-panel">
           <div class="ef"><label>Dato</label><input type="date" id="e-date" value="${e.date}"/></div>
           <div class="ef"><label>Aktivitet</label><input type="text" id="e-task" value="${esc(e.task)}"/></div>
-          <div class="ef"><label>Timer</label><input type="number" id="e-dur" min="0.25" max="24" step="0.25" value="${h}"/></div>
+          <div class="ef"><label>Timer</label><input type="number" id="e-hours" min="0" max="24" step="1" value="${Math.floor(h)}"/></div>
+          <div class="ef"><label>Minutter</label><input type="number" id="e-minutes" min="0" max="59" step="1" value="${Math.round((h-Math.floor(h))*60)}"/></div>
           <div class="ef"><label>Kategori</label><select id="e-cat">
             <option value="mor"${e.cat==='mor'?' selected':''}>Morgen</option>
             <option value="day"${e.cat==='day'?' selected':''}>Normaldag</option>
@@ -934,7 +936,9 @@ window.cancelEdit=function(){editingId=null;render();};
 window.saveEdit=async function(id){
   const date=document.getElementById('e-date').value;
   const task=document.getElementById('e-task').value.trim();
-  const duration=parseFloat(document.getElementById('e-dur').value);
+  const eH=parseInt(document.getElementById('e-hours').value,10)||0;
+  const eM=parseInt(document.getElementById('e-minutes').value,10)||0;
+  const duration=eH+(eM/60);
   const cat=document.getElementById('e-cat').value;
   const company=document.getElementById('e-co').value;
   const note=document.getElementById('e-note').value.trim();
@@ -972,7 +976,9 @@ window.sbQuickAdd=async function(){
   const date=document.getElementById('sb-date').value;
   const company=document.getElementById('sb-company').value;
   const task=document.getElementById('sb-task').value.trim();
-  const duration=parseFloat(document.getElementById('sb-duration').value);
+  const sbH=parseInt(document.getElementById('sb-hours').value,10)||0;
+  const sbM=parseInt(document.getElementById('sb-minutes').value,10)||0;
+  const duration=sbH+(sbM/60);
   const catSel=document.getElementById('sb-cat').value;
   const note=document.getElementById('sb-note').value.trim();
   const sted=document.getElementById('sb-sted')?.value||(currentUser==='sepideh'?'stockholm':'oslo');
@@ -987,7 +993,8 @@ window.sbQuickAdd=async function(){
     await sbFetch(TABLE,{method:'POST',prefer:'return=representation',body:JSON.stringify(entry)});
     entries.unshift(entry);
     document.getElementById('sb-task').value='';
-    document.getElementById('sb-duration').value='';
+    document.getElementById('sb-hours').value='';
+    document.getElementById('sb-minutes').value='';
     document.getElementById('sb-cat').value='auto';
     document.getElementById('sb-note').value='';
     setSync('ok');render();closeModal();
