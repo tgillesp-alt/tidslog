@@ -597,7 +597,7 @@ function fmtHM(h){const v=+h||0;const totalMin=Math.round(v*60);const hh=Math.fl
 function pct(a,b){return b>0?Math.round(a/b*100):0;}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
-function coName(c){return{int:'International',ps:'Planetstaden',et:'Enter Tromsø',ml:'Mallangen Resort',se:'St. Elisabeth'}[c]||c;}
+function coName(c){return{int:'International',ps:'Planetstaden',et:'Enter Tromsø',ml:'Mallangen Resort',se:'St. Elisabeth',prop:'Property'}[c]||c;}
 function coBadge(c){return`<span class="badge badge-${c}">${coName(c)}</span>`;}
 
 // ── AUTH ──
@@ -715,7 +715,7 @@ function populateDropdowns(){
   const sub=document.getElementById('app-subtitle');
   if(sub) sub.textContent=isSep?'First Hotels International & Planetstaden':'First Hotels & Enter Tromsø';
   const coOpts=isSep
-    ?'<option value="int">International</option><option value="ps">Planetstaden</option>'
+    ?'<option value="int">International</option><option value="ps">Planetstaden</option><option value="prop">Property</option>'
     :'<option value="ps">Planetstaden</option><option value="int">International</option><option value="et">Enter Tromsø</option><option value="ml">Mallangen Resort</option><option value="se">St. Elisabeth</option>';
   ['sb-company','inp-company'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=coOpts;});
   ['rapport-company','sb-filter-company'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML='<option value="">Alle selskap</option>'+coOpts;});
@@ -902,10 +902,10 @@ function renderRapport(){
     set('rapport-earnings-detail',fmtHM(tot)+' × '+rate+' kr/t');
   }else{if(re)re.style.display='none';}
   // Co rows
-  const coNames={int:'International',ps:'Planetstaden',et:'Enter Tromsø',ml:'Mallangen Resort',se:'St. Elisabeth'};
+  const coNames={int:'International',ps:'Planetstaden',et:'Enter Tromsø',ml:'Mallangen Resort',se:'St. Elisabeth',prop:'Property'};
   const coColors={int:'var(--int)',ps:'var(--ps)',et:'var(--et)',ml:'var(--ml)',se:'var(--se)'};
   const isSep=currentUser==='sepideh';
-  const coKeys=isSep?['int','ps']:['ps','int','et','ml','se'];
+  const coKeys=isSep?['int','ps','prop']:['ps','int','et','ml','se'];
   let coHtml='';
   coKeys.forEach(k=>{
     if(!coT[k]&&coT[k]!==0)return;
