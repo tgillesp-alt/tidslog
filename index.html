@@ -842,11 +842,10 @@ function renderLogTable(filtered){
             <option value="annet"${e.sted==='annet'?' selected':''}>Annet</option>
           </select></div>
           <div class="ef"><label>Selskap</label><select id="e-co">
-            <option value="int"${e.company==='int'?' selected':''}>International</option>
-            <option value="ps"${e.company==='ps'?' selected':''}>Planetstaden</option>
-            <option value="et"${e.company==='et'?' selected':''}>Enter Tromsø</option>
-            <option value="ml"${e.company==='ml'?' selected':''}>Mallangen Resort</option>
-            <option value="se"${e.company==='se'?' selected':''}>St. Elisabeth</option>
+            ${(currentUser==='sepideh'
+              ?'<option value="int">International</option><option value="ps">Planetstaden</option><option value="prop">Property</option>'
+              :'<option value="int">International</option><option value="ps">Planetstaden</option><option value="et">Enter Tromsø</option><option value="ml">Mallangen Resort</option><option value="se">St. Elisabeth</option>'
+            ).replace(`value="${e.company}"`,`value="${e.company}" selected`)}
           </select></div>
           <div class="ef ef-note"><label>Merknad</label><textarea id="e-note">${esc(e.note||'')}</textarea></div>
         </div>
