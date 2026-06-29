@@ -83,6 +83,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .btn-danger{background:#c0392b;color:#fff;border-color:#c0392b}
 .btn-add-sidebar{width:100%;padding:9px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
 .btn-add-sidebar:hover{opacity:.88}
+.fab{position:fixed;bottom:24px;right:20px;width:52px;height:52px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:26px;line-height:1;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:999}
+@media(min-width:640px){.fab{display:none}}
 
 /* ── CARDS & FORMS ── */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:14px}
@@ -348,6 +350,9 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
       <button class="logout-btn" onclick="logout()"><span>↩</span> Bytt bruker</button>
     </div>
   </aside>
+
+  <!-- FAB: Ny oppføring (mobil) -->
+  <button class="fab" onclick="openModal()" title="Ny oppføring">+</button>
 
   <!-- MAIN CONTENT -->
   <div class="main-content">
